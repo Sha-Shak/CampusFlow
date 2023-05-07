@@ -5,7 +5,7 @@ import { getAccessToken } from "../Services/githubOAuth.service";
 function RedirectOAuth() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     const token = localStorage.getItem("github-access-token");
     if (token) navigate("/dashboard");
@@ -13,6 +13,7 @@ function RedirectOAuth() {
     const code = searchParams.get("code");
     if (!code) navigate("/login");
     getAccess(code);
+    navigate("/dashboard");
   }, []);
 
   async function getAccess(code) {
