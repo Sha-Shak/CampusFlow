@@ -1,8 +1,7 @@
 const FormResponse = require('../models/typeform/typeform.model');
 const postTypeform = async (req, res) => {
-  //   console.log('typeform', req.body);
-  const formResponse = req.body;
-  //   console.log(formResponse);
+  const formResponse = req.body.form_response;
+  console.log(formResponse);
 
   const newFormResponse = new FormResponse({
     form_id: formResponse.form_id,

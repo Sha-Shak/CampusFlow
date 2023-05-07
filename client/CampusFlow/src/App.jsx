@@ -7,6 +7,9 @@ import {
 } from 'react-router-dom';
 import LoginPage from './pages/Login.page';
 import RedirectOAuth from './pages/RedirectOAuth.page';
+import TypeForm from './pages/TypeForm.page';
+import CandidateList from './pages/CandidateList';
+import SideBar from './components/SideBar';
 function App() {
 
   return (
@@ -17,6 +20,10 @@ function App() {
           <Route path="/login" element={ <LoginPage/> } />
           <Route path="/dashboard" element={ <div>Dashboard</div> } />
           <Route path="/redirect/auth" element={ <RedirectOAuth/> } />
+
+          <Route path="/candidate" element={      <SideBar>
+<CandidateList /> </SideBar>} />
+          <Route path="*" element={ <div>404</div> } />
           </Routes>
       </Router>
     </>
