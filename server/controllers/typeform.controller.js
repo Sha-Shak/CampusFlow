@@ -1,7 +1,8 @@
 const FormResponse = require('../models/typeform/typeform.model');
 const postTypeform = async (req, res) => {
-  const formResponse = req.body.form_response;
-  console.log(formResponse);
+  //   console.log('typeform', req.body);
+  const formResponse = req.body;
+  //   console.log(formResponse);
 
   const newFormResponse = new FormResponse({
     form_id: formResponse.form_id,
@@ -11,8 +12,8 @@ const postTypeform = async (req, res) => {
       answer: answer.text,
     })),
   });
-
-  newFormResponse.save();
+  console.log(newFormResponse.answers);
+  await newFormResponse.save();
   res.send();
 };
 module.exports = {

@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const formResponseSchema = new mongoose.Schema({
   form_id: String,
-  submitted_at: Date,
+  submitted_at: String,
   answers: [
     {
       field: String,
