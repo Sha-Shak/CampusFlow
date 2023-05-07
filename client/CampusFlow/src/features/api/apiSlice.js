@@ -8,10 +8,7 @@ export const apiSlice = createApi({
       console.log('api', token);
 
       if (token) {
-        headers.set(
-          'github-access-token',
-          `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`
-        );
+        headers.set('github-access-token', `${token}`);
       }
       return headers;
     },

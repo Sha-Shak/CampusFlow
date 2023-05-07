@@ -60,7 +60,26 @@ const getAllOrganizationMembers = async (req, res) => {
 const getAllCohorts = async (req, res) => {
   const orgName = 'student-tool';
   const githubAccessToken = req.headers['github-access-token'];
-  // console.log(githubAccessToken);
+  const getAllCohorts = async (req, res) => {
+    const orgName = 'student-tool';
+    const githubAccessToken = req.headers['github-access-token'];
+    // console.log(githubAccessToken);
+    const url = `https://api.github.com/orgs/${orgName}/teams/students/teams`;
+    console.log(gh_personal_token);
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${gh_personal_token}`,
+          'github-access-token': githubAccessToken,
+        },
+      });
+      const cohorts = response.data;
+      res.status(200).json(cohorts);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Server error' });
+    }
+  };
   const url = `https://api.github.com/orgs/${orgName}/teams/students/teams`;
   console.log(gh_personal_token);
   try {
