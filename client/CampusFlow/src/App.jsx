@@ -11,6 +11,7 @@ import TypeForm from './pages/TypeForm.page';
 import CandidateList from './pages/CandidateList';
 import SideBar from './components/SideBar';
 import CreateStudent from './components/CreateStudent';
+import MarkStudent from './components/MarkStudent';
 function App() {
   return (
     <>
@@ -29,7 +30,7 @@ function App() {
               </SideBar>
             }
           />
-          <Route path="/createStudent" element={<CreateStudent />} />
+          <Route path="/createStudent" element={<MarkStudent />} />
           <Route path="*" element={<div>404</div>} />
         </Routes>
       </Router>
