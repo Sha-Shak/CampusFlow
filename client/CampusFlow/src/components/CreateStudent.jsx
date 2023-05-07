@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, TextField, Select, MenuItem, Grid } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import { useParams } from 'react-router-dom';
+import { useGetCandidateByIdQuery } from '../features/candidate/candidateApi';
+import { useGetAllCohortsQuery } from '../features/github/githubApi';
 
 const Form = styled('form')({
   display: 'flex',
@@ -10,12 +13,25 @@ const Form = styled('form')({
 });
 
 const CreateStudent = () => {
+  const {id} = useParams()
+  const {data: candidate, isLoading, isError, error, isSuccess} = useGetCandidateByIdQuery(id)
+  const {data: cohorts, isSuccess: isCohortSucess} = useGetAllCohortsQuery()
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [gitEmail, setGitEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [cohort, setCohort] = useState('');
-
+  useEffect(() => {
+    if (isSuccess) {
+      setName(candidate.name);
+      setEmail(candidate.email);
+      setPhone(candidate.phone);
+    }
+    if(isCohortSucess) {
+      setCohort(cohorts[0].name)
+    }
+  }, [isSuccess, candidate, cohorts, isCohortSucess]);
+  console.log(candidate)
   const handleCohortChange = (event) => {
     setCohort(event.target.value);
   };
@@ -65,9 +81,11 @@ const CreateStudent = () => {
             placeholder="Cohort"
           >
             <MenuItem value="">Select Cohort</MenuItem>
-            <MenuItem value="cohortA">Cohort A</MenuItem>
-            <MenuItem value="cohortB">Cohort B</MenuItem>
-            <MenuItem value="cohortC">Cohort C</MenuItem>
+            {cohorts?.map((cohort) => {
+              return <MenuItem value={cohort.name}>{cohort.name}</MenuItem>;
+            })
+            }
+           
           </Select>
           <Button variant="contained" color="primary" type="submit">
             Create Student
