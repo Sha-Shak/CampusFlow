@@ -26,11 +26,11 @@ function App() {
             path="/candidate"
             element={
               <SideBar>
-                <CandidateList />{' '}
+                <CandidateList />
               </SideBar>
             }
           />
-          <Route path="/createStudent" element={<MarkStudent />} />
+          <Route path="/createStudent" element={<CreateStudent />} />
           <Route path="*" element={<div>404</div>} />
         </Routes>
       </Router>

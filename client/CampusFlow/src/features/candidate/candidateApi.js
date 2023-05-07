@@ -1,21 +1,12 @@
 import { apiSlice } from '../api/apiSlice';
 
-export const githubApi = apiSlice.injectEndpoints({
+export const candidateApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    createBooking: builder.mutation({
-      query: (bookingInfo) => ({
-        url: '/app/bookings',
-        method: 'POST',
-        body: bookingInfo,
-      }),
+    getAllCandidates: builder.query({
+      query: () => `/typeform/getAllCandidates`,
     }),
-    getAllCohorts: builder.query({
-      query: () => ({
-        url: `/github/getAllCohorts/`,
-        headers: {
-          'github-access-token': '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',
-        },
-      }),
+    getCandidateById: builder.query({
+      query: (id) => `/typeform/getCandidateById/${id}`,
     }),
     deleteBookingById: builder.mutation({
       query: (id) => ({
@@ -45,4 +36,5 @@ export const githubApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetAllCohortsQuery } = githubApi;
+export const { useGetAllCandidatesQuery, useGetCandidateByIdQuery } =
+  candidateApi;

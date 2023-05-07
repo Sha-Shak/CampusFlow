@@ -1,7 +1,6 @@
 const FormResponse = require('../models/typeform/typeform.model');
 const postTypeform = (req, res) => {
   const formResponse = req.body.form_response;
-  console.log(formResponse);
 
   const newFormResponse = new FormResponse({
     form_id: formResponse.form_id,
@@ -31,8 +30,17 @@ const getAllCandidates = async (req, res) => {
     console.log(error);
   }
 };
+const getCandidateById = async (req, res) => {
+  try {
+    const candidate = await FormResponse.findById(req.params.id);
+    res.status(200).send(candidate);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 module.exports = {
   postTypeform,
   getAllCandidates,
+  getCandidateById,
 };
