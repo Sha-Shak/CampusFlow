@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const githubController = require('../controllers/github.controller');
 // login to github
-router.get('/access', githubController.getGithubAccessToken);
+router.post('/access', githubController.getGithubAccessToken);
 
 router.get('/getGithubUser', githubController.getGithubUser);
 router.get(

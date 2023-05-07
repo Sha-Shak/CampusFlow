@@ -5,14 +5,15 @@ const gh_client_secret = process.env.GITHUB_CLIENT_SECRET;
 const gh_personal_token = process.env.GITHUB_PERSONAL_TOKEN;
 
 const getGithubAccessToken = async (req, res) => {
-  const { code } = req.query;
+  const { code } = req.body;
+  console.log(code);
   const url = `https://github.com/login/oauth/access_token?client_id=${gh_client_id}&client_secret=${gh_client_secret}&code=${code}`;
   try {
     const response = await axios.post(url);
     const resultData = response.data;
     const accessToken = resultData.split('&')[0].split('=')[1];
     console.log(accessToken);
-    res.status(200).json({ accessToken });
+    res.status(200).send(accessToken);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error' });
