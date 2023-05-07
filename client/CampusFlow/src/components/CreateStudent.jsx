@@ -31,7 +31,6 @@ const CreateStudent = () => {
       setCohort(cohorts[0].name)
     }
   }, [isSuccess, candidate, cohorts, isCohortSucess]);
-  console.log(candidate)
   const handleCohortChange = (event) => {
     setCohort(event.target.value);
   };
@@ -82,7 +81,7 @@ const CreateStudent = () => {
           >
             <MenuItem value="">Select Cohort</MenuItem>
             {cohorts?.map((cohort) => {
-              return <MenuItem value={cohort.name}>{cohort.name}</MenuItem>;
+              return <MenuItem key={cohort.name} value={cohort.name}>{cohort.name}</MenuItem>;
             })
             }
            

@@ -6,7 +6,6 @@ export const apiSlice = createApi({
     prepareHeaders: (headers, { getState, endpoint }) => {
       const token = localStorage.getItem('github-access-token');
       console.log('api', token);
-
       if (token) {
         headers.set('github-access-token', `${token}`);
       }

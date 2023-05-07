@@ -30,7 +30,7 @@ function App() {
               </SideBar>
             }
           />
-          <Route path="/createStudent" element={<CreateStudent />} />
+          <Route path="/createStudent/:id" element={<CreateStudent />} />
           <Route path="*" element={<div>404</div>} />
         </Routes>
       </Router>
