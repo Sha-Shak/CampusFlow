@@ -1,7 +1,7 @@
 const router = require('express').Router();
-const typeformController = require('../controllers/typeform.controller');
+const { postTypeform } = require('../controllers/typeform.controller');
 
 //typeform
-router.post('/typeform-webhook', typeformController.postTypeform);
+router.post('/typeform-webhook', postTypeform);
 
 module.exports = router;
