@@ -6,7 +6,7 @@ const studentsRoute = require('./routes/students.route');
 const skillRoute = require('./routes/skill.route');
 const githubRoute = require('./routes/github.route');
 const app = express();
-const PORT = 3001;
+const PORT = process.env.PORT || 8080;
 
 require('dotenv').config();
 

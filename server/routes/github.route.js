@@ -4,7 +4,7 @@ const githubController = require('../controllers/github.controller');
 // login to github
 router.get('/access', githubController.getGithubAccessToken);
 
-// router.get('/getGithubUser', githubController.getGithubUser);
+router.get('/getGithubUser', githubController.getGithubUser);
 router.get(
   '/getAllOrganizationMembers',
   githubController.getAllOrganizationMembers
