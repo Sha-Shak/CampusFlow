@@ -1,0 +1,136 @@
+{
+  "name": "Saimon",
+  "email": "saimon@example.com",
+  "password": "password123",
+  "status": true,
+  "type": "junior",
+  "cohortName": "Cohort 1",
+  "joiningDate": "2022-01-01T00:00:00.000Z",
+  "githubUsername": "johndoe",
+  "githubMail": "johndoe@example.com",
+  "profileImg": "https://example.com/profile.jpg",
+  "generalSkills": [
+    {
+      "name": "JavaScript",
+      "tests": [
+        {
+          "marks": 80,
+          "weekName": "Week 1"
+        },
+        {
+          "marks": 90,
+          "weekName": "Week 2"
+        }
+      ]
+    },
+    {
+      "name": "React",
+      "tests": [
+        {
+          "marks": 85,
+          "weekName": "Week 1"
+        },
+        {
+          "marks": 95,
+          "weekName": "Week 2"
+        }
+      ]
+    }
+  ],
+  "junior": [
+    {
+      "weekName": "Week 1",
+      "softSkills": [{
+        "skill": "6455e83fa2b0aca3f102bad2",
+        "marks": 80
+      }],
+      "techSkills":  [{
+        "skill": "6455c84e3fc1bbbf463928bd",
+        "marks": 90
+      }],
+      "assessmentMarks": 80,
+      "unitMarks": [
+        {
+          "unitName": "Unit 1",
+          "marks": 70
+        },
+        {
+          "unitName": "Unit 2",
+          "marks": 90
+        }
+      ]
+    },
+    {
+      "weekName": "Week 2",
+      "softSkills": [{
+        "skill": "6455e83fa2b0aca3f102bad2",
+        "marks": 90
+      }
+      ],
+      "techSkills":  [{
+        "skill": "6455c84e3fc1bbbf463928bd",
+        "marks": 90
+      }
+      ],
+      "assessmentMarks": 90,
+      "unitMarks": [
+        {
+          "unitName": "Unit 1",
+          "marks": 80
+        },
+        {
+          "unitName": "Unit 2",
+          "marks": 95
+        }
+      ]
+    }
+  ],
+  "senior": [
+    {
+      "weekName": "Week 1",
+      "softSkills": [{
+        "skill": "6455e83fa2b0aca3f102bad2",
+        "marks": 80
+      }],
+      "techSkills":  [{
+        "skill": "6455c84e3fc1bbbf463928bd",
+        "marks": 90
+      }],
+      "assessmentMarks": 80,
+      "unitMarks": [
+        {
+          "unitName": "Unit 1",
+          "marks": 70
+        },
+        {
+          "unitName": "Unit 2",
+          "marks": 90
+        }
+      ]
+    },
+    {
+      "weekName": "Week 2",
+      "softSkills": [{
+        "skill": "6455e83fa2b0aca3f102bad2",
+        "marks": 90
+      }
+      ],
+      "techSkills":  [{
+        "skill": "6455c84e3fc1bbbf463928bd",
+        "marks": 90
+      }
+      ],
+      "assessmentMarks": 90,
+      "unitMarks": [
+        {
+          "unitName": "Unit 1",
+          "marks": 80
+        },
+        {
+          "unitName": "Unit 2",
+          "marks": 95
+        }
+      ]
+    }
+  ]
+}

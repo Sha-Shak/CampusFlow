@@ -1,0 +1,124 @@
+
+  [
+    {
+      "weekName": "Week 1",
+      "softSkills": {
+        "type": []
+      },
+      "techSkills": {
+        "type": []
+      },
+      "assessmentMarks": 0,
+      "unitMarks": [
+        {
+          "unitName": "Unit Testing",
+          "marks": 0
+        },
+        {
+          "unitName": "Advanced Javascript",
+          "marks": 0
+        }
+      ]
+    },
+    {
+      "weekName": "Week 2",
+      "softSkills": {
+        "type": []
+      },
+      "techSkills": {
+        "type": []
+      },
+      "assessmentMarks": 0,
+      "unitMarks": [
+        {
+          "unitName": "Data Structures",
+          "marks": 80
+        }
+
+      ]
+    },
+    {
+      "weekName": "Week 3",
+      "softSkills": {
+        "type": []
+      },
+      "techSkills": {
+        "type": []
+      },
+      "assessmentMarks": 0,
+      "unitMarks": [
+        {
+          "unitName": "Algorithms",
+          "marks": 0
+        },
+        {
+          "unitName": "Networking",
+          "marks": 0
+        }
+      ]
+    },
+    {
+      "weekName": "Week 4",
+      "softSkills": {
+        "type": []
+      },
+      "techSkills": {
+        "type": []
+      },
+      "assessmentMarks": 0,
+      "unitMarks": [
+        {
+          "unitName": "Backend Frameworks",
+          "marks": 0
+        },
+        {
+          "unitName": "Databases",
+          "marks": 0
+        },
+        {
+          "unitName": "Advanced HTML & CSS",
+          "marks": 0
+        }
+      ]
+    },
+    {
+      "weekName": "Week 5",
+      "softSkills": {
+        "type": []
+      },
+      "techSkills": {
+        "type": []
+      },
+      "assessmentMarks": 0,
+      "unitMarks": [
+        {
+          "unitName": "TypeScript",
+          "marks": 0
+        },
+        {
+          "unitName": "Angular",
+          "marks": 0
+        },
+        {
+          "unitName": "GraphQL",
+          "marks": 0
+        }
+      ]
+    },
+    {
+      "weekName": "Week 6",
+      "softSkills": {
+        "type": []
+      },
+      "techSkills": {
+        "type": []
+      },
+      "assessmentMarks": 0,
+      "unitMarks": [
+        {
+          "unitName": "React",
+          "marks": 0
+        }
+      ]
+    }
+  ]

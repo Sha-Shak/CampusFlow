@@ -1,0 +1,104 @@
+  [
+  {
+    "weekName": "Week 1",
+    "softSkills": {
+      "type": []
+    },
+    "techSkills": {
+      "type": []
+    },
+    "assessmentMarks": 0,
+    "unitMarks": [
+      {
+        "unitName": "Authentication",
+        "marks": 0
+      },
+      {
+        "unitName": "State Management",
+        "marks": 0
+      }
+    ]
+  },
+    {
+      "weekName": "Week 2",
+      "softSkills": {
+        "type": []
+      },
+      "techSkills": {
+        "type": []
+      },
+      "assessmentMarks": 0,
+      "unitMarks": [
+        {
+          "unitName": "Solo Project",
+          "marks": 0
+        }
+      ]
+    },
+    {
+      "weekName": "Week 3",
+      "softSkills": {
+        "type": []
+      },
+      "techSkills": {
+        "type": []
+      },
+      "assessmentMarks": 0,
+      "unitMarks": [
+        {
+          "unitName": "Legacy Project",
+          "marks": 0
+        }
+
+      ]
+    },
+    {
+      "weekName": "Week 4",
+      "softSkills": {
+        "type": []
+      },
+      "techSkills": {
+        "type": []
+      },
+      "assessmentMarks": 0,
+      "unitMarks": [
+        {
+          "unitName": "Mid Thesis",
+          "marks": 0
+        }
+      ]
+    },
+    {
+      "weekName": "Week 5",
+      "softSkills": {
+        "type": []
+      },
+      "techSkills": {
+        "type": []
+      },
+      "assessmentMarks": 0,
+      "unitMarks": [
+        {
+          "unitName": "Final Thesis",
+          "marks": 0
+        }
+      ]
+    }
+    ,
+    {
+      "weekName": "Week 5",
+      "softSkills": {
+        "type": []
+      },
+      "techSkills": {
+        "type": []
+      },
+      "assessmentMarks": 0,
+      "unitMarks": [
+        {
+          "unitName": "Final Thoughts",
+          "marks": 0
+        }
+      ]
+    }
+  ]
