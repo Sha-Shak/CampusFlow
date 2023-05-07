@@ -31,8 +31,17 @@ const getAllCandidates = async (req, res) => {
     console.log(error);
   }
 };
+const getCandidateById = async (req, res) => {
+  try {
+    const candidate = await FormResponse.findById(req.params.id);
+    res.status(200).send(candidate);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 module.exports = {
   postTypeform,
   getAllCandidates,
+  getCandidateById,
 };

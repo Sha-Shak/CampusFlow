@@ -21,11 +21,12 @@ const getGithubAccessToken = async (req, res) => {
 };
 const getGithubUser = async (req, res) => {
   const url = `https://api.github.com/user`;
+  const githubAccessToken = req.headers['github-access-token'];
   try {
     const response = await axios.get(url, {
       headers: {
-        Authorization: `Bearer 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`,
-        'github-access-token': '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',
+        Authorization: `Bearer ${gh_personal_token}`,
+        'github-access-token': githubAccessToken,
       },
     });
     const user = response.data;
@@ -38,13 +39,14 @@ const getGithubUser = async (req, res) => {
 
 const getAllOrganizationMembers = async (req, res) => {
   const orgName = 'student-tool';
+  const githubAccessToken = req.headers['github-access-token'];
 
   const url = `https://api.github.com/orgs/${orgName}/teams/staff-instructors/members`;
   try {
     const response = await axios.get(url, {
       headers: {
-        Authorization: `Bearer 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`,
-        'github-access-token': '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',
+        Authorization: `Bearer ${gh_personal_token}`,
+        'github-access-token': githubAccessToken,
       },
     });
     const members = response.data;
@@ -57,13 +59,15 @@ const getAllOrganizationMembers = async (req, res) => {
 
 const getAllCohorts = async (req, res) => {
   const orgName = 'student-tool';
+  const githubAccessToken = req.headers['github-access-token'];
+  // console.log(githubAccessToken);
   const url = `https://api.github.com/orgs/${orgName}/teams/students/teams`;
   console.log(gh_personal_token);
   try {
     const response = await axios.get(url, {
       headers: {
         Authorization: `Bearer ${gh_personal_token}`,
-        'github-access-token': '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',
+        'github-access-token': githubAccessToken,
       },
     });
     const cohorts = response.data;
@@ -76,12 +80,13 @@ const getAllCohorts = async (req, res) => {
 const getStudentsInCohort = async (req, res) => {
   const cohortName = 'student-nov-2023';
   // const cohortID = 7855410;
+  const githubAccessToken = req.headers['github-access-token'];
   const url = `https://api.github.com/orgs/student-tool/teams/${cohortName}/members`;
   try {
     const response = await axios.get(url, {
       headers: {
-        Authorization: `Bearer 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`,
-        'github-access-token': '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',
+        Authorization: `Bearer ${gh_personal_token}`,
+        'github-access-token': githubAccessToken,
       },
     });
     const members = response.data;
@@ -94,20 +99,17 @@ const getStudentsInCohort = async (req, res) => {
 const addStudentToCohort = async (req, res) => {
   // Eta PUT request
   const username = 'zahidtwt';
+  const githubAccessToken = req.headers['github-access-token'];
   const cohortName = 'student-nov-2023';
   // const url = `https://api.github.com/orgs/student-tool/teams/${cohortName}/memberships/${req.body.username}`;
   const url = `https://api.github.com/orgs/student-tool/teams/${cohortName}/memberships/${username}`;
   try {
-    const response = await axios.put(
-      url,
-      {},
-      {
-        headers: {
-          Authorization: `Bearer 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`,
-          'github-access-token': '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',
-        },
-      }
-    );
+    const response = await axios.put(url, {
+      headers: {
+        Authorization: `Bearer ${gh_personal_token}`,
+        'github-access-token': githubAccessToken,
+      },
+    });
     const data = response.data;
     res.status(200).json(data);
   } catch (error) {
@@ -118,13 +120,14 @@ const addStudentToCohort = async (req, res) => {
 
 const deleteStudentFromCohort = async (req, res) => {
   const cohortName = 'student-nov-2023';
+  const githubAccessToken = req.headers['github-access-token'];
   const username = 'zahidtwt';
   const url = `https://api.github.com/orgs/student-tool/teams/${cohortName}/memberships/${username}`;
   try {
     const response = await axios.delete(url, {
       headers: {
-        Authorization: `Bearer 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`,
-        'github-access-token': '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',
+        Authorization: `Bearer ${gh_personal_token}`,
+        'github-access-token': githubAccessToken,
       },
     });
     res.status(200).json({ message: 'Member removed successfully' });
@@ -137,6 +140,7 @@ const deleteStudentFromCohort = async (req, res) => {
 //post request
 const addCohort = async (req, res) => {
   const cohortName = 'studen-zahid-2023';
+  const githubAccessToken = req.headers['github-access-token'];
   const url = `https://api.github.com/orgs/student-tool/teams`;
   try {
     const response = await axios.post(
@@ -149,8 +153,8 @@ const addCohort = async (req, res) => {
       },
       {
         headers: {
-          Authorization: `Bearer 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`,
-          'github-access-token': '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',
+          Authorization: `Bearer ${gh_personal_token}`,
+          'github-access-token': githubAccessToken,
         },
       }
     );
