@@ -19,6 +19,11 @@ router.delete(
   githubController.deleteStudentFromCohort
 );
 router.post('/addCohort', githubController.addCohort);
+
+router.get('/getGithubInstructor', githubController.getGithubInstructor);
+router.get('/getGithubMaintainers', githubController.getGithubMaintainers);
+router.get('/getGithubTeams', githubController.getGithubTeams);
+router.get('/getGithubOrgRepos', githubController.getGithubOrgRepos);
 module.exports = router;
 
 // debug

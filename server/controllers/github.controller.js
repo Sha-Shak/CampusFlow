@@ -3,6 +3,7 @@ const axios = require('axios');
 const gh_client_id = process.env.GITHUB_CLIENT_ID;
 const gh_client_secret = process.env.GITHUB_CLIENT_SECRET;
 const gh_personal_token = process.env.GITHUB_PERSONAL_TOKEN;
+const orgName = 'student-tool';
 
 const getGithubAccessToken = async (req, res) => {
   const { code } = req.body;
@@ -38,7 +39,7 @@ const getGithubUser = async (req, res) => {
 };
 
 const getAllOrganizationMembers = async (req, res) => {
-  const orgName = 'student-tool';
+  // const orgName = 'student-tool';
   const githubAccessToken = req.headers['github-access-token'];
 
   const url = `https://api.github.com/orgs/${orgName}/teams/staff-instructors/members`;
@@ -58,7 +59,6 @@ const getAllOrganizationMembers = async (req, res) => {
 };
 
 const getAllCohorts = async (req, res) => {
-  const orgName = 'student-tool';
   const githubAccessToken = req.headers['github-access-token'];
   const getAllCohorts = async (req, res) => {
     const orgName = 'student-tool';
@@ -100,7 +100,7 @@ const getStudentsInCohort = async (req, res) => {
   const cohortName = 'student-nov-2023';
   // const cohortID = 7855410;
   const githubAccessToken = req.headers['github-access-token'];
-  const url = `https://api.github.com/orgs/student-tool/teams/${cohortName}/members`;
+  const url = `https://api.github.com/orgs/${orgName}/teams/${cohortName}/members`;
   try {
     const response = await axios.get(url, {
       headers: {
@@ -139,7 +139,7 @@ const deleteStudentFromCohort = async (req, res) => {
 const addCohort = async (req, res) => {
   const cohortName = 'studen-zahid-2033';
   const githubAccessToken = req.headers['github-access-token'];
-  const url = `https://api.github.com/orgs/student-tool/teams`;
+  const url = `https://api.github.com/orgs/${orgName}/teams`;
   try {
     const response = await axios.post(
       url,
@@ -171,7 +171,7 @@ const addStudentToCohort = async (req, res) => {
   const { username, cohortName } = req.body;
   const githubAccessToken = req.headers['github-access-token'];
   // const url = `https://api.github.com/orgs/student-tool/teams/${cohortName}/memberships/${req.body.username}`;
-  const url = `https://api.github.com/orgs/student-tool/teams/${cohortName}/memberships/${username}`;
+  const url = `https://api.github.com/orgs/${orgName}/teams/${cohortName}/memberships/${username}`;
   try {
     const response = await axios.put(
       url,
@@ -191,6 +191,87 @@ const addStudentToCohort = async (req, res) => {
   }
 };
 
+// getgithubInstructor
+const getGithubInstructor = async (req, res) => {
+  const url = `https://api.github.com/orgs/${orgName}/teams/staff-instructors/members`;
+  const githubAccessToken = req.headers['github-access-token'];
+  try {
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${gh_personal_token}`,
+        'github-access-token': githubAccessToken,
+      },
+    });
+    const user = response.data;
+    res.status(200).json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+// getOrgMaintainers;
+const getGithubMaintainers = async (req, res) => {
+  const url = `https://api.github.com/orgs/${orgName}/teams/staff-maintainers/members`;
+  const githubAccessToken = req.headers['github-access-token'];
+  try {
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${gh_personal_token}`,
+        'github-access-token': githubAccessToken,
+      },
+    });
+    const user = response.data;
+    res.status(200).json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+const getGithubTeams = async (req, res) => {
+  const url = `https://api.github.com/orgs/${orgName}/teams`;
+  const githubAccessToken = req.headers['github-access-token'];
+  try {
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${gh_personal_token}`,
+        'github-access-token': githubAccessToken,
+      },
+    });
+    const user = response.data;
+    res.status(200).json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+// NOT WORKING CORRECTLY
+const getGithubOrgRepos = async (req, res) => {
+  const url1 = `https://api.github.com/orgs/${orgName}/repos?per_page=100&page=1`;
+  const url2 = `https://api.github.com/orgs/${orgName}/repos?per_page=100&page=1`;
+  const githubAccessToken = req.headers['github-access-token'];
+  try {
+    const response1 = await axios.get(url1, {
+      headers: {
+        Authorization: `Bearer ${gh_personal_token}`,
+        'github-access-token': githubAccessToken,
+      },
+    });
+    const response2 = await axios.get(url2, {
+      headers: {
+        Authorization: `Bearer ${gh_personal_token}`,
+        'github-access-token': githubAccessToken,
+      },
+    });
+    // const user = response.data;
+    res.status(200).json([...response1.data, ...response2.data]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
 module.exports = {
   getGithubAccessToken,
   getGithubUser,
@@ -200,4 +281,8 @@ module.exports = {
   addStudentToCohort,
   deleteStudentFromCohort,
   addCohort,
+  getGithubInstructor,
+  getGithubMaintainers,
+  getGithubTeams,
+  getGithubOrgRepos,
 };

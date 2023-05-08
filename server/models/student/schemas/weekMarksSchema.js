@@ -19,7 +19,7 @@ const weekMarksSchema = new mongoose.Schema({
   },
   unitMarks: {
     type: [UnitMarksSchema],
-    required: true,
+    // required: true,
   },
 });
 

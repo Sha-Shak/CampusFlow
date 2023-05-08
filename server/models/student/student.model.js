@@ -47,6 +47,9 @@ const StudentSchema = new mongoose.Schema({
   senior: {
     type: [weekMarksSchema],
   },
+  checkpoints: {
+    type: [weekMarksSchema],
+  },
 });
 
 const Student = mongoose.model('Student', StudentSchema);

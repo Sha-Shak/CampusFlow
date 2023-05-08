@@ -23,4 +23,10 @@ router.put(
   studentsControllers.changeJuniorStudentToSenior
 );
 
+router.get('/getJuniorData/:id', studentsControllers.getJuniorData);
+router.get(
+  '/getStudentByCohortName/:cohortName',
+  studentsControllers.getStudentByCohortName
+);
+
 module.exports = router;
