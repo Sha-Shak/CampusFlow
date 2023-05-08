@@ -13,6 +13,7 @@ import SideBar from './components/SideBar';
 import CreateStudent from './components/CreateStudent';
 import MarkStudent from './components/MarkStudent';
 import AddSkill from './components/AddSkill';
+import RepoAccess from './components/RepoAccess';
 function App() {
   return (
     <>
@@ -34,6 +35,7 @@ function App() {
           <Route path="/createStudent/:id" element={<CreateStudent />} />
           <Route path="/markStudent" element={<MarkStudent />} />
           <Route path="/addSkill" element={<AddSkill />} />
+          <Route path="/repoAccess" element={<RepoAccess />} />
           <Route path="*" element={<div>404</div>} />
         </Routes>
       </Router>
