@@ -1,0 +1,150 @@
+[
+  {
+    "week": "Week 1",
+    "days": [
+      {
+        "day": "Saturday",
+        "topics": [
+          {"name": "Lecture: Welcome", "url": "https://lectures.projectcode.me/welcome"},
+          {"name": "Lecture: Git recap", "url": "Live lecture"},
+          {"name": "Exercise: Pre-course review", "url": "https://github.com/Project-Code-Bd/pre-course"}
+        ]
+      },
+      {
+        "day": "Sunday",
+        "topics": [
+          {"name": "Toy Problem: Two adds", "url": "https://github.com/Project-Code-Bd/tp-two-adds"},
+          {"name": "Lecture: Functional programming", "url": "Live lecture"},
+          {"name": "Exercise: Pre-course review", "url": "https://github.com/Project-Code-Bd/pre-course"}
+        ]
+      },
+      {
+        "day": "Monday",
+        "topics": [
+          {"name": "Toy Problem: Highest word count", "url": "https://github.com/Project-Code-Bd/tp-highest-word-count"},
+          {"name": "Lecture: Unit testing", "url": "https://lectures.projectcode.me/unit-testing"},
+          {"name": "Lecture: Pair programming", "url": "https://lectures.projectcode.me/pair-programming"},
+          {"name": "Exercise: Da tester", "url": "https://github.com/Project-Code-Bd/da-tester-exercise"}
+        ]
+      },
+      {
+        "day": "Tuesday",
+        "topics": [
+          {"name": "Toy Problem: Fix this ASAP", "url": "https://github.com/Project-Code-Bd/tp-fix-this-asap"},
+          {"name": "Lecture: Advanced JS - 1", "url": "https://lectures.projectcode.me/advanced-js-1"},
+          {"name": "Exercise: JayQuery", "url": "https://github.com/Project-Code-Bd/jay-query-exercise"}
+        ]
+      },
+      {
+        "day": "Wednesday",
+        "topics": [
+          {"name": "Toy Problem: Clonator", "url": "https://github.com/Project-Code-Bd/tp-clonator"},
+          {"name": "Lecture: Advanced JS - 2", "url": "https://lectures.projectcode.me/advanced-js-2"},
+          {"name": "Exercise: JayQuery", "url": "https://github.com/Project-Code-Bd/jay-query-exercise"},
+          {"name": "Exercise: Sub Class Dance Party", "url": "https://github.com/Project-Code-Bd/sub-class-dance-party-exercise"}
+        ]
+      },
+      {
+        "day": "Thursday",
+        "topics": [
+          {"name": "Toy Problem: Evented thing", "url": "https://github.com/Project-Code-Bd/tp-evented-thing"},
+          {"name": "Lecture: Advanced JS - 3", "url": "https://lectures.projectcode.me/advanced-js-3"},
+          {"name": "Exercise: Sub Class Dance Party", "url": "https://github.com/Project-Code-Bd/sub-class-dance-party-exercise"}
+        ]
+      }
+    ]
+  },
+  {
+    "week": "Week 2",
+    "days": [
+      {
+        "day": "Saturday",
+        "topics": [
+          {"name": "Weekly Assessment 1", "url": "https://github.com/Project-Code-Bd/weekly-assessment-1"},
+          {"name": "Lecture: Programming languages", "url": "https://lectures.projectcode.me/programming-languages"},
+          {"name": "Exercise: The Polyglot", "url": "https://github.com/Project-Code-Bd/the-polyglot-exercise"}
+        ]
+      },
+      {
+        "day": "Sunday",
+        "topics": [
+          {"name": "Toy Problem: Yarra", "url": "https://github.com/Project-Code-Bd/tp-yarra"},
+          {"name": "Lecture: Data structures - 1", "url": "https://lectures.projectcode.me/data-structures-1"},
+          {"name": "Exercise: Data structures - 1", "url": "https://github.com/Project-Code-Bd/data-structures-1-exercise"}
+        ]
+      },
+      {
+        "day": "Monday",
+        "topics": [
+          {"name": "Toy Problem: Methodize", "url": "https://github.com/Project-Code-Bd/tp-methodize"},
+          {"name": "Lecture: Data structures - 2", "url": "https://lectures.projectcode.me/data-structures-2"},
+          {"name": "Exercise: Data structures - 2", "url": "https://github.com/Project-Code-Bd/data-structures-2-exercise"}
+        ]
+      },
+      {
+        "day": "Tuesday",
+        "topics": [
+          {"name": "Toy Problem: Circular list", "url": "https://github.com/Project-Code-Bd/tp-circular-list"},
+          {"name": "Lecture: Data structures - 3", "url": "https://lectures.projectcode.me/data-structures-3"},
+          {"name": "Exercise: Data structures - 2", "url": "https://github.com/Project-Code-Bd/data-structures-2-exercise"}
+        ]
+      },
+      {
+        "day": "Wednesday",
+        "topics": [
+          {"name": "Toy Problem: Common ancestor", "url": "https://github.com/Project-Code-Bd/tp-common-ancestor"},
+          {"name": "Lecture: Data structures - 4", "url": "https://lectures.projectcode.me/data-structures-4"},
+          {"name": "Exercise: Data structures - 2", "url": "https://github.com/Project-Code-Bd/data-structures-2-exercise"}
+        ]
+      },
+      {
+        "day": "Thursday",
+        "topics": [
+          {"name": "Toy Problem: Spiral traversal", "url": "https://github.com/Project-Code-Bd/tp-spiral-traversal"},
+          {"name": "Lecture: Algorithms 1", "url": "https://lectures.projectcode.me/algorithms-1"},
+          {"name": "Exercise: Flavours of sorts", "url": "https://github.com/Project-Code-Bd/flavors-of-sorts-exercise"}
+        ]
+      }
+    ]
+  },
+  {
+    "week":"Week 3",
+    "days": []
+  },
+  {
+    "week":"Week 4",
+    "days": []
+  },
+  {
+    "week":"Week 5",
+    "days": []
+  },
+  {
+    "week":"Week 6",
+    "days": []
+  },
+  {
+    "week":"Week 7",
+    "days": []
+  },
+  {
+    "week":"Week 8",
+    "days": []
+  },
+  {
+    "week":"Week 9",
+    "days": []
+  },
+  {
+    "week":"Week 10",
+    "days": []
+  },
+  {
+    "week":"Week 11",
+    "days": []
+  },
+  {
+    "week":"Week 12",
+    "days": []
+  }
+]

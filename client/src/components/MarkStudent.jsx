@@ -15,10 +15,11 @@ import {
 import { useGetSkillsByCategoryQuery } from '../features/skill/skillApi';
 import { useAddSoftTechSkillsByStudentIDMutation } from '../features/student/studentApi';
 import { useParams } from 'react-router-dom';
+import Toggle from './Toggle';
 
 const MarkStudent = () => {
 
-  const {id} = useParams()
+  const {id, week} = useParams()
   const { data: softSkills} = useGetSkillsByCategoryQuery('softskill')
 
   const { data: techSkills } = useGetSkillsByCategoryQuery('techskill')
@@ -34,7 +35,6 @@ const initialAssessmentMark = {
 const [assessmentMark, setAssessmentMark] = useState(initialAssessmentMark);
 const [softSkillMarks, setSoftSkillMarks] = useState();
 const [techSkillMarks, setTechSkillMarks] = useState();
-const [week, setWeek] = useState(2); // Not used yet
 let initialSoftSkillMarks 
 let initialTechSkillMarks
 
@@ -112,7 +112,8 @@ useEffect(() => {
     console.log('submit');
   };
 
-  return (
+  return (<>
+
     <Paper elevation={3} sx={{ p: 2 }}>
       {/* Header */}
       <Grid item xs={12}>
@@ -160,6 +161,8 @@ useEffect(() => {
         </Grid>
         <Divider sx={{ mt: 2 }} />
         <Grid item xs={12} sx={{ mt: 2 }}>
+        <Toggle/>
+
           <FormGroup>
             {softSkills?.map((skill, index) => (
               <Grid
@@ -228,7 +231,7 @@ useEffect(() => {
         </Button>
         {/* Submit Button Finished */}
       </form>
-    </Paper>
+    </Paper></>
   );
 };
 

@@ -86,6 +86,8 @@ const AddSkill = () => {
           }}
         >
           <Typography variant="h6">Skill For:</Typography>
+          <Toggle onchange/>
+
           <FormControlLabel
             control={
               <Checkbox
