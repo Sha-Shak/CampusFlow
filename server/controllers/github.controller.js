@@ -117,11 +117,12 @@ const getStudentsInCohort = async (req, res) => {
 };
 const addStudentToCohort = async (req, res) => {
   // Eta PUT request
-  const username = 'zahidtwt';
+  // const username = 'zahidtwt';
+  const { gitUsername, cohort } = req.body;
   const githubAccessToken = req.headers['github-access-token'];
-  const cohortName = 'student-nov-2023';
+  // const cohortName = 'student-nov-2023';
   // const url = `https://api.github.com/orgs/student-tool/teams/${cohortName}/memberships/${req.body.username}`;
-  const url = `https://api.github.com/orgs/student-tool/teams/${cohortName}/memberships/${username}`;
+  const url = `https://api.github.com/orgs/student-tool/teams/${cohort}/memberships/${gitUsername}`;
   try {
     const response = await axios.put(url, {
       headers: {
