@@ -10,10 +10,12 @@ import RedirectOAuth from './pages/RedirectOAuth.page';
 import TypeForm from './pages/TypeForm.page';
 import CandidateList from './pages/CandidateList';
 import SideBar from './components/SideBar';
-import CreateStudent from './components/CreateStudent';
+import CreateStudent from './components/CreateStudentModal';
 import MarkStudent from './components/MarkStudent';
 import AddSkill from './components/AddSkill';
 import RepoAccess from './components/RepoAccess';
+import CreateCohort from './components/CreateCohortModal';
+import TestModal from './pages/TestModal';
 function App() {
   return (
     <>
@@ -36,6 +38,8 @@ function App() {
           <Route path="/markStudent" element={<MarkStudent />} />
           <Route path="/addSkill" element={<AddSkill />} />
           <Route path="/repoAccess" element={<RepoAccess />} />
+          <Route path="/createCohort" element={<CreateCohort />} />
+          <Route path="test" element={<TestModal />} />
           <Route path="*" element={<div>404</div>} />
         </Routes>
       </Router>
