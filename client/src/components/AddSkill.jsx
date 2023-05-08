@@ -52,8 +52,10 @@ const AddSkill = () => {
         border: '1px solid black',
       }}
     >
+      {/* Select Skills to Add */}
       <form onSubmit={handleAddSkill}>
         <Typography variant="h6">Select Skill to Add</Typography>
+        {/* Dropdown and chip */}
         <Grid container spacing={2} justifyContent={'center'}>
           <Grid item xs={10}>
             <Autocomplete
@@ -70,7 +72,10 @@ const AddSkill = () => {
               )}
             />
           </Grid>
+          {/* Dropdown and chip finished */}
         </Grid>
+
+        {/* Skill for check box */}
         <Box
           sx={{
             display: 'flex',
@@ -102,6 +107,9 @@ const AddSkill = () => {
             label="Senior"
           />
         </Box>
+        {/* Skill for check box finished*/}
+
+        {/* Submit Button */}
         <Box>
           <Button
             variant="contained"
@@ -113,6 +121,9 @@ const AddSkill = () => {
           </Button>
         </Box>
       </form>
+      {/* Selected Skills to add finished*/}
+
+      {/* Create Custom Skill */}
       <form onSubmit={handleCreateSkill}>
         <Box
           sx={{
@@ -162,6 +173,7 @@ const AddSkill = () => {
           </Grid>
         </Box>
       </form>
+      {/* Create Custom Skill finished */}
     </Box>
   );
 };
