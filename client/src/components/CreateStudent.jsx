@@ -3,7 +3,7 @@ import { Button, TextField, Select, MenuItem, Grid } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { useParams } from 'react-router-dom';
 import { useGetCandidateByIdQuery } from '../features/candidate/candidateApi';
-import { useGetAllCohortsQuery } from '../features/github/githubApi';
+import { useAddStudentToCohortMutation, useGetAllCohortsQuery } from '../features/github/githubApi';
 
 const Form = styled('form')({
   display: 'flex',
@@ -16,9 +16,12 @@ const CreateStudent = () => {
   const {id} = useParams()
   const {data: candidate, isLoading, isError, error, isSuccess} = useGetCandidateByIdQuery(id)
   const {data: cohorts, isSuccess: isCohortSucess} = useGetAllCohortsQuery()
+
+  const [addStudentToCohort, {isSuccess: isAddStudentSuccess}] = useAddStudentToCohortMutation()
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [gitEmail, setGitEmail] = useState('');
+  const [gitUsername, setgitUsername] = useState('');
   const [phone, setPhone] = useState('');
   const [cohort, setCohort] = useState('');
   useEffect(() => {
@@ -39,40 +42,51 @@ const CreateStudent = () => {
     event.preventDefault();
     console.log('name', name);
     console.log('email', email);
-    console.log('gitEmail', gitEmail);
+    console.log('gitUsername', gitUsername);
     console.log('phone', phone);
     console.log('cohort', cohort);
-    setName('');
-    setEmail('');
-    setGitEmail('');
-    setPhone('');
-    setCohort('');
+    addStudentToCohort({gitUsername,cohort})
+    if(isAddStudentSuccess) {
+      clearForm()
+    }
+    
   };
-
+  const clearForm = () =>{
+    setName('')
+    setEmail('')
+    setPhone('')
+    setgitUsername('')
+    setCohort('')
+  }
   return (
     <Grid container spacing={2} justifyContent="center">
-      <Grid item xs={12} md={3}>
+      <Grid item xs={12} md={6}>
         <Form onSubmit={handleSubmit}>
           <TextField
             label="Name"
             value={name}
+            required
             onChange={(event) => setName(event.target.value)}
           />
           <TextField
+
             label="Email"
+            required
             value={email}
             onChange={(event) => setEmail(event.target.value)}
           />
           <TextField
-            label="GitHub Email"
-            value={gitEmail}
-            onChange={(event) => setGitEmail(event.target.value)}
-          />
-          <TextField
             label="Phone"
             value={phone}
+            required
             onChange={(event) => setPhone(event.target.value)}
           />
+            <TextField
+              label="GitHub Username"
+              value={gitUsername}
+              required
+              onChange={(event) => setgitUsername(event.target.value)}
+            />
           <Select
             displayEmpty
             value={cohort}
