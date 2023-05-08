@@ -20,3 +20,9 @@ router.delete(
 );
 router.post('/addCohort', githubController.addCohort);
 module.exports = router;
+
+// debug
+// router.put(
+//   '/addStudentToCohortDebug',
+//   githubController.addStudentToCohortDebug
+// );
