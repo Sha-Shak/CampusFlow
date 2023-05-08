@@ -9,7 +9,6 @@ import LoginPage from './pages/Login.page';
 import RedirectOAuth from './pages/RedirectOAuth.page';
 import TypeForm from './pages/TypeForm.page';
 import CandidateList from './pages/CandidateList';
-import SideBar from './components/SideBar';
 import CreateStudent from './components/CreateStudentModal';
 import MarkStudent from './components/MarkStudent';
 import AddSkill from './components/AddSkill';
