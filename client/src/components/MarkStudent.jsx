@@ -113,7 +113,7 @@ useEffect(() => {
   };
 
   return (
-    <Paper elevation={3}>
+    <Paper elevation={3} sx={{ p: 2 }}>
       {/* Header */}
       <Grid item xs={12}>
         <Typography
