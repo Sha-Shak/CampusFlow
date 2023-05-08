@@ -4,6 +4,7 @@ import { styled } from '@mui/material/styles';
 import { useParams } from 'react-router-dom';
 import { useGetCandidateByIdQuery } from '../features/candidate/candidateApi';
 import { useAddStudentToCohortMutation, useGetAllCohortsQuery } from '../features/github/githubApi';
+import { useCreateStudentMutation } from '../features/student/studentApi';
 
 const Form = styled('form')({
   display: 'flex',
@@ -18,7 +19,7 @@ const CreateStudent = () => {
   const {data: cohorts, isSuccess: isCohortSucess} = useGetAllCohortsQuery()
 
   const [addStudentToCohort, {isSuccess: isAddStudentSuccess}] = useAddStudentToCohortMutation()
-
+  const [createStudent, {isSuccess: isCreateStudentSuccess}] = useCreateStudentMutation()
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [gitUsername, setgitUsername] = useState('');
@@ -46,14 +47,30 @@ const CreateStudent = () => {
     console.log('phone', phone);
     console.log('cohort', cohort);
     addStudentToCohort({username: gitUsername,cohortName: cohort})
+    createStudent({
+      name: name,
+      email: email,
+      status: true,
+      type: 'junior',
+      cohortName: cohort,
+      joiningDate: new Date(),
+      githubUsername: gitUsername,
+
+    })
     
   };
+
   useEffect(() => {
     if(isAddStudentSuccess) {
-      console.log('success')
+      console.log('added to cohort success')
+      
       clearForm()
     }
-  }, [isAddStudentSuccess])
+    if(isCreateStudentSuccess) {
+      console.log('added to db success')
+      clearForm()
+    }
+  }, [isAddStudentSuccess, isCreateStudentSuccess])
   const clearForm = () =>{
     setName('')
     setEmail('')

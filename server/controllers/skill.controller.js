@@ -37,6 +37,40 @@ const addCategoryToSkill = async (req, res) => {
   }
 };
 
+const addCategoryToSkills = async (req, res) => {
+  try {
+    const { skills } = req.body;
+    const result = [];
+
+    for (let i = 0; i < skills.length; i++) {
+      const { id, category } = skills[i];
+      const lowercaseCategory = category.toLowerCase();
+      const skill = await Skill.findById(id);
+      if (!skill) {
+        return res
+          .status(404)
+          .json({ message: `Skill with id ${id} not found` });
+      }
+      if (skill.category.includes(lowercaseCategory)) {
+        result.push({ id, success: false, message: 'Skill already added' });
+      } else {
+        skill.category.push(lowercaseCategory);
+        await skill.save();
+        result.push({
+          id,
+          success: true,
+          message: 'Skill category added successfully',
+        });
+      }
+    }
+
+    res.status(201).json(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
 const removeCategoryFromSkill = async (req, res) => {
   try {
     const { id } = req.params;
@@ -64,7 +98,12 @@ const getSkillsByCategory = async (req, res) => {
     if (skills.length === 0) {
       return res.status(404).json({ message: 'No skills in this category' });
     }
-    return res.status(200).json(skills);
+    const result = skills.map((skill) => {
+      const { _id, skillName, description } = skill;
+      return { _id, skillName, description };
+    });
+
+    return res.status(200).json(result);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error' });
@@ -108,4 +147,5 @@ module.exports = {
   addCategoryToSkill,
   removeCategoryFromSkill,
   getSkillsByCategory,
+  addCategoryToSkills,
 };

@@ -21,7 +21,7 @@ app.use(
 app.use(cors());
 app.use(express.json());
 app.use('/github', githubRoute);
-app.use('/students', studentsRoute);
+app.use('/student', studentsRoute);
 app.use('/skill', skillRoute);
 app.use('/typeform', typeformRoute);
 

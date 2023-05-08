@@ -31,7 +31,7 @@ function App() {
             }
           />
           <Route path="/createStudent/:id" element={<CreateStudent />} />
-          <Route path="/markStudent" element={<MarkStudent />} />
+          <Route path="/markStudent/:id" element={<MarkStudent />} />
           <Route path="*" element={<div>404</div>} />
         </Routes>
       </Router>

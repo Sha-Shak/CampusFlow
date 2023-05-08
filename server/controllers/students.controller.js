@@ -16,8 +16,8 @@ const createStudent = async (req, res) => {
     let student = new Student({
       ...req.body,
       // uncomment when you done testing
-      // junior: juniorWeeks,
-      // senior: seniorWeeks,
+      junior: juniorWeeks,
+      senior: seniorWeeks,
     });
 
     await student.save();

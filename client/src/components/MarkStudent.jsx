@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Typography from '@mui/material/Typography';
 import Slider from '@mui/material/Slider';
 import FormGroup from '@mui/material/FormGroup';
@@ -12,34 +12,44 @@ import {
   MenuItem,
   FormControl,
 } from '@mui/material';
-import { Form } from 'react-router-dom';
-
-// Importing the soft skills and tech skills from the database
-const softSkills = ['Communication', 'Teamwork', 'Problem Solving'];
-const techSkills = ['JavaScript', 'React', 'CSS'];
-
-// Creating the initial state for the soft skills and tech skills
-const initialSoftSkillMarks = softSkills.reduce((acc, skill) => {
-  acc[skill] = '';
-  return acc;
-}, {});
-
-const initialTechSkillMarks = techSkills.reduce((acc, skill) => {
-  acc[skill] = '';
-  return acc;
-}, {});
-
-// Creating the initial state for Assessment Mark with week
-const initialAssessmentMark = {
-  assessmentMark: 5,
-  week: '',
-};
+import { useGetSkillsByCategoryQuery } from '../features/skill/skillApi';
+import { useAddSoftTechSkillsByStudentIDMutation } from '../features/student/studentApi';
+import { useParams } from 'react-router-dom';
 
 const MarkStudent = () => {
-  const [assessmentMark, setAssessmentMark] = useState(initialAssessmentMark);
-  const [softSkillMarks, setSoftSkillMarks] = useState(initialSoftSkillMarks);
-  const [techSkillMarks, setTechSkillMarks] = useState(initialTechSkillMarks);
-  const [week, setWeek] = useState(''); // Not used yet
+
+  const {id} = useParams()
+  const { data: softSkills} = useGetSkillsByCategoryQuery('softskill')
+
+  const { data: techSkills } = useGetSkillsByCategoryQuery('techskill')
+  
+  const [addSoftTechSkillsByStudentID, { isSuccess }] = useAddSoftTechSkillsByStudentIDMutation()
+  
+// Creating the initial state for the soft skills and tech skills
+// Creating the initial state for Assessment Mark with week
+const initialAssessmentMark = {
+  assessmentMark: 0,
+};
+
+const [assessmentMark, setAssessmentMark] = useState(initialAssessmentMark);
+const [softSkillMarks, setSoftSkillMarks] = useState();
+const [techSkillMarks, setTechSkillMarks] = useState();
+const [week, setWeek] = useState(2); // Not used yet
+let initialSoftSkillMarks 
+let initialTechSkillMarks
+
+useEffect(() => {
+  if(!softSkills || !techSkills) return
+  initialSoftSkillMarks = softSkills.reduce((acc, skill) => {
+    acc[skill._id] = 0;
+    return acc}, {});
+    setSoftSkillMarks(initialSoftSkillMarks)
+    initialTechSkillMarks = techSkills.reduce((acc, skill) => {
+      acc[skill._id] = 0;
+      return acc}, {});
+      setTechSkillMarks(initialTechSkillMarks)
+  }, [ softSkills, techSkills]);
+
 
   const sliderMarks = Array.from({ length: 10 }, (_, i) => ({
     value: i + 1,
@@ -57,7 +67,6 @@ const MarkStudent = () => {
       ...prev,
       [event.target.name]: event.target.value,
     }));
-    console.log(assessmentMark);
   };
 
   const handleSoftSliderChange = (event) => {
@@ -65,7 +74,6 @@ const MarkStudent = () => {
       ...prev,
       [event.target.name]: event.target.value,
     }));
-    console.log(softSkillMarks);
   };
 
   const handleTechSliderChange = (event) => {
@@ -73,35 +81,34 @@ const MarkStudent = () => {
       ...prev,
       [event.target.name]: event.target.value,
     }));
-    console.log(techSkillMarks);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
+    
     const allSoftSkillMarks = Object.entries(softSkillMarks).map(
       ([skill, mark]) => ({
-        skillName: skill,
-        mark,
+        skill: skill,
+        marks: mark,
       })
     );
-    console.log(allSoftSkillMarks);
     const allTechSkillMarks = Object.entries(techSkillMarks).map(
       ([skill, mark]) => ({
         skillName: skill,
         mark,
       })
     );
-    console.log(allTechSkillMarks);
-    const marks = {
-      assessmentMark: assessmentMark.assessmentMark,
-      week: week,
-      softSkillMarks: allSoftSkillMarks,
-      techSkillMarks: allTechSkillMarks,
-    };
+    
 
-    console.log(marks);
-    // TODO: Send marks to the database
+
+    const data = {
+      id,
+      week, 
+      softSkills: allSoftSkillMarks,
+      techSkills: allTechSkillMarks,
+    }
+    addSoftTechSkillsByStudentID(data)
+    console.log(data);
     console.log('submit');
   };
 
@@ -134,10 +141,10 @@ const MarkStudent = () => {
           </Grid>
           <Grid item xs={6}>
             <Slider
-              min={1}
+              min={0}
               max={10}
-              step={0.5}
-              defaultValue={5}
+              step={1}
+              defaultValue={0}
               name="assessmentMark"
               marks={sliderMarks}
               onChange={handleAssessmentMarkChange}
@@ -154,7 +161,7 @@ const MarkStudent = () => {
         <Divider sx={{ mt: 2 }} />
         <Grid item xs={12} sx={{ mt: 2 }}>
           <FormGroup>
-            {softSkills.map((skill, index) => (
+            {softSkills?.map((skill, index) => (
               <Grid
                 container
                 spacing={2}
@@ -163,15 +170,15 @@ const MarkStudent = () => {
                 key={index}
               >
                 <Grid item xs={4}>
-                  <Typography variant="body1">{skill}</Typography>
+                  <Typography variant="body1">{skill?.skillName}</Typography>
                 </Grid>
                 <Grid item xs={6}>
                   <Slider
-                    min={1}
+                    min={0}
                     max={10}
                     step={1}
-                    defaultValue={5}
-                    name={skill}
+                    defaultValue={0}
+                    name={skill?._id}
                     marks={sliderMarks}
                     onChange={handleSoftSliderChange}
                   />
@@ -186,7 +193,7 @@ const MarkStudent = () => {
         {/* Tech Skill Sliders */}
         <Grid item xs={12} sx={{ mt: 2 }}>
           <FormGroup>
-            {techSkills.map((skill, index) => (
+            {techSkills?.map((skill, index) => (
               <Grid
                 container
                 spacing={2}
@@ -195,16 +202,16 @@ const MarkStudent = () => {
                 key={index}
               >
                 <Grid item xs={4}>
-                  <Typography variant="body1">{skill}</Typography>
+                  <Typography variant="body1">{skill?.skillName}</Typography>
                 </Grid>
                 <Grid item xs={6}>
                   <Slider
-                    min={1}
+                    min={0}
                     max={10}
                     step={1}
-                    defaultValue={5}
+                    defaultValue={0}
                     marks={sliderMarks}
-                    name={skill}
+                    name={skill?._id}
                     onChange={handleTechSliderChange}
                   />
                 </Grid>
