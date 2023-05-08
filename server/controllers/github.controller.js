@@ -115,33 +115,6 @@ const getStudentsInCohort = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
-// const addStudentToCohort = async (req, res) => {
-//   // Eta PUT request
-//   // const username = 'zahidtwt';
-//   const { gitUsername, cohort } = req.body;
-//   console.log(gitUsername, cohort);
-//   const githubAccessToken = req.headers['github-access-token'];
-//   const auth = req.headers['Authorization'];
-//   console.log(githubAccessToken);
-//   console.log(gh_personal_token);
-//   // const cohortName = 'student-nov-2023';
-//   // const url = `https://api.github.com/orgs/student-tool/teams/${cohortName}/memberships/${req.body.username}`;
-//   const url = `https://api.github.com/orgs/student-tool/teams/${cohort}/memberships/${gitUsername}`;
-//   try {
-//     const response = await axios.put(url, {
-//       headers: {
-//         'X-GitHub-Api-Version': '2022-11-28',
-//         Authorization: auth,
-//         'github-access-token': githubAccessToken,
-//       },
-//     });
-//     const data = response.data;
-//     res.status(200).json(data);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: 'Server error' });
-//   }
-// };
 
 const deleteStudentFromCohort = async (req, res) => {
   const cohortName = 'student-nov-2023';
