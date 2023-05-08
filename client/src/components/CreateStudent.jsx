@@ -45,12 +45,15 @@ const CreateStudent = () => {
     console.log('gitUsername', gitUsername);
     console.log('phone', phone);
     console.log('cohort', cohort);
-    addStudentToCohort({gitUsername,cohort})
-    if(isAddStudentSuccess) {
-      clearForm()
-    }
+    addStudentToCohort({username: gitUsername,cohortName: cohort})
     
   };
+  useEffect(() => {
+    if(isAddStudentSuccess) {
+      console.log('success')
+      clearForm()
+    }
+  }, [isAddStudentSuccess])
   const clearForm = () =>{
     setName('')
     setEmail('')
