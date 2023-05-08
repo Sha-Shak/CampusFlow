@@ -12,7 +12,7 @@ import CandidateList from './pages/CandidateList';
 import SideBar from './components/SideBar';
 import CreateStudent from './components/CreateStudent';
 import MarkStudent from './components/MarkStudent';
-function App() {
+function App() { 
   return (
     <>
       <Router>
