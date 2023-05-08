@@ -10,6 +10,7 @@ import Paper from '@mui/material/Paper';
 import TablePagination from '@mui/material/TablePagination';
 import { useNavigate } from 'react-router-dom';
 import { useGetAllCandidatesQuery } from '../features/candidate/candidateApi';
+import TextField from '@mui/material/TextField';
 
 const mockData = [
   {
@@ -138,6 +139,7 @@ function CandidateList() {
   } = useGetAllCandidatesQuery();
 
   const [page, setPage] = useState(0);
+  const [searchTerm, setSearchTerm] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const navigate = useNavigate();
@@ -162,6 +164,10 @@ function CandidateList() {
     setPage(0);
   };
 
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
   const rows = candidates?.map((candidate) => {
     return createData(
       candidate.id,
@@ -171,58 +177,75 @@ function CandidateList() {
     );
   });
 
+  const filteredRows = rows?.filter(
+    (row) =>
+      row.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      row.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      row.phone.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <>
       {isSuccess && (
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell>Form ID</TableCell>
-                <TableCell align="right">Name</TableCell>
-                <TableCell align="right">Email</TableCell>
-                <TableCell align="right">Phone</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => (
-                  <TableRow
-                    key={row.id}
-                    sx={{
-                      '&:nth-of-type(odd)': {
-                        backgroundColor: 'rgba(0, 0, 0, 0.05)',
-                      },
-                      '&:last-child td, &:last-child th': { border: 0 },
-                    }}
-                  >
-                    <TableCell align="right">{row.name}</TableCell>
-                    <TableCell align="right">{row.email}</TableCell>
-                    <TableCell align="right">{row.phone}</TableCell>
-                    <TableCell align="right">
-                      <Button
-                        variant="contained"
-                        value={row.id}
-                        onClick={handleClick}
-                        size="small"
-                      >
-                        Convert to Student
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-            </TableBody>
-          </Table>
-          <TablePagination
-            component="div"
-            count={rows.length}
-            page={page}
-            onPageChange={handleChangePage}
-            rowsPerPage={rowsPerPage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
+        <>
+          <TextField
+            label="Search"
+            variant="outlined"
+            value={searchTerm}
+            onChange={handleSearchChange}
+            fullWidth
+            style={{ marginBottom: '16px' }}
           />
-        </TableContainer>
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Form ID</TableCell>
+                  <TableCell align="right">Name</TableCell>
+                  <TableCell align="right">Email</TableCell>
+                  <TableCell align="right">Phone</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {filteredRows
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row, index) => (
+                    <TableRow
+                      key={row.id}
+                      sx={{
+                        '&:nth-of-type(odd)': {
+                          backgroundColor: 'rgba(0, 0, 0, 0.05)',
+                        },
+                        '&:last-child td, &:last-child th': { border: 0 },
+                      }}
+                    >
+                      <TableCell align="right">{row.name}</TableCell>
+                      <TableCell align="right">{row.email}</TableCell>
+                      <TableCell align="right">{row.phone}</TableCell>
+                      <TableCell align="right">
+                        <Button
+                          variant="contained"
+                          value={row.id}
+                          onClick={handleClick}
+                          size="small"
+                        >
+                          Convert to Student
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+              </TableBody>
+            </Table>
+            <TablePagination
+              component="div"
+              count={filteredRows.length}
+              page={page}
+              onPageChange={handleChangePage}
+              rowsPerPage={rowsPerPage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          </TableContainer>
+        </>
       )}
     </>
   );
