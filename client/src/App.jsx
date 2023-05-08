@@ -31,8 +31,7 @@ function App() {
           <Route
             path="/candidate"
             element={
-                <CandidateList />
-            }
+                <CandidateList />            }
           />
           <Route path="/createStudent/:id" element={<CreateStudent />} />
           <Route path="/markStudent/:id/:week" element={<MarkStudent />} />
