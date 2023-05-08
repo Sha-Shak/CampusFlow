@@ -11,7 +11,7 @@ export const githubApi = apiSlice.injectEndpoints({
     addStudentToCohort: builder.mutation({
       query: (data) => ({
         url: `/github/addStudentToCohort/`,
-        method: 'POST',
+        method: 'PUT',
         body: data,
       }),
     }),
