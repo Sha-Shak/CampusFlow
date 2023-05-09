@@ -1,22 +1,61 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Chip from '@mui/material/Chip';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
-import Stack from '@mui/material/Stack';
 import { Box, Button, Grid, Typography } from '@mui/material';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import { useGetAllSkillsQuery } from '../features/skill/skillApi';
 
 // Todo: Importing the skills from the database (dummy data on line 161)
 
 const initialSelectedSkills = [];
-
+const skillsName = [
+    { skillName: 'JavaScript' },
+    { skillName: 'React' },
+    { skillName: 'Node.js' },
+    { skillName: 'Express.js' },
+    { skillName: 'MongoDB' },
+    { skillName: 'SQL' },
+    { skillName: 'Python' },
+    { skillName: 'Django' },
+    { skillName: 'Flask' },
+    { skillName: 'PHP' },
+    { skillName: 'Laravel' },
+    { skillName: 'Symfony' },
+    { skillName: 'Ruby' },
+    { skillName: 'Ruby on Rails' },
+    { skillName: 'Java' },
+    { skillName: 'Spring' },
+    { skillName: 'Kotlin' },
+    { skillName: 'Swift' },
+    { skillName: 'iOS development' },
+    { skillName: 'Android development' },
+    { skillName: 'React Native' },
+    { skillName: 'Vue.js' },
+    { skillName: 'Angular' },
+    { skillName: 'Bootstrap' },
+    { skillName: 'Sass' },
+    { skillName: 'Git' },
+    { skillName: 'AWS' },
+    { skillName: 'Azure' },
+    { skillName: 'Google Cloud Platform' },
+  ];
+  
 const AddSkill = () => {
+  const {data: skillsName, isSuccess} = useGetAllSkillsQuery()
+  
   const [selectedSkills, setSelectedSkills] = useState(initialSelectedSkills);
   const [newSkillName, setNewSkillName] = useState('');
   const [newSkillDescription, setNewSkillDescription] = useState('');
   const [junior, setJunior] = useState(true);
   const [senior, setSenior] = useState(false);
+
+  useEffect(() => {
+    console.log(skillsName);
+  }, [skillsName]);
+
+
 
   const handleJuniorChange = (event) => {
     setJunior(event.target.checked);
@@ -28,6 +67,7 @@ const AddSkill = () => {
 
   const handleAddSkill = (event) => {
     event.preventDefault();
+    console.log(selectedSkills);
     console.log('Add Skill');
   };
 
@@ -58,11 +98,11 @@ const AddSkill = () => {
         {/* Dropdown and chip */}
         <Grid container spacing={2} justifyContent={'center'}>
           <Grid item xs={10}>
-            <Autocomplete
+            {isSuccess&&(<Autocomplete
               multiple
               id="tags-standard"
               options={skillsName}
-              getOptionLabel={(option) => option.skillName}
+              getOptionLabel={(option) => option?.skillName}
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -70,7 +110,7 @@ const AddSkill = () => {
                   placeholder="Select skills"
                 />
               )}
-            />
+            />)}
           </Grid>
           {/* Dropdown and chip finished */}
         </Grid>
@@ -181,34 +221,4 @@ const AddSkill = () => {
 
 export default AddSkill;
 
-const skillsName = [
-  { skillName: 'JavaScript' },
-  { skillName: 'React' },
-  { skillName: 'Node.js' },
-  { skillName: 'Express.js' },
-  { skillName: 'MongoDB' },
-  { skillName: 'SQL' },
-  { skillName: 'Python' },
-  { skillName: 'Django' },
-  { skillName: 'Flask' },
-  { skillName: 'PHP' },
-  { skillName: 'Laravel' },
-  { skillName: 'Symfony' },
-  { skillName: 'Ruby' },
-  { skillName: 'Ruby on Rails' },
-  { skillName: 'Java' },
-  { skillName: 'Spring' },
-  { skillName: 'Kotlin' },
-  { skillName: 'Swift' },
-  { skillName: 'iOS development' },
-  { skillName: 'Android development' },
-  { skillName: 'React Native' },
-  { skillName: 'Vue.js' },
-  { skillName: 'Angular' },
-  { skillName: 'Bootstrap' },
-  { skillName: 'Sass' },
-  { skillName: 'Git' },
-  { skillName: 'AWS' },
-  { skillName: 'Azure' },
-  { skillName: 'Google Cloud Platform' },
-];
+// 
