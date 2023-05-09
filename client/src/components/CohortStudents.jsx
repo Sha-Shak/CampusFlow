@@ -70,7 +70,7 @@ const CohortStudents = () => {
           ))}
         </tbody>
         {/* foot */}
-        <tfoot className="bg-red-700">
+        <tfoot>
           <tr className="">
             <th>Name</th>
             <th>Job</th>
