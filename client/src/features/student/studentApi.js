@@ -34,6 +34,8 @@ export const studentApi = apiSlice.injectEndpoints({
         method: 'GET',
       }),
     }),
+
+    //donebysaimon
     getStudentWeekInfo: builder.query({
       query: (data) => ({
         url: `/student/getStudentWeekInfo/${data.id}/${data.week}`,
