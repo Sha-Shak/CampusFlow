@@ -26,6 +26,12 @@ router.get('/getGithubTeams', githubController.getGithubTeams);
 router.get('/getGithubOrgRepos', githubController.getGithubOrgRepos);
 module.exports = router;
 
+router.get('/getAccessToGithubRepo', githubController.getAccessToGithubRepo);
+router.get(
+  '/removeAccessToGithubRepo',
+  githubController.removeAccessToGithubRepo
+);
+
 // debug
 // router.put(
 //   '/addStudentToCohortDebug',

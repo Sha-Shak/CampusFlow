@@ -18,9 +18,10 @@ import TestModal from './pages/TestModal';
 import Dashboard from './pages/Dashboard.page';
 import CurriculumComponent from './pages/Curriculum.page';
 import CohortStudents from './components/CohortStudents';
+import Cohorts from './pages/Cohorts.page';
 function App() {
   return (
-    <div className="bg-gray-200">
+    <div>
       <Router>
         <Routes>
           <Route path="/" element={<Navigate to="/login" />} />
@@ -29,12 +30,11 @@ function App() {
           <Route path="/redirect/auth" element={<RedirectOAuth />} />
           <Route path="/curriculum" element={<CurriculumComponent />} />
 
-          <Route path="/candidate" element={<CandidateList />} />
+          <Route path="/candidates" element={<CandidateList />} />
           <Route path="/createStudent/:id" element={<CreateStudent />} />
           <Route path="/markStudent/:id/:week" element={<MarkStudent />} />
-          <Route path="/addSkill" element={<AddSkill />} />
+          <Route path="/cohorts" element={<Cohorts />} />
           <Route path="/repoAccess" element={<RepoAccess />} />
-          <Route path="/createCohort" element={<CreateCohort />} />
           <Route path="test" element={<CohortStudents />} />
           <Route path="*" element={<div>404</div>} />
         </Routes>

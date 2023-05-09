@@ -249,7 +249,7 @@ const getGithubTeams = async (req, res) => {
 // NOT WORKING CORRECTLY
 const getGithubOrgRepos = async (req, res) => {
   const url1 = `https://api.github.com/orgs/${orgName}/repos?per_page=100&page=1`;
-  const url2 = `https://api.github.com/orgs/${orgName}/repos?per_page=100&page=1`;
+  const url2 = `https://api.github.com/orgs/${orgName}/repos?per_page=100&page=2`;
   const githubAccessToken = req.headers['github-access-token'];
   try {
     const response1 = await axios.get(url1, {
@@ -264,8 +264,48 @@ const getGithubOrgRepos = async (req, res) => {
         'github-access-token': githubAccessToken,
       },
     });
-    // const user = response.data;
+
     res.status(200).json([...response1.data, ...response2.data]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+const getAccessToGithubRepo = async (req, res) => {
+  const { teamSlug, repoName } = req.body;
+  const url = `https://api.github.com/orgs/${orgName}/teams/${teamSlug}/repos/${orgName}/${repoName}`;
+
+  const githubAccessToken = req.headers['github-access-token'];
+  try {
+    const response = await axios.put(
+      url,
+      { permission: 'pull' },
+      {
+        headers: {
+          Authorization: `Bearer ${gh_personal_token}`,
+          'github-access-token': githubAccessToken,
+        },
+      }
+    );
+    res.status(200).json(response.data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+const removeAccessToGithubRepo = async (req, res) => {
+  const { teamSlug, repoName } = req.body;
+  const url = `https://api.github.com/orgs/${orgName}/teams/${teamSlug}/repos/${orgName}/${repoName}`;
+
+  const githubAccessToken = req.headers['github-access-token'];
+  try {
+    const response = await axios.delete(url, {
+      headers: {
+        Authorization: `Bearer ${gh_personal_token}`,
+        'github-access-token': githubAccessToken,
+      },
+    });
+    res.status(200).json(response.data);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error' });
@@ -285,4 +325,6 @@ module.exports = {
   getGithubMaintainers,
   getGithubTeams,
   getGithubOrgRepos,
+  getAccessToGithubRepo,
+  removeAccessToGithubRepo,
 };

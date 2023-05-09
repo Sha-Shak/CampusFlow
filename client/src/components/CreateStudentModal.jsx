@@ -137,7 +137,7 @@ const CreateStudentModal = ({ createStudentOpen, onStudentClose, id }) => {
           onChange={handleCohortChange}
           placeholder="Cohort"
           fullWidth
-          sx={{ borderRadius: '25px' , height: '3rem'}}
+          sx={{ borderRadius: '25px', height: '3rem' }}
         >
           <MenuItem value="">Select Cohort</MenuItem>
           {cohorts?.map((cohort) => {
@@ -153,7 +153,7 @@ const CreateStudentModal = ({ createStudentOpen, onStudentClose, id }) => {
         <Button
           size="large"
           variant="contained"
-          color="info"
+          color="secondary"
           onClick={handleOpen}
           sx={{
             display: 'flex',
@@ -174,12 +174,15 @@ const CreateStudentModal = ({ createStudentOpen, onStudentClose, id }) => {
   const createStudentModalBody = (
     <Box
       sx={{
+        // backgroundImage: 'url(https://i.imgur.com/2nCt3Sbl.png)',
+        // backgroundRepeat: 'no-repeat',
+        // backgroundSize: 'cover',
+        backgroundColor: '#F5F5F5!important',
         position: 'absolute',
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
         width: '45%',
-        bgcolor: 'background.paper',
         borderRadius: '25px',
         boxShadow: 15,
         p: 4,
@@ -202,7 +205,7 @@ const CreateStudentModal = ({ createStudentOpen, onStudentClose, id }) => {
             width: '100%',
           }}
         > */}
-          {/* <IconButton
+        {/* <IconButton
             sx={{ alignSelf: 'flex-end', fontSize: '2rem' }}
             onClick={onStudentClose}
           >
@@ -212,8 +215,12 @@ const CreateStudentModal = ({ createStudentOpen, onStudentClose, id }) => {
             />
           </IconButton> */}
         {/* </Box> */}
-        <Typography variant="h4" align="center"
-        textTransform={'uppercase'} m={2}>
+        <Typography
+          variant="h4"
+          align="center"
+          textTransform={'uppercase'}
+          m={2}
+        >
           Create New Student
         </Typography>
         <Grid container spacing={2} justifyContent="center">
