@@ -1,0 +1,8 @@
+.MuiOutlinedInput-notchedOutline {
+  /* border-color: #fff!important; */
+  border-radius: 25px!important;
+  height: 3.5rem!important;
+}
+.MuiButtonBase-root {
+  border-radius: 25px!important;
+}
