@@ -17,6 +17,7 @@ import CreateCohort from './components/CreateCohortModal';
 import TestModal from './pages/TestModal';
 import Dashboard from './pages/Dashboard.page';
 import CurriculumComponent from './pages/Curriculum.page';
+import CohortStudents from './components/CohortStudents';
 function App() {
   return (
     <div>
@@ -34,7 +35,7 @@ function App() {
           <Route path="/addSkill" element={<AddSkill />} />
           <Route path="/repoAccess" element={<RepoAccess />} />
           <Route path="/createCohort" element={<CreateCohort />} />
-          <Route path="test" element={<TestModal />} />
+          <Route path="test" element={<CohortStudents />} />
           <Route path="*" element={<div>404</div>} />
         </Routes>
       </Router>
