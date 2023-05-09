@@ -199,6 +199,17 @@ function createCheckPoints(typeWiseStudentInfo, weekName) {
       skill.marks = skill.marks / typeWiseStudentInfo.length;
     });
   }
+
+  if (allmarks.softSkills === undefined) {
+    allmarks.softSkills = [];
+  }
+  if (allmarks.techSkills === undefined) {
+    allmarks.techSkills = [];
+  }
+  if (allmarks.assessmentMarks == NaN) {
+    allmarks.assessmentMarks = 0;
+  }
+
   checkpoints.softSkills = allmarks.softSkills;
   checkpoints.techSkills = allmarks.techSkills;
   return checkpoints;
@@ -237,13 +248,13 @@ const saveMidEndJuniorData = async (req, res) => {
     const checkpoints1 = createCheckPoints(midJuniorAllinfo, 'mid Junior');
     const checkpoints2 = createCheckPoints(endJuniorAllinfo, 'end Junior');
 
-    console.log('mid junior', checkpoints1);
-    console.log('end junior', checkpoints2);
+    // console.log('mid junior', checkpoints1);
+    // console.log('end junior', checkpoints2);
     // inserting checkpoint to Student model inside checkpoint array
     student.checkpoints.push(checkpoints1);
-
     student.checkpoints.push(checkpoints2);
 
+    console.log(student.checkpoints);
     await student.save();
     res.status(200).json(student);
   } catch (error) {
