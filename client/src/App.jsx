@@ -19,6 +19,7 @@ import Dashboard from './pages/Dashboard.page';
 import CurriculumComponent from './pages/Curriculum.page';
 import CohortStudents from './components/CohortStudents';
 import Cohorts from './pages/Cohorts.page';
+import SkillsRadarChart from './components/SkillsRadarChart';
 function App() {
   return (
     <div>
@@ -35,7 +36,7 @@ function App() {
           <Route path="/markStudent/:id/:week" element={<MarkStudent />} />
           <Route path="/cohorts" element={<Cohorts />} />
           <Route path="/repoAccess" element={<RepoAccess />} />
-          <Route path="test" element={<CohortStudents />} />
+          <Route path="test" element={<SkillsRadarChart />} />
           <Route path="*" element={<div>404</div>} />
         </Routes>
       </Router>

@@ -34,10 +34,17 @@ export const studentApi = apiSlice.injectEndpoints({
         method: 'GET',
       }),
     }),
+    getStudentWeekInfo: builder.query({
+      query: (data) => ({
+        url: `/student/getStudentWeekInfo/${data.id}/${data.week}`,
+        method: 'GET',
+      }),
+    }),
   }),
 });
 
 export const {
   useCreateStudentMutation,
   useAddSoftTechSkillsByStudentIDMutation,
+  useGetStudentWeekInfoQuery,
 } = studentApi;
