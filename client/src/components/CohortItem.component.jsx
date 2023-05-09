@@ -1,3 +1,4 @@
+import { FaGithub } from 'react-icons/fa';
 function getRandomGradient() {
   const hue = Math.floor(Math.random() * 360);
   return `linear-gradient(to bottom, hsl(${hue}, 50%, 90%), hsl(${
@@ -5,7 +6,7 @@ function getRandomGradient() {
   }, 50%, 80%))`;
 }
 
-function CohortItem({ name, url }) {
+function CohortItem({ name, html_url }) {
   const date = new Date(name.slice(8));
 
   const monthYearText = date.toLocaleString('default', {
@@ -27,15 +28,21 @@ function CohortItem({ name, url }) {
             opacity: '0.9',
           }}
         >
-          <p className="text-[50px] font-black leading-10	 text-black uppercase m-1">
+          <p className="text-right text-[50px] font-black leading-10	 text-gray-800 uppercase m-1">
             {monthYearText}
           </p>
         </div>
         <div className="card-body">
-          <h2 className="card-title">{name}</h2>
-          <p>If a dog chews shoes whose shoes does he choose?</p>
-          <div className="card-actions justify-end">
-            <button className="btn btn-md btn-outline rounded-lg w-full">
+          <h2 className="card-title uppercase">{name}</h2>
+
+          <div className="flex card-actions items-center">
+            <a href={html_url} target="_blank" rel="noopener noreferrer">
+              <button className="btn btn-md btn-outline rounded-lg bg-black font-semibold text-white mr-2 flex-1">
+                <FaGithub className="mr-2" />
+                GitHub
+              </button>
+            </a>
+            <button className="btn btn-md btn-outline rounded-lg flex-1">
               View Students
             </button>
           </div>
