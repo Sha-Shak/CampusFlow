@@ -28,6 +28,12 @@ export const studentApi = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    getStudentByCohortName: builder.query({
+      query: (cohortName) => ({
+        url: `/student/getStudentByCohortName/${cohortName}`,
+        method: 'GET',
+      }),
+    }),
   }),
 });
 
