@@ -1,8 +1,55 @@
+
+body{
+  background-color: rgb(246, 246, 246) ;
+}
 .MuiOutlinedInput-notchedOutline {
-  /* border-color: #fff!important; */
-  border-radius: 25px!important;
+  border-color: rgba(196, 146, 245, 0.529)!important;
+  border-radius: 10px!important;
   height: 3.5rem!important;
 }
 .MuiButtonBase-root {
-  border-radius: 25px!important;
+  border-radius: 10px!important;
+  box-shadow: 0px!important;
+}
+.MuiModal-root {
+  /* background-color: rgba(225, 151, 245, 0.3)!important;
+   */
+   background: linear-gradient(-45deg, #ae82ff62, #9774f657);
+   background-size: 400% 400%;
+   animation: gradient 10s ease infinite;
+
+}
+.boxbg{
+  background: hsla(257, 100%, 85%, 1);
+
+background: linear-gradient(-45deg, hsla(257, 100%, 85%, 1) 0%, hsla(258, 100%, 92%, 1) 0%, hsla(0, 0%, 100%, 1) 61%);
+
+background: -moz-linear-gradient(-90deg, hsla(257, 100%, 85%, 1) 0%, hsla(258, 100%, 92%, 1) 0%, hsla(0, 0%, 100%, 1) 61%);
+
+background: -webkit-linear-gradient(-45deg, rgb(195, 175, 244) 0%, rgb(200, 223, 249) 61%);
+
+filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#C9B3FF", endColorstr="#E4D8FF", GradientType=1 );
+}
+
+.bgGradientGlobal {
+	background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+}
+.bgGradient {
+	background: linear-gradient(-45deg, #ee76524d, #e73c7e3e, #23a5d53c, #23d5ab32);
+	background-size: 400% 400%;
+	animation: gradient 5s ease infinite;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
 }

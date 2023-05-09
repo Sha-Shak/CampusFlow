@@ -172,20 +172,24 @@ const CreateStudentModal = ({ createStudentOpen, onStudentClose, id }) => {
   );
 
   const createStudentModalBody = (
-    <Box
+    <Box 
       sx={{
+        // backgroundImage: 'url(https://i.imgur.com/2nCt3Sbl.png)',
+        // backgroundRepeat: 'no-repeat',
+        // backgroundSize: 'cover',
+        backgroundColor: '#F5F5F5!important',
         position: 'absolute',
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
         width: '45%',
-        bgcolor: 'background.paper',
         borderRadius: '25px',
         boxShadow: 15,
         p: 4,
       }}
     >
       <Box
+      
         sx={{
           display: 'flex',
           flexDirection: 'column',
