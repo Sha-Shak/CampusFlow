@@ -23,7 +23,7 @@ const StudentSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ['junior', 'senior'],
+    enum: ['junior', 'senior', 'alumni'],
     required: true,
   },
   cohortName: {
