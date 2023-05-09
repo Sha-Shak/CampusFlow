@@ -23,10 +23,19 @@ router.put(
   studentsControllers.changeJuniorStudentToSenior
 );
 
-router.get('/getJuniorData/:id', studentsControllers.getJuniorData);
+router.post(
+  '/saveMidEndJuniorData/:id',
+  studentsControllers.saveMidEndJuniorData
+);
 router.get(
   '/getStudentByCohortName/:cohortName',
   studentsControllers.getStudentByCohortName
 );
+router.get(
+  '/getUnitMarksByStudentID/:id',
+  studentsControllers.getUnitMarksByStudentID
+);
+
+router.post('/check/:id', studentsControllers.postUnitMarksByStudentID);
 
 module.exports = router;
