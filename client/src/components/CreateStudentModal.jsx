@@ -28,8 +28,7 @@ const Form = styled('form')({
   margin: '0 auto',
 });
 
-const CreateStudentModal = ({ createStudentOpen, onStudentClose }) => {
-  const { id } = useParams();
+const CreateStudentModal = ({ createStudentOpen, onStudentClose, id }) => {
   const {
     data: candidate,
     isLoading,
@@ -138,6 +137,7 @@ const CreateStudentModal = ({ createStudentOpen, onStudentClose }) => {
           onChange={handleCohortChange}
           placeholder="Cohort"
           fullWidth
+          sx={{ borderRadius: '25px' , height: '3rem'}}
         >
           <MenuItem value="">Select Cohort</MenuItem>
           {cohorts?.map((cohort) => {
@@ -159,11 +159,12 @@ const CreateStudentModal = ({ createStudentOpen, onStudentClose }) => {
             display: 'flex',
             flexDirection: 'row',
             justifyContent: 'center',
+            borderRadius: '25px',
           }}
           fullWidth
-          startIcon={<AddIcon />}
+          // startIcon={<AddIcon />}
         >
-          Cohort
+          Add Cohort
         </Button>
         <CreateCohortModal open={open} onClose={handleClose} />
       </Grid>
@@ -171,20 +172,24 @@ const CreateStudentModal = ({ createStudentOpen, onStudentClose }) => {
   );
 
   const createStudentModalBody = (
-    <Box
+    <Box 
       sx={{
+        // backgroundImage: 'url(https://i.imgur.com/2nCt3Sbl.png)',
+        // backgroundRepeat: 'no-repeat',
+        // backgroundSize: 'cover',
+        backgroundColor: '#F5F5F5!important',
         position: 'absolute',
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
         width: '45%',
-        bgcolor: 'background.paper',
         borderRadius: '25px',
         boxShadow: 15,
         p: 4,
       }}
     >
       <Box
+      
         sx={{
           display: 'flex',
           flexDirection: 'column',
@@ -193,15 +198,15 @@ const CreateStudentModal = ({ createStudentOpen, onStudentClose }) => {
           gap: '1rem',
         }}
       >
-        <Box
+        {/* <Box
           sx={{
             display: 'flex',
             flexDirection: 'row',
             justifyContent: 'flex-end',
             width: '100%',
           }}
-        >
-          <IconButton
+        > */}
+          {/* <IconButton
             sx={{ alignSelf: 'flex-end', fontSize: '2rem' }}
             onClick={onStudentClose}
           >
@@ -209,13 +214,14 @@ const CreateStudentModal = ({ createStudentOpen, onStudentClose }) => {
               color="primary"
               sx={{ alignSelf: 'flex-end', fontSize: '2rem' }}
             />
-          </IconButton>
-        </Box>
-        <Typography variant="h4" align="center">
+          </IconButton> */}
+        {/* </Box> */}
+        <Typography variant="h4" align="center"
+        textTransform={'uppercase'} m={2}>
           Create New Student
         </Typography>
         <Grid container spacing={2} justifyContent="center">
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={12}>
             <Form onSubmit={handleSubmit}>
               {studentInfo}
               {cohortPart}

@@ -11,123 +11,8 @@ import TablePagination from '@mui/material/TablePagination';
 import { useNavigate } from 'react-router-dom';
 import { useGetAllCandidatesQuery } from '../features/candidate/candidateApi';
 import TextField from '@mui/material/TextField';
+import CreateStudentModal from '../components/CreateStudentModal';
 
-const mockData = [
-  {
-    id: 'O9lXh3',
-    name: 'Tom Anderson',
-    email: 'zq3hdj@gmail.com',
-    phone: '235-896-7410',
-  },
-  {
-    id: 'f8IY25',
-    name: 'Mary Wilson',
-    email: 'bemnao@yahoo.com',
-    phone: '659-745-8032',
-  },
-  {
-    id: 'DF4A1p',
-    name: 'Bob Johnson',
-    email: 'zlphex@hotmail.com',
-    phone: '125-458-9632',
-  },
-  {
-    id: 'oNQ7Bc',
-    name: 'Alice Lee',
-    email: 'oqbdbm@gmail.com',
-    phone: '895-698-4170',
-  },
-  {
-    id: 'tb1ZiL',
-    name: 'David Anderson',
-    email: 'hfkwxl@hotmail.com',
-    phone: '720-310-4789',
-  },
-  {
-    id: 'K7dY93',
-    name: 'Emily Lee',
-    email: 'uynqdj@yahoo.com',
-    phone: '142-659-8702',
-  },
-  {
-    id: '9D2fLc',
-    name: 'John Doe',
-    email: 'qxrqho@hotmail.com',
-    phone: '684-259-7031',
-  },
-  {
-    id: 'w6avX9',
-    name: 'Mary Johnson',
-    email: 'uhkqsb@gmail.com',
-    phone: '547-138-9260',
-  },
-  {
-    id: 'Wf5xy7',
-    name: 'Tom Lee',
-    email: 'dxcfgt@hotmail.com',
-    phone: '613-597-8461',
-  },
-  {
-    id: 'iH9Gz5',
-    name: 'Emily Taylor',
-    email: 'boqwxl@yahoo.com',
-    phone: '365-180-9723',
-  },
-  {
-    id: 'GJ7Rw0',
-    name: 'John Anderson',
-    email: 'lzfnhg@hotmail.com',
-    phone: '489-736-2510',
-  },
-  {
-    id: 'cE3jT1',
-    name: 'Jane Wilson',
-    email: 'nwypld@gmail.com',
-    phone: '926-147-5039',
-  },
-  {
-    id: 'rM2gY5',
-    name: 'David Smith',
-    email: 'kxbpty@yahoo.com',
-    phone: '702-413-6985',
-  },
-  {
-    id: 'Xo9ba6',
-    name: 'Tom Johnson',
-    email: 'qopwcd@hotmail.com',
-    phone: '869-312-5076',
-  },
-  {
-    id: 'LJ3cm1',
-    name: 'Mary Brown',
-    email: 'mglpkd@gmail.com',
-    phone: '251-973-6805',
-  },
-  {
-    id: 'eU4hV8',
-    name: 'John Taylor',
-    email: 'ctkyzf@yahoo.com',
-    phone: '579-463-8201',
-  },
-  {
-    id: 'hP0sJ9',
-    name: 'Alice Smith',
-    email: 'xqebkw@hotmail.com',
-    phone: '415-928-6073',
-  },
-  {
-    id: 'iF6cM4',
-    name: 'Bob Wilson',
-    email: 'mtzfqh@gmail.com',
-    phone: '347-680-9351',
-  },
-  {
-    id: 'rC7bN5',
-    name: 'Emily Anderson',
-    email: 'myzxnc@yahoo.com',
-    phone: '809-374-9265',
-  },
-];
 
 function CandidateList() {
   const {
@@ -141,18 +26,27 @@ function CandidateList() {
   const [page, setPage] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [createStudentOpen, setCreateStudentOpen] = useState(false);
+  const [selectedCandidate, setSelectedCandidate] = useState(null);
+  const onStudentOpen = () => {
+    setCreateStudentOpen(true);
+  };
 
+  const onStudentClose = () => {
+    setCreateStudentOpen(false);
+  };
   const navigate = useNavigate();
 
   function createData(id, name, email, phone) {
     return { id, name, email, phone };
   }
-
   const handleClick = (event) => {
     event.preventDefault();
+    setSelectedCandidate(event.target.value);
+    onStudentOpen();
     console.log('You clicked a candidate.');
-    navigate(`/createStudent/${event.target.value}`);
     console.log(event.target.value);
+
   };
 
   const handleChangePage = (event, newPage) => {
@@ -245,6 +139,11 @@ function CandidateList() {
               onRowsPerPageChange={handleChangeRowsPerPage}
             />
           </TableContainer>
+          <CreateStudentModal
+        createStudentOpen={createStudentOpen}
+        onStudentClose={onStudentClose}
+        id={selectedCandidate}
+      />
         </>
       )}
     </>

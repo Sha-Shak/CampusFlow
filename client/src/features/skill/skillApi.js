@@ -30,4 +30,4 @@ export const skillApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetSkillsByCategoryQuery } = skillApi;
+export const { useGetSkillsByCategoryQuery, useGetAllSkillsQuery } = skillApi;
