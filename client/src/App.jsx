@@ -29,7 +29,7 @@ function App() {
           <Route path="/redirect/auth" element={<RedirectOAuth />} />
           <Route path="/curriculum" element={<CurriculumComponent />} />
 
-          <Route path="/candidate" element={<CandidateList />} />
+          <Route path="/candidates" element={<CandidateList />} />
           <Route path="/createStudent/:id" element={<CreateStudent />} />
           <Route path="/markStudent/:id/:week" element={<MarkStudent />} />
           <Route path="/addSkill" element={<AddSkill />} />

@@ -1,14 +1,28 @@
-import React from 'react'
-import curriculum from '../assets/curriculum.json';
+import React from 'react';
+import juniorCurriculum from '../assets/juniorCurriculum.json';
+import seniorCurriculum from '../assets/seniorCurriculum.json';
+import Layout from '../components/Layout';
 import WeekCollapseComponent from '../components/WeekCollapse.component';
 
 function CurriculumComponent() {
   return (
-    <div className="flex w-full flex-col justify-center items-center">
-      <div className='text-2xl font-bold mb-5'>Curriculum</div>
-      {curriculum.map((week, index) => <WeekCollapseComponent key={index} week={week} />)}
-    </div>
-  )
+    <Layout>
+      <div className="flex">
+        <div className="flex w-full flex-col justify-center items-center">
+          <div className="text-2xl font-bold mb-5">Junior</div>
+          {juniorCurriculum.map((week, index) => (
+            <WeekCollapseComponent key={index} week={week} />
+          ))}
+        </div>
+        <div className="flex w-full flex-col justify-center items-center">
+          <div className="text-2xl font-bold mb-5">Senior</div>
+          {seniorCurriculum.map((week, index) => (
+            <WeekCollapseComponent key={index} week={week} />
+          ))}
+        </div>
+      </div>
+    </Layout>
+  );
 }
 
-export default CurriculumComponent
+export default CurriculumComponent;
