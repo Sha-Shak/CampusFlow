@@ -135,8 +135,79 @@ const changeJuniorStudentToSenior = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
+function work(skillType, typeWiseStudentInfo, allmarks) {
+  typeWiseStudentInfo.map((week) => {
+    week[skillType].map((i) => {
+      // console.log(i);
+      if (allmarks[skillType] === undefined) {
+        allmarks[skillType] = [];
+      }
+      let id = i.skill._id;
+      let foundSkill = false;
+      for (let obj of allmarks[skillType]) {
+        if (obj.skill === id) {
+          foundSkill = true;
+        }
+      }
+
+      if (!foundSkill) {
+        allmarks[skillType].push({ skill: id, marks: 0 });
+        // console.log('found', allmarks[skillType]);
+      }
+      allmarks[skillType].map((obj) => {
+        // console.log('skill ', obj);
+        if (obj.skill === id) {
+          // console.log(i.marks);
+          obj.marks += i.marks;
+        }
+      });
+
+      // if (!allmarks[skills.skill.skillName]) {
+      //   // allmarks[skills.skill.skillName] = 0;
+      //   // allmarks[skills.skill._id] = 'test';
+      //   allmarks['marks'] = 0;
+      // }
+
+      // allmarks['marks'] += i.marks;
+    });
+  });
+}
+
+function createCheckPoints(typeWiseStudentInfo, weekName) {
+  const allmarks = {};
+  const checkpoints = {
+    weekName: weekName,
+    assessmentMarks: 0,
+    softSkills: [],
+    techSkills: [],
+  };
+
+  let totalAssesmentsMasrks = 0;
+  typeWiseStudentInfo.map((week) => {
+    totalAssesmentsMasrks += week.assessmentMarks;
+  });
+  checkpoints.assessmentMarks =
+    totalAssesmentsMasrks / typeWiseStudentInfo.length;
+
+  work('softSkills', typeWiseStudentInfo, allmarks);
+  work('techSkills', typeWiseStudentInfo, allmarks);
+
+  for (const skillType of Object.keys(allmarks)) {
+    const skillArray = allmarks[skillType];
+    skillArray.forEach((skill) => {
+      skill.marks = skill.marks / typeWiseStudentInfo.length;
+    });
+  }
+  checkpoints.softSkills = allmarks.softSkills;
+  checkpoints.techSkills = allmarks.techSkills;
+  return checkpoints;
+  // console.log(checkpoints);
+}
+
 const getJuniorData = async (req, res) => {
   const { id } = req.params;
+
   // const id = id;
   try {
     const student = await Student.findById(id)
@@ -159,78 +230,90 @@ const getJuniorData = async (req, res) => {
       return res.status(404).json({ message: 'Student not found' });
     }
 
-    const checkpoints = {
-      weekName: 'mid Junior',
-      assessmentMarks: 0,
-      softSkills: [],
-      techSkills: [],
-    };
+    // const checkpoints = {
+    //   weekName: 'mid Junior',
+    //   assessmentMarks: 0,
+    //   softSkills: [],
+    //   techSkills: [],
+    // };
 
-    const juniorAllinfor = _.cloneDeep(student.junior).slice(0, 3);
-    // console.log(juniorAllinfor);
+    // const juniorAllinfor = _.cloneDeep(student.junior);
+    const midJuniorAllinfo = _.cloneDeep(student.junior).slice(0, 3);
+    const endJuniorAllinfo = _.cloneDeep(student.junior).slice(3, 6);
+    // const midSeniorAllinfo = _.cloneDeep(student.junior).slice(0, 3);
+    // const endSeniorAllinfo = _.cloneDeep(student.junior).slice(3, 6);
+    // console.log(midJuniorAllinfo);
+    // console.log(midJuniorAllinfo);
 
-    let totalAssesmentsMasrks = 0;
-    juniorAllinfor.map((week) => {
-      totalAssesmentsMasrks += week.assessmentMarks;
-    });
-    checkpoints.assessmentMarks = totalAssesmentsMasrks / juniorAllinfor.length;
+    // let totalAssesmentsMasrks = 0;
+    // juniorAllinfor.map((week) => {
+    //   totalAssesmentsMasrks += week.assessmentMarks;
+    // });
+    // checkpoints.assessmentMarks = totalAssesmentsMasrks / juniorAllinfor.length;
 
-    // calculation soft skills avg marks
-    const allmarks = {};
-    function work(skillType) {
-      juniorAllinfor.map((week) => {
-        week[skillType].map((i) => {
-          // console.log(i);
-          if (allmarks[skillType] === undefined) {
-            allmarks[skillType] = [];
-          }
-          let id = i.skill._id;
-          let foundSkill = false;
-          for (let obj of allmarks[skillType]) {
-            if (obj.skill === id) {
-              foundSkill = true;
-            }
-          }
+    // // calculation soft skills avg marks
+    // const allmarks = {};
+    // function work(skillType) {
+    //   juniorAllinfor.map((week) => {
+    //     week[skillType].map((i) => {
+    //       // console.log(i);
+    //       if (allmarks[skillType] === undefined) {
+    //         allmarks[skillType] = [];
+    //       }
+    //       let id = i.skill._id;
+    //       let foundSkill = false;
+    //       for (let obj of allmarks[skillType]) {
+    //         if (obj.skill === id) {
+    //           foundSkill = true;
+    //         }
+    //       }
 
-          if (!foundSkill) {
-            allmarks[skillType].push({ skill: id, marks: 0 });
-            // console.log('found', allmarks[skillType]);
-          }
-          allmarks[skillType].map((obj) => {
-            // console.log('skill ', obj);
-            if (obj.skill === id) {
-              // console.log(i.marks);
-              obj.marks += i.marks;
-            }
-          });
+    //       if (!foundSkill) {
+    //         allmarks[skillType].push({ skill: id, marks: 0 });
+    //         // console.log('found', allmarks[skillType]);
+    //       }
+    //       allmarks[skillType].map((obj) => {
+    //         // console.log('skill ', obj);
+    //         if (obj.skill === id) {
+    //           // console.log(i.marks);
+    //           obj.marks += i.marks;
+    //         }
+    //       });
 
-          // if (!allmarks[skills.skill.skillName]) {
-          //   // allmarks[skills.skill.skillName] = 0;
-          //   // allmarks[skills.skill._id] = 'test';
-          //   allmarks['marks'] = 0;
-          // }
+    //       // if (!allmarks[skills.skill.skillName]) {
+    //       //   // allmarks[skills.skill.skillName] = 0;
+    //       //   // allmarks[skills.skill._id] = 'test';
+    //       //   allmarks['marks'] = 0;
+    //       // }
 
-          // allmarks['marks'] += i.marks;
-        });
-      });
-    }
-    work('softSkills');
-    work('techSkills');
+    //       // allmarks['marks'] += i.marks;
+    //     });
+    //   });
+    // }
+    // work('softSkills');
+    // work('techSkills');
 
-    for (const skillType of Object.keys(allmarks)) {
-      const skillArray = allmarks[skillType];
-      skillArray.forEach((skill) => {
-        skill.marks = skill.marks / juniorAllinfor.length;
-      });
-    }
-    checkpoints.softSkills = allmarks.softSkills;
-    checkpoints.techSkills = allmarks.techSkills;
-    console.log(checkpoints);
+    // for (const skillType of Object.keys(allmarks)) {
+    //   const skillArray = allmarks[skillType];
+    //   skillArray.forEach((skill) => {
+    //     skill.marks = skill.marks / juniorAllinfor.length;
+    //   });
+    // }
+    // checkpoints.softSkills = allmarks.softSkills;
+    // checkpoints.techSkills = allmarks.techSkills;
+    // console.log(checkpoints);
 
+    // console.log(midJuniorAllinfo);
+
+    const checkpoints = createCheckPoints(midJuniorAllinfo, 'mid Junior');
+    const checkpoints2 = createCheckPoints(endJuniorAllinfo, 'end Junior');
+
+    console.log('mid junior', checkpoints);
+    console.log('end junior', checkpoints2);
     // inserting checkpoint to Student model inside checkpoint array
-    student.checkpoints.push(checkpoints);
+    // student.checkpoints.push(checkpoints);
 
-    await student.save();
+    // await student.save();
 
     res.status(200).json(student.junior);
   } catch (error) {
