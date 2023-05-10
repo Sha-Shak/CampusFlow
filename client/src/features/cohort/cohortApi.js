@@ -24,13 +24,13 @@ export const cohortApi = apiSlice.injectEndpoints({
     changeCohortStatus: builder.mutation({
       query: (data) => ({
         url: `/cohort/${data.cohortName}`,
-        method: 'PUT',
+        method: 'POST',
         body: data,
       }),
     }),
     addStudentToCohort: builder.mutation({
       query: (data) => ({
-        url: `/cohort/${data.cohortName}/add-student`,
+        url: `/cohort/add-student/${data.cohortName}`,
         method: 'PUT',
         body: data,
       }),

@@ -12,6 +12,6 @@ router.post('/createCohort', CreateCohort);
 router.get('/getAllCohort', GetAllCohorts);
 router.get('/:cohortName', GetCohortByName);
 router.put('/:cohortName', changeCohortStatus);
-router.put('/:cohortName/add-student', addStudentToCohort);
+router.put('/add-student/:cohortName/', addStudentToCohort);
 
 module.exports = router;

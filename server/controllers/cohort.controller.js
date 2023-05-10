@@ -62,6 +62,7 @@ const addStudentToCohort = async (req, res) => {
   try {
     const { cohortName } = req.params;
     const { studentId } = req.body;
+    console.log(studentId, cohortName);
     const cohort = await Cohort.findOne({ cohortName });
     if (!cohort) {
       return res.status(404).json({ message: 'Cohort not found' });
@@ -70,7 +71,8 @@ const addStudentToCohort = async (req, res) => {
     if (!student) {
       return res.status(404).json({ message: 'Student not found' });
     }
-    cohort.student.push(studentId);
+
+    cohort.students.push(studentId);
     await cohort.save();
     res.status(200).json(cohort);
   } catch (error) {

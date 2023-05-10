@@ -14,10 +14,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import CreateCohortModal from './CreateCohortModal';
 import Modal from '@mui/material/Modal';
 import { useGetCandidateByIdQuery } from '../features/candidate/candidateApi';
-import {
-  useAddStudentToGithubCohortMutation,
-  useGetAllGithubCohortsQuery,
-} from '../features/github/githubApi';
+import { useAddStudentToGithubCohortMutation } from '../features/github/githubApi';
 import {
   useAddStudentToCohortMutation,
   useGetAllCohortQuery,
@@ -32,7 +29,7 @@ const Form = styled('form')({
 });
 
 const CreateStudentModal = ({ createStudentOpen, onStudentClose, id }) => {
-  const { data: candidate, isSuccess } = useGetCandidateByIdQuery(id);
+  const { data: candidate, isSuccess } = useGetCandidateByIdQuery(id); // candidate list
   const {
     data: cohorts,
     isSuccess: isGetAllCohortSuccess,
@@ -58,22 +55,10 @@ const CreateStudentModal = ({ createStudentOpen, onStudentClose, id }) => {
       setEmail(candidate.email);
       setPhone(candidate.phone);
     }
-    if (isGetAllCohortSuccess) {
-      setCohort(cohorts[0]?.name);
-    }
   }, [isSuccess, candidate, cohorts, isGetAllCohortSuccess]);
 
-  // Function Handlers
   const handleCohortChange = (event) => {
     setCohort(event.target.value);
-  };
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    addStudentToGithubCohort({
-      username: gitUsername,
-      cohortName: cohort,
-    });
   };
 
   useEffect(() => {
@@ -85,22 +70,40 @@ const CreateStudentModal = ({ createStudentOpen, onStudentClose, id }) => {
         phone,
         type: 'junior',
         githubUsername: gitUsername,
+        cohortName: cohort,
       });
-      if (newStudent) {
-        console.log(newStudent);
-      }
-      if (isAddStudentSuccess) {
-        clearForm();
-      }
+      clearForm();
     }
-  }, [isAddStudentToGithubSuccess, isAddStudentSuccess]);
+  }, [isAddStudentToGithubSuccess]);
+
+  useEffect(() => {
+    if (newStudent) {
+      toast.info('Student added to Cohort');
+      console.log('debug', newStudent._id, cohort);
+      addStudentToCohort({
+        studentId: newStudent._id,
+        cohortName: cohort,
+      });
+    }
+  }, [newStudent, cohort]);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    addStudentToGithubCohort({
+      username: gitUsername,
+      cohortName: cohort,
+    });
+  };
+
+  if (isCohortAddSuccess) {
+    toast.success('Student Creation Successfull');
+  }
 
   const clearForm = () => {
     setName('');
     setEmail('');
     setPhone('');
     setgitUsername('');
-    setCohort('');
   };
 
   // Modal Handlers
@@ -149,7 +152,7 @@ const CreateStudentModal = ({ createStudentOpen, onStudentClose, id }) => {
         <Grid item xs={8}>
           <Select
             displayEmpty
-            // value={cohort}
+            value={cohort}
             onChange={handleCohortChange}
             placeholder="Cohort"
             fullWidth
@@ -158,8 +161,8 @@ const CreateStudentModal = ({ createStudentOpen, onStudentClose, id }) => {
             <MenuItem>Select Cohort</MenuItem>
             {cohorts?.map((cohort) => {
               return (
-                <MenuItem key={cohort.cohortName} value={cohort.cohortName}>
-                  {cohort.cohortName}
+                <MenuItem key={cohort?.cohortName} value={cohort?.cohortName}>
+                  {cohort?.cohortName}
                 </MenuItem>
               );
             })}

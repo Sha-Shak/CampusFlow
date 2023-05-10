@@ -17,8 +17,8 @@ const CohortSchema = new mongoose.Schema({
     type: String,
     enum: ['jrActive', 'srActive'],
   },
-  student: {
-    type: mongoose.Schema.Types.ObjectId,
+  students: {
+    type: [mongoose.Schema.Types.ObjectId],
     ref: 'Student',
   },
 });
