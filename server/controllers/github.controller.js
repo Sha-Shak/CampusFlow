@@ -64,7 +64,7 @@ const getAllCohorts = async (req, res) => {
     const orgName = 'student-tool';
     const githubAccessToken = req.headers['github-access-token'];
     // console.log(githubAccessToken);
-    const url = `https://api.github.com/orgs/${orgName}/teams/students/teams`;
+    const url = `https://api.github.com/orgs/${orgName}/teams`;
     console.log(gh_personal_token);
     try {
       const response = await axios.get(url, {
@@ -137,7 +137,7 @@ const deleteStudentFromCohort = async (req, res) => {
 
 //post request
 const addCohort = async (req, res) => {
-  const cohortName = 'studen-zahid-2033';
+  const { cohortName } = req.body;
   const githubAccessToken = req.headers['github-access-token'];
   const url = `https://api.github.com/orgs/${orgName}/teams`;
   try {
@@ -145,9 +145,9 @@ const addCohort = async (req, res) => {
       url,
       {
         name: cohortName,
-        description: 'March 2023 cohort',
+        description: '',
         privacy: 'closed',
-        parent_team_id: 7855405,
+        parent_team_id: 7881229,
       },
       {
         headers: {
@@ -172,6 +172,7 @@ const addStudentToCohort = async (req, res) => {
   const githubAccessToken = req.headers['github-access-token'];
   // const url = `https://api.github.com/orgs/student-tool/teams/${cohortName}/memberships/${req.body.username}`;
   const url = `https://api.github.com/orgs/${orgName}/teams/${cohortName}/memberships/${username}`;
+  console.log(url);
   try {
     const response = await axios.put(
       url,

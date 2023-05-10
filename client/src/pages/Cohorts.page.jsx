@@ -1,10 +1,10 @@
 import React from 'react';
 import CohortItem from '../components/CohortItem.component';
 import Layout from '../components/Layout';
-import { useGetAllCohortsQuery } from '../features/github/githubApi';
+import { useGetAllCohortQuery } from '../features/cohort/cohortApi';
 
 function Cohorts() {
-  const { data: cohorts, isSuccess } = useGetAllCohortsQuery();
+  const { data: cohorts, isSuccess } = useGetAllCohortQuery();
   // console.log(cohorts);
   return (
     <Layout>

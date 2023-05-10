@@ -6,13 +6,12 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Layout from '../components/Layout';
 import { Box, Divider, Typography } from '@mui/material';
-import { useGetAllCohortsQuery } from '../features/github/githubApi';
 import { minHeight } from '@mui/system';
 import { useGetStudentByCohortNameQuery } from '../features/student/studentApi';
+import { useGetAllCohortQuery } from '../features/cohort/cohortApi';
 
 function MarkStudents() {
-  const { data: cohorts, isSuccess: isCohortsSuccess } =
-    useGetAllCohortsQuery();
+  const { data: cohorts, isSuccess: isCohortsSuccess } = useGetAllCohortQuery();
   const [cohort, setCohort] = React.useState('student-nov-2023');
   const { data: students, isSuccess: isStudentSuccess } =
     useGetStudentByCohortNameQuery(cohort);

@@ -1,22 +1,40 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
-
-const CreateCohortModal = ({ open, onClose }) => {
+import { useCreateCohortMutation } from '../features/cohort/cohortApi';
+import toast, { Toaster } from 'react-hot-toast';
+import { useAddGithubCohortMutation } from '../features/github/githubApi';
+const CreateCohortModal = ({ open, onClose, refetchCohort }) => {
+  const [createCohort, { isSuccess, isError, error }] =
+    useCreateCohortMutation();
+  const [createGithubCohort, { isError: isGithubCohortError }] =
+    useAddGithubCohortMutation();
   const [cohortName, setCohortName] = useState('');
-
+  const [startDate, setStartDate] = useState('');
   const handleCohortNameChange = (event) => {
     setCohortName(event.target.value);
   };
 
   const handleCreateCohort = () => {
-    console.log('Create cohort with name:', cohortName);
-    // Send the information to your API or perform the desired action
+    createCohort({ cohortName, jrStartDate: startDate });
   };
-
+  const handleSuccess = () => {
+    if (isError || isGithubCohortError) {
+      toast.error('Error Creating Cohort');
+    }
+    if (isSuccess) {
+      setCohortName('');
+      setStartDate('');
+      createGithubCohort({ cohortName });
+      toast.success('Cohort Created Successfully');
+      refetchCohort();
+      onClose();
+    }
+  };
+  useEffect(handleSuccess, [isSuccess, isError, error]);
   // JSX for the modal body
   const modalBody = (
     <Box
@@ -36,14 +54,23 @@ const CreateCohortModal = ({ open, onClose }) => {
         Create Cohort
       </Typography>
       <Box display="flex" flexDirection="column" mt={2}>
+        <label className="m-2">Cohort Name</label>
         <TextField
-          label="Cohort Name"
+          required
+          placeholder="student-jan-23"
           value={cohortName}
           onChange={handleCohortNameChange}
           fullWidth
         />
+        <label className="m-2">Class Start Date</label>
+        <input
+          required
+          onChange={(e) => setStartDate(e.target.value)}
+          type="date"
+          className="focus:border-purple-300  focus:outline-none w-full text-sm text-gray-600
+          border-2 border-purple-200 h-12 p-4 rounded-lg "
+        />
       </Box>
-
       {/* Create and Cancel Button */}
       <Box display="flex" justifyContent="space-around" mt={2} gap={1}>
         <Button onClick={onClose} color="error" variant="contained" fullWidth>
@@ -58,14 +85,18 @@ const CreateCohortModal = ({ open, onClose }) => {
           Create
         </Button>
         {/* Create and Cancel Button finished*/}
-      </Box>
+      </Box>{' '}
+      <Toaster />
     </Box>
   );
 
   return (
-    <Modal open={open} onClose={onClose}>
-      {modalBody}
-    </Modal>
+    <>
+      <Toaster />
+      <Modal open={open} onClose={onClose}>
+        {modalBody}
+      </Modal>
+    </>
   );
 };
 

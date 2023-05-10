@@ -3,9 +3,12 @@ const mongoose = require('mongoose');
 const CohortSchema = new mongoose.Schema({
   cohortName: {
     type: String,
+    required: true,
+    unique: true,
   },
   jrStartDate: {
     type: Date,
+    required: true,
   },
   srStartDate: {
     type: Date,

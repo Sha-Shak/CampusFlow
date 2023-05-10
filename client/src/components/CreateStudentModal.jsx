@@ -9,17 +9,20 @@ import {
   Typography,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { useParams } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
+
 import CreateCohortModal from './CreateCohortModal';
 import Modal from '@mui/material/Modal';
-import AddIcon from '@mui/icons-material/Add';
-import CancelIcon from '@mui/icons-material/Cancel';
-import IconButton from '@mui/material/IconButton';
 import { useGetCandidateByIdQuery } from '../features/candidate/candidateApi';
 import {
-  useAddStudentToCohortMutation,
-  useGetAllCohortsQuery,
+  useAddStudentToGithubCohortMutation,
+  useGetAllGithubCohortsQuery,
 } from '../features/github/githubApi';
+import {
+  useAddStudentToCohortMutation,
+  useGetAllCohortQuery,
+} from '../features/cohort/cohortApi';
+import { useCreateStudentMutation } from '../features/student/studentApi';
 
 const Form = styled('form')({
   display: 'flex',
@@ -29,17 +32,18 @@ const Form = styled('form')({
 });
 
 const CreateStudentModal = ({ createStudentOpen, onStudentClose, id }) => {
+  const { data: candidate, isSuccess } = useGetCandidateByIdQuery(id);
   const {
-    data: candidate,
-    isLoading,
-    isError,
-    error,
-    isSuccess,
-  } = useGetCandidateByIdQuery(id);
-  const { data: cohorts, isSuccess: isCohortSucess } = useGetAllCohortsQuery();
-
-  const [addStudentToCohort, { isSuccess: isAddStudentSuccess }] =
+    data: cohorts,
+    isSuccess: isGetAllCohortSuccess,
+    refetch: refetchCohort,
+  } = useGetAllCohortQuery();
+  const [addStudentToGithubCohort, { isSuccess: isAddStudentToGithubSuccess }] =
+    useAddStudentToGithubCohortMutation();
+  const [addStudentToCohort, { isSuccess: isCohortAddSuccess }] =
     useAddStudentToCohortMutation();
+  const [addStudent, { isSuccess: isAddStudentSuccess, data: newStudent }] =
+    useCreateStudentMutation();
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -54,32 +58,42 @@ const CreateStudentModal = ({ createStudentOpen, onStudentClose, id }) => {
       setEmail(candidate.email);
       setPhone(candidate.phone);
     }
-    if (isCohortSucess) {
-      setCohort(cohorts[0].name);
+    if (isGetAllCohortSuccess) {
+      setCohort(cohorts[0]?.name);
     }
-  }, [isSuccess, candidate, cohorts, isCohortSucess]);
+  }, [isSuccess, candidate, cohorts, isGetAllCohortSuccess]);
 
   // Function Handlers
   const handleCohortChange = (event) => {
     setCohort(event.target.value);
   };
-
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log('name', name);
-    console.log('email', email);
-    console.log('gitUsername', gitUsername);
-    console.log('phone', phone);
-    console.log('cohort', cohort);
-    addStudentToCohort({ username: gitUsername, cohortName: cohort });
+
+    addStudentToGithubCohort({
+      username: gitUsername,
+      cohortName: cohort,
+    });
   };
 
   useEffect(() => {
-    if (isAddStudentSuccess) {
-      console.log('success');
-      clearForm();
+    if (isAddStudentToGithubSuccess) {
+      toast.success('Student added to Github Cohort');
+      addStudent({
+        name,
+        email,
+        phone,
+        type: 'junior',
+        githubUsername: gitUsername,
+      });
+      if (newStudent) {
+        console.log(newStudent);
+      }
+      if (isAddStudentSuccess) {
+        clearForm();
+      }
     }
-  }, [isAddStudentSuccess]);
+  }, [isAddStudentToGithubSuccess, isAddStudentSuccess]);
 
   const clearForm = () => {
     setName('');
@@ -129,46 +143,53 @@ const CreateStudentModal = ({ createStudentOpen, onStudentClose, id }) => {
   );
 
   const cohortPart = (
-    <Grid container spacing={2} alignItems={'center'}>
-      <Grid item xs={8}>
-        <Select
-          displayEmpty
-          value={cohort}
-          onChange={handleCohortChange}
-          placeholder="Cohort"
-          fullWidth
-          sx={{ borderRadius: '25px', height: '3rem' }}
-        >
-          <MenuItem value="">Select Cohort</MenuItem>
-          {cohorts?.map((cohort) => {
-            return (
-              <MenuItem key={cohort.name} value={cohort.name}>
-                {cohort.name}
-              </MenuItem>
-            );
-          })}
-        </Select>
+    <>
+      <Toaster />
+      <Grid container spacing={2} alignItems={'center'}>
+        <Grid item xs={8}>
+          <Select
+            displayEmpty
+            // value={cohort}
+            onChange={handleCohortChange}
+            placeholder="Cohort"
+            fullWidth
+            sx={{ borderRadius: '25px', height: '3rem' }}
+          >
+            <MenuItem>Select Cohort</MenuItem>
+            {cohorts?.map((cohort) => {
+              return (
+                <MenuItem key={cohort.cohortName} value={cohort.cohortName}>
+                  {cohort.cohortName}
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </Grid>
+        <Grid item xs={4}>
+          <Button
+            size="large"
+            variant="contained"
+            color="secondary"
+            onClick={handleOpen}
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              borderRadius: '25px',
+            }}
+            fullWidth
+            // startIcon={<AddIcon />}
+          >
+            Add Cohort
+          </Button>
+          <CreateCohortModal
+            open={open}
+            onClose={handleClose}
+            refetchCohort={refetchCohort}
+          />
+        </Grid>
       </Grid>
-      <Grid item xs={4}>
-        <Button
-          size="large"
-          variant="contained"
-          color="secondary"
-          onClick={handleOpen}
-          sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-            borderRadius: '25px',
-          }}
-          fullWidth
-          // startIcon={<AddIcon />}
-        >
-          Add Cohort
-        </Button>
-        <CreateCohortModal open={open} onClose={handleClose} />
-      </Grid>
-    </Grid>
+    </>
   );
 
   const createStudentModalBody = (
