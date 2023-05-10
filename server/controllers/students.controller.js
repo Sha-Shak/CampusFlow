@@ -3,8 +3,9 @@ const Student = require('../models/student/student.model');
 const juniorWeeks = require('./juniorWeeks.json');
 const seniorWeeks = require('./seniorWeeks.json');
 const _ = require('lodash');
-const getAllStudents = (req, res) => {
-  res.send('Fetching All Students 200');
+
+const getAllStudents = async (req, res) => {
+  await res.send('Fetching All Students 200');
 };
 const getStudentByID = async (req, res) => {
   const studentId = req.params.id;
@@ -199,6 +200,17 @@ function createCheckPoints(typeWiseStudentInfo, weekName) {
       skill.marks = skill.marks / typeWiseStudentInfo.length;
     });
   }
+
+  if (allmarks.softSkills === undefined) {
+    allmarks.softSkills = [];
+  }
+  if (allmarks.techSkills === undefined) {
+    allmarks.techSkills = [];
+  }
+  if (allmarks.assessmentMarks == NaN) {
+    allmarks.assessmentMarks = 0;
+  }
+
   checkpoints.softSkills = allmarks.softSkills;
   checkpoints.techSkills = allmarks.techSkills;
   return checkpoints;
@@ -237,13 +249,13 @@ const saveMidEndJuniorData = async (req, res) => {
     const checkpoints1 = createCheckPoints(midJuniorAllinfo, 'mid Junior');
     const checkpoints2 = createCheckPoints(endJuniorAllinfo, 'end Junior');
 
-    console.log('mid junior', checkpoints1);
-    console.log('end junior', checkpoints2);
+    // console.log('mid junior', checkpoints1);
+    // console.log('end junior', checkpoints2);
     // inserting checkpoint to Student model inside checkpoint array
     student.checkpoints.push(checkpoints1);
-
     student.checkpoints.push(checkpoints2);
 
+    console.log(student.checkpoints);
     await student.save();
     res.status(200).json(student);
   } catch (error) {
@@ -255,6 +267,9 @@ const saveMidEndJuniorData = async (req, res) => {
 // get student by cohortName
 const getStudentByCohortName = async (req, res) => {
   let { cohortName } = req.params;
+  if (!cohortName) {
+    return res.status(400).json({ message: 'Please provide cohortName' });
+  }
   cohortName = cohortName.toLowerCase();
   try {
     const result = await Student.find({ cohortName });
@@ -305,6 +320,29 @@ const postUnitMarksByStudentID = async (req, res) => {
   }
 };
 
+// array = []
+
+// unitMarksArray
+const JuniorUnitMarks = async (req, res) => {
+  const { id } = req.params;
+  const { type } = req.params;
+  const unitMarks = [];
+
+  // find junoir student
+  const student = await Student.findById(id);
+  if (!student) {
+    return res.status(404).json({ message: 'Student not found' });
+  }
+  const juniorWeekInfo = student[type];
+  juniorWeekInfo.map((week) => {
+    week.unitMarks.map((unit) => {
+      unitMarks.push(unit);
+    });
+  });
+  // console.log(unitMarks);
+  res.send(unitMarks);
+};
+
 module.exports = {
   getAllStudents,
   createStudent,
@@ -317,4 +355,5 @@ module.exports = {
   getStudentByCohortName,
   getUnitMarksByStudentID,
   postUnitMarksByStudentID,
+  JuniorUnitMarks,
 };

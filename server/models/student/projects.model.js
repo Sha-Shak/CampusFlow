@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { schema } = require('./skill.model');
 const project = new mongoose.Schema({
   projectName: {
     type: String,
@@ -27,14 +28,12 @@ const project = new mongoose.Schema({
     type: [
       {
         givenBy: {
-          type: String,
+          type: mongoose.Schema.Types.ObjectId,
           required: true,
+          ref: 'User',
         },
       },
     ],
-  },
-  category: {
-    type: [String],
   },
 });
 const Skill = mongoose.model('Skill', SkillSchema);
