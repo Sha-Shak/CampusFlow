@@ -39,3 +39,4 @@ router.put('/addInstructor', githubController.addInstructor);
 //   '/addStudentToCohortDebug',
 //   githubController.addStudentToCohortDebug
 // );
+module.exports = router;
