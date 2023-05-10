@@ -1,86 +1,106 @@
 import React from 'react';
 import { FaGithub, FaEnvelope } from 'react-icons/fa';
 import { RiWhatsappFill } from 'react-icons/ri';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useGetStudentByCohortNameQuery } from '../features/student/studentApi';
+import Layout from './Layout';
+import TableSkeleton from './TableSkeleton';
 
 const CohortStudents = () => {
-  const handleNavigate = () => {
-    console.log('navigate to github');
-  };
+  const { cohort } = useParams();
+  const { data: students, isSuccess } = useGetStudentByCohortNameQuery(cohort);
+  console.log(students);
+  const navigate = useNavigate();
+  const handleNavigate = () => {};
 
   return (
-    <div className="overflow-x-auto w-full mt-4 p-4 table-normal">
-      <table className="table w-full">
-        {/* head */}
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Cohort</th>
-            <th>Connect</th>
-          </tr>
-        </thead>
-        <tbody>
-          {/* row 1 */}
-          {mockData.map((student) => (
-            <tr>
-              <td>
-                <div className="flex items-center space-x-3">
-                  <div className="avatar">
-                    <div className="mask mask-squircle w-12 h-12">
-                      <img
-                        src="https://raw.githubusercontent.com/zahidtwt/zahidlive/main/277801721_1146010236235641_4251157026316733609_n.jpg"
-                        alt="Avatar Tailwind CSS Component"
-                      />
+    <Layout>
+      <div className="overflow-x-auto w-full p-4 table-normal bg-white min-h-[80vh] rounded-xl shadow-lg">
+        <div className="text-sm breadcrumbs">
+          <ul>
+            <li>
+              <Link to={'/'}>Home</Link>
+            </li>
+            <li>
+              <Link to={'/cohorts'}>Cohorts</Link>
+            </li>
+            <li className="capitalize">{cohort}</li>
+          </ul>
+        </div>
+
+        <table className="w-full bg-white ">
+          {/* head */}
+          <thead className="bg-violet-200">
+            <tr className="text-center">
+              <th>Name</th>
+              <th>Connect</th>
+              <th className="text-center">View Student Info</th>
+            </tr>
+          </thead>
+          <tbody>
+            {/* row 1 */}
+            {students?.map((student) => (
+              <tr className="hover:bg-indigo-100 rounded-xl cursor-pointer hover:shadow-lg">
+                <td>
+                  <div className="flex items-center space-x-3">
+                    <div className="avatar">
+                      <div className="mask mask-squircle w-12 h-12">
+                        <img
+                          src={
+                            student.profileImg ||
+                            `https://avatars.githubusercontent.com/t/1233543`
+                          }
+                          alt={student.name}
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <div className="font-bold">{student.name}</div>
+                      <span className="badge badge-ghost badge-sm uppercase">
+                        {student.type}
+                      </span>
                     </div>
                   </div>
-                  <div>
-                    <div className="font-bold">{student.name}</div>
-                    <span className="badge badge-ghost badge-sm">
-                      {student.type}
-                    </span>
+                </td>
+
+                <td className="text-center">
+                  <div className="flex gap-4">
+                    <button
+                      onClick={handleNavigate}
+                      data-tip="View Github"
+                      className="tooltip"
+                    >
+                      <FaGithub size={25} />
+                    </button>
+                    <button
+                      onClick={handleNavigate}
+                      data-tip="Send Email"
+                      className="tooltip"
+                    >
+                      <FaEnvelope size={25} color={'#3bb5f3'} />
+                    </button>
+                    <button data-tip="Send Message" className="tooltip">
+                      <RiWhatsappFill size={30} color={'#25D366'} />
+                    </button>
                   </div>
-                </div>
-              </td>
-              <td>{student.cohortName}</td>
-              <td className="">
-                <div className="flex gap-2">
+                </td>
+                <td className="text-center">
                   <button
-                    onClick={handleNavigate}
-                    data-tip="View Github"
-                    className="tooltip"
+                    onClick={() => {
+                      navigate(`/student/${student._id}`);
+                    }}
+                    className="btn btn-contained rounded-xl bg-indigo-100 border-none text-black hover:text-indigo-100 "
                   >
-                    <FaGithub size={25} />
+                    View Details
                   </button>
-                  <button
-                    onClick={handleNavigate}
-                    data-tip="Send Email"
-                    className="tooltip"
-                  >
-                    <FaEnvelope size={25} />
-                  </button>
-                  <button
-                    onClick={handleNavigate}
-                    data-tip="Send Message"
-                    className="tooltip"
-                  >
-                    <RiWhatsappFill size={30} />
-                  </button>
-                </div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-        {/* foot */}
-        <tfoot>
-          <tr className="">
-            <th>Name</th>
-            <th>Job</th>
-            <th>Favorite Color</th>
-            <th>Information</th>
-            <th>Details</th>
-          </tr>
-        </tfoot>
-      </table>
-    </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+          {/* foot */}
+        </table>
+      </div>
+    </Layout>
   );
 };
 

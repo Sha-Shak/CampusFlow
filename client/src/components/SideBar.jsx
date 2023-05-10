@@ -46,6 +46,15 @@ function SideBar() {
               >
                 <Link to="/cohorts">Cohorts</Link>
               </li>
+              <li
+                className={
+                  location.pathname === '/markstudents'
+                    ? 'bg-purple-200 rounded-[50px]'
+                    : ''
+                }
+              >
+                <Link to="/markstudents">Mark Students</Link>
+              </li>
             </ul>
           </div>
         </div>

@@ -2,7 +2,7 @@ import React from 'react';
 
 function NavBar() {
   return (
-    <div className=" pt-5 px-5 sticky top-0 z-10">
+    <div className=" pt-5 px-5 sticky top-0 z-[100]">
       <div className="navbar bg-white shadow-lg rounded-2xl border-slate-700	sticky top-0">
         <div className="flex-1">
           <a className="btn btn-ghost normal-case text-xl">daisyUI</a>

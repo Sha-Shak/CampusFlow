@@ -5,7 +5,7 @@ import { useGetAllCohortsQuery } from '../features/github/githubApi';
 
 function Cohorts() {
   const { data: cohorts, isSuccess } = useGetAllCohortsQuery();
-  console.log(cohorts);
+  // console.log(cohorts);
   return (
     <Layout>
       <div className="flex flex-wrap justify-around">

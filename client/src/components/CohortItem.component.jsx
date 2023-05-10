@@ -1,4 +1,5 @@
 import { FaGithub } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 function getRandomGradient() {
   const hue = Math.floor(Math.random() * 360);
   return `linear-gradient(to bottom, hsl(${hue}, 50%, 90%), hsl(${
@@ -8,7 +9,7 @@ function getRandomGradient() {
 
 function CohortItem({ name, html_url }) {
   const date = new Date(name.slice(8));
-
+  const navigate = useNavigate();
   const monthYearText = date.toLocaleString('default', {
     month: 'long',
     year: 'numeric',
@@ -42,7 +43,13 @@ function CohortItem({ name, html_url }) {
                 GitHub
               </button>
             </a>
-            <button className="btn btn-md btn-outline rounded-lg flex-1">
+            <button
+              onClick={() => {
+                navigate(`/cohorts/${name}/students`);
+                console.log('clicked', name);
+              }}
+              className="btn btn-md btn-outline rounded-lg flex-1"
+            >
               View Students
             </button>
           </div>

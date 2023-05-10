@@ -48,5 +48,6 @@ export const studentApi = apiSlice.injectEndpoints({
 export const {
   useCreateStudentMutation,
   useAddSoftTechSkillsByStudentIDMutation,
+  useGetStudentByCohortNameQuery,
   useGetStudentWeekInfoQuery,
 } = studentApi;
