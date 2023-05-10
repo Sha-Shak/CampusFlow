@@ -37,5 +37,9 @@ router.get(
 );
 
 router.post('/check/:id', studentsControllers.postUnitMarksByStudentID);
+router.get(
+  '/getJuniorUnitMarks/:id/:type',
+  studentsControllers.JuniorUnitMarks
+);
 
 module.exports = router;

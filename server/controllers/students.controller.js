@@ -3,8 +3,9 @@ const Student = require('../models/student/student.model');
 const juniorWeeks = require('./juniorWeeks.json');
 const seniorWeeks = require('./seniorWeeks.json');
 const _ = require('lodash');
-const getAllStudents = (req, res) => {
-  res.send('Fetching All Students 200');
+
+const getAllStudents = async (req, res) => {
+  await res.send('Fetching All Students 200');
 };
 const getStudentByID = async (req, res) => {
   const studentId = req.params.id;
@@ -266,6 +267,9 @@ const saveMidEndJuniorData = async (req, res) => {
 // get student by cohortName
 const getStudentByCohortName = async (req, res) => {
   let { cohortName } = req.params;
+  if (!cohortName) {
+    return res.status(400).json({ message: 'Please provide cohortName' });
+  }
   cohortName = cohortName.toLowerCase();
   try {
     const result = await Student.find({ cohortName });
@@ -316,6 +320,29 @@ const postUnitMarksByStudentID = async (req, res) => {
   }
 };
 
+// array = []
+
+// unitMarksArray
+const JuniorUnitMarks = async (req, res) => {
+  const { id } = req.params;
+  const { type } = req.params;
+  const unitMarks = [];
+
+  // find junoir student
+  const student = await Student.findById(id);
+  if (!student) {
+    return res.status(404).json({ message: 'Student not found' });
+  }
+  const juniorWeekInfo = student[type];
+  juniorWeekInfo.map((week) => {
+    week.unitMarks.map((unit) => {
+      unitMarks.push(unit);
+    });
+  });
+  // console.log(unitMarks);
+  res.send(unitMarks);
+};
+
 module.exports = {
   getAllStudents,
   createStudent,
@@ -328,4 +355,5 @@ module.exports = {
   getStudentByCohortName,
   getUnitMarksByStudentID,
   postUnitMarksByStudentID,
+  JuniorUnitMarks,
 };
