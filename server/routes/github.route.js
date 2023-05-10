@@ -32,6 +32,8 @@ router.get(
   githubController.removeAccessToGithubRepo
 );
 
+router.put('/addInstructor', githubController.addInstructor);
+
 // debug
 // router.put(
 //   '/addStudentToCohortDebug',

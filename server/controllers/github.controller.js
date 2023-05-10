@@ -311,6 +311,29 @@ const removeAccessToGithubRepo = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+const addInstructor = async (req, res) => {
+  const { username, cohortName } = req.body;
+  const githubAccessToken = req.headers['github-access-token'];
+  // const url = `https://api.github.com/orgs/student-tool/teams/${cohortName}/memberships/${req.body.username}`;
+  const url = `https://api.github.com/orgs/${orgName}/teams/staff-instructors/memberships/${username}`;
+  try {
+    const response = await axios.put(
+      url,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${gh_personal_token}`,
+          'github-access-token': `${githubAccessToken}`,
+        },
+      }
+    );
+    const data = response.data;
+    res.status(200).json(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
 
 module.exports = {
   getGithubAccessToken,
@@ -327,4 +350,5 @@ module.exports = {
   getGithubOrgRepos,
   getAccessToGithubRepo,
   removeAccessToGithubRepo,
+  addInstructor,
 };
