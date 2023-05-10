@@ -7,6 +7,7 @@ const skillRoute = require('./routes/skill.route');
 const githubRoute = require('./routes/github.route');
 const typeformRoute = require('./routes/typeform.route');
 const userRouter = require('./routes/user.route');
+const cohortRouter = require('./routes/cohort.route');
 const app = express();
 const PORT = process.env.PORT || 8080;
 
@@ -26,6 +27,7 @@ app.use('/student', studentsRoute);
 app.use('/skill', skillRoute);
 app.use('/typeform', typeformRoute);
 app.use('/user', userRouter);
+app.use('/cohort', cohortRouter);
 
 app.listen(PORT, () => {
   console.log(`🚀  Listening on port ${PORT}`);
