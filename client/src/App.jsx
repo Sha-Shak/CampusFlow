@@ -22,6 +22,7 @@ import AlumniInfoCard from './components/alumniComponents/AlumniInfoCard';
 import AlumniSidebar from './components/alumniComponents/AlumniSidebar';
 import SiteChip from './components/alumniComponents/SiteChip';
 import SmallNavProfile from './components/alumniComponents/SmallNavProfile';
+import ProjectCard from './components/alumniComponents/ProjectCard';
 function App() {
   return (
     <div>
@@ -47,7 +48,7 @@ function App() {
           <Route path="test" element={<SkillsRadarChart />} />
           <Route path="/alumni/info" element={<AlumniInfoCard />} />
           <Route path="/alumni/sidebar" element={<AlumniSidebar />} />
-          <Route path="/alumni/profileChip" element={<SmallNavProfile />} />
+          <Route path="/alumni/profileChip" element={<ProjectCard />} />
           <Route path="/alumni/chip" element={<SiteChip />} />
           <Route path="*" element={<div>404</div>} />
         </Routes>
