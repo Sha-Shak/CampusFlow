@@ -3,23 +3,13 @@ import Typography from '@mui/material/Typography';
 import Slider from '@mui/material/Slider';
 import FormGroup from '@mui/material/FormGroup';
 import Grid from '@mui/material/Grid';
-import {
-  Button,
-  Divider,
-  Paper,
-  Select,
-  InputLabel,
-  MenuItem,
-  FormControl,
-} from '@mui/material';
+import { Button, Divider, Paper } from '@mui/material';
 import { useGetSkillsByCategoryQuery } from '../features/skill/skillApi';
 import { useGetStudentWeekInfoQuery } from '../features/student/studentApi';
-import { useParams } from 'react-router-dom';
 
 const MarkStudent = ({ studentId, week, handleMarkSubmission }) => {
-  week = 1;
-  const { data: softSkills, refetch } =
-    useGetSkillsByCategoryQuery('softskill');
+  console.log(studentId, week);
+  const { data: softSkills } = useGetSkillsByCategoryQuery('softskill');
 
   const { data: techSkills } = useGetSkillsByCategoryQuery('techskill');
 
@@ -44,7 +34,6 @@ const MarkStudent = ({ studentId, week, handleMarkSubmission }) => {
   let initialMarks = {};
   useEffect(() => {
     if (!studentWeekInfo?.softSkills[0]?.skill) {
-      console.log('no soft skills');
       const initialMarks = softSkills?.reduce((acc, skill) => {
         acc[skill._id] = 0;
         return acc;
@@ -55,7 +44,6 @@ const MarkStudent = ({ studentId, week, handleMarkSubmission }) => {
     }
 
     if (!studentWeekInfo?.techSkills[0]?.skill) {
-      console.log('no tech skills');
       initialMarks = techSkills?.reduce((acc, skill) => {
         acc[skill._id] = 0;
         return acc;
@@ -67,8 +55,7 @@ const MarkStudent = ({ studentId, week, handleMarkSubmission }) => {
   }, [studentWeekInfo, techSkills, softSkills]);
 
   // slider default value and marks
-  console.log('original softskill', softSkills);
-  console.log('mydb', studentWeekInfo?.softSkills);
+
   useEffect(() => {
     const generate = softSkills?.map((skill) => {
       const studentSkill = studentWeekInfo?.softSkills?.find(
@@ -129,7 +116,6 @@ const MarkStudent = ({ studentId, week, handleMarkSubmission }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
     const allSoftSkillMarks = Object.entries(softSkillMarks).map(
       ([skill, mark]) => ({
         skill: skill,
@@ -149,12 +135,13 @@ const MarkStudent = ({ studentId, week, handleMarkSubmission }) => {
       softSkills: allSoftSkillMarks,
       techSkills: allTechSkillMarks,
     };
-    handleMarkSubmission(data);
     console.log(data);
     console.log('submit');
     setSoftSkillMarks(initialSoftSkillMarks);
     setTechSkillMarks(initialTechSkillMarks);
     setAssessmentMark(initialAssessmentMark);
+    handleMarkSubmission(data);
+    toast.success('Marking Successful');
   };
 
   return (
@@ -231,7 +218,7 @@ const MarkStudent = ({ studentId, week, handleMarkSubmission }) => {
                       min={0}
                       max={10}
                       step={1}
-                      defaultValue={skill.marks}
+                      defaultValue={0}
                       // value={skill?.marks}
                       name={skill?._id}
                       marks={sliderMarks}
@@ -281,6 +268,14 @@ const MarkStudent = ({ studentId, week, handleMarkSubmission }) => {
           </Grid>
           <Divider sx={{ mt: 2 }} />
           {/* Tech Skill Sliders Finished */}
+          <Button
+            type="submit"
+            variant="contained"
+            size="large"
+            color="primary"
+          >
+            Submit Marks
+          </Button>
         </form>
       </Paper>
     </>

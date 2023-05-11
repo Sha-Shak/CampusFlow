@@ -9,6 +9,13 @@ import MarkStudent from './MarkStudent';
 import toast, { Toaster } from 'react-hot-toast';
 
 import { useAddSoftTechSkillsByStudentIDMutation } from '../features/student/studentApi';
+import {
+  FormControl,
+  Input,
+  InputLabel,
+  MenuItem,
+  Select,
+} from '@mui/material';
 const steps = [
   'Select campaign settings',
   'Create an ad group',
@@ -16,26 +23,34 @@ const steps = [
 ];
 
 function StepMarking({ students, isStudentFetchSuccess }) {
+  const [week, setWeek] = useState(1);
   const [activeStep, setActiveStep] = useState(0);
   const [completed, setCompleted] = useState({});
-  const [studentToMark, setStudentToMark] = useState({});
+  const [studentToMark, setStudentToMark] = useState(students[0]?._id);
   const [addSoftTechSkillsByStudentID, { isSuccess }] =
     useAddSoftTechSkillsByStudentIDMutation();
+
+  useEffect(() => {
+    setStudentToMark(students[0]?._id);
+  }, [students]);
+
   function handleMarkSubmission(data) {
     addSoftTechSkillsByStudentID(data);
+    nextStep();
+  }
+
+  function nextStep() {
     const newActiveStep =
       isLastStep() && !allStepsCompleted()
-        ? // It's the last step, but not all steps have been completed,
-          // find the first step that has been completed
-          students.findIndex((step, i) => !(i in completed))
+        ? students.findIndex((step, i) => !(i in completed))
         : activeStep + 1;
     setActiveStep(newActiveStep);
-    toast.success('Marking Successful');
+
+    setStudentToMark(students[newActiveStep]?._id);
   }
   const totalSteps = () => {
     return students.length;
   };
-
   const completedSteps = () => {
     return Object.keys(completed).length;
   };
@@ -48,27 +63,18 @@ function StepMarking({ students, isStudentFetchSuccess }) {
     return completedSteps() === totalSteps();
   };
 
-  const handleNext = () => {
-    const newActiveStep =
-      isLastStep() && !allStepsCompleted()
-        ? students.findIndex((step, i) => !(i in completed))
-        : activeStep + 1;
-    setActiveStep(newActiveStep);
-  };
   if (isSuccess) {
     toast.success('Marking Successful');
   }
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
 
   const handleStep = (step, studentId) => () => {
     console.log(studentId);
     setStudentToMark(studentId);
     setActiveStep(step);
   };
-
+  const handleWeekChange = (event) => {
+    setWeek(event.target.value);
+  };
   const handleComplete = () => {
     const newCompleted = completed;
     newCompleted[activeStep] = true;
@@ -85,6 +91,17 @@ function StepMarking({ students, isStudentFetchSuccess }) {
     <Box sx={{ display: 'flex' }}>
       <Toaster />
       <Box width={'20vw'}>
+        <FormControl fullWidth sx={{ mb: '5px' }}>
+          <InputLabel id="demo-simple-select-label">Select Week</InputLabel>
+          <Select value={week} label="Select Week" onChange={handleWeekChange}>
+            <MenuItem value={1}>Week 1</MenuItem>
+            <MenuItem value={2}>Week 2</MenuItem>
+            <MenuItem value={3}>Week 3</MenuItem>
+            <MenuItem value={4}>Week 4</MenuItem>
+            <MenuItem value={5}>Week 5</MenuItem>
+            <MenuItem value={6}>Week 6</MenuItem>
+          </Select>
+        </FormControl>
         <Stepper nonLinear activeStep={activeStep} orientation="vertical">
           {students.map((student, index) => (
             <Step key={student?.name} completed={completed[index]}>
@@ -127,20 +144,21 @@ function StepMarking({ students, isStudentFetchSuccess }) {
                       variant="caption"
                       sx={{ display: 'inline-block' }}
                     >
-                      Step {activeStep + 1} already completed
+                      Mark already submitted.
                     </Typography>
                   ) : (
-                    <Button
-                      sx={{ mt: '10px', position: 'fixed', bottom: '60px' }}
-                      onClick={handleComplete}
-                      variant="contained"
-                      size="large"
-                      color="primary"
-                    >
-                      {completedSteps() === totalSteps() - 1
-                        ? 'Submit & Finish'
-                        : 'Submit Marks & Next'}
-                    </Button>
+                    ''
+                    // <Button
+                    //   sx={{ mt: '10px', position: 'fixed', bottom: '60px' }}
+                    //   onClick={handleComplete}
+                    //   variant="contained"
+                    //   size="large"
+                    //   color="primary"
+                    // >
+                    //   {completedSteps() === totalSteps() - 1
+                    //     ? 'Submit & Finish'
+                    //     : 'Submit Marks & Next'}
+                    // </Button>
                   ))}
               </Box>
             </>
@@ -152,6 +170,7 @@ function StepMarking({ students, isStudentFetchSuccess }) {
           <MarkStudent
             studentId={studentToMark}
             handleMarkSubmission={handleMarkSubmission}
+            week={week}
           />
         )}
       </Box>

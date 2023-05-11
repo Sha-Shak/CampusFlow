@@ -1,7 +1,15 @@
+html{
+	background: rgba(201, 179, 255, 0.265);
 
-body{
-  background-color: rgb(246, 246, 246) ;
+	background: linear-gradient(-45deg, rgba(217, 202, 255, 0.194) 0%, rgba(226, 214, 255, 0.271) 0%, rgba(255, 255, 255, 0.804) 61%);
+	
+	background: -moz-linear-gradient(-90deg, rgba(220, 207, 255, 0.162) 0%, rgba(226, 214, 255, 0.298) 0%, rgba(255, 255, 255, 0.833) 61%);
+	
+	background: -webkit-linear-gradient(-45deg, rgba(221, 207, 255, 0.193) 0%, rgba(200, 223, 249, 0.384) 61%);
+	
+	filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#C9B3FF", endColorstr="#E4D8FF", GradientType=1 );
 }
+
 .MuiOutlinedInput-notchedOutline {
   border-color: rgba(196, 146, 245, 0.529)!important;
   border-radius: 10px!important;
@@ -14,11 +22,11 @@ body{
 /* .MuiModal-root {
   /* background-color: rgba(225, 151, 245, 0.3)!important;
    */
-   background: linear-gradient(-45deg, #ae82ff62, #9774f657);
+   /* background: linear-gradient(-45deg, #ae82ff62, #9774f657);
    background-size: 400% 400%;
    animation: gradient 10s ease infinite;
 
-} */
+} */ */
 .boxbg{
   background: hsla(257, 100%, 85%, 1);
 
@@ -52,4 +60,11 @@ filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#C9B3FF", en
 	100% {
 		background-position: 0% 50%;
 	}
+}
+
+.recharts-text{
+	font-size: 12px!important;
+	font-weight: bold;
+	color:rgba(196, 146, 245, 0.529)!important;
+	text-overflow: clip!important;
 }

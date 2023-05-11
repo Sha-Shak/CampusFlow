@@ -11,7 +11,7 @@ import { useGetStudentWeekInfoQuery } from '../features/student/studentApi';
 
 const dummyData = [
   { skill: 'Behaviour', value: 8 },
-  { skill: 'Time Management', value: 8 },
+  { skill: 'Management', value: 8 },
   { skill: 'Productivity', value: 8 },
   { skill: 'Teamwork', value: 8 },
   { skill: 'Clean Code', value: 8 },
@@ -43,10 +43,8 @@ const SkillsRadarChart = () => {
 
   const data = createFormattedData(softSkills);
 
-  console.log('formatted', data);
-
   return (
-    <ResponsiveContainer width="100%" height={450}>
+    <ResponsiveContainer width={300} height={200}>
       <RadarChart cx="50%" cy="50%" outerRadius="85%" data={dummyData}>
         <PolarGrid />
         <PolarAngleAxis dataKey="skill" />

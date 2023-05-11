@@ -9,7 +9,7 @@ function SideBar() {
       <div>
         <div className="drawer sticky">
           <div className="drawer-side">
-            <ul className="menu min-w-[270px] p-4 bg-white text-base-content m-5 rounded-2xl shadow-xl min-h-[80vh] sticky top-0">
+            <ul className="menu min-w-[270px] p-4  text-base-content m-5 rounded-2xl bg-white bg-clip-border  border-[#701ddc1f] border-2 shadow-3xl min-h-[80vh] sticky top-0">
               <li
                 className={
                   location.pathname === '/dashboard'
