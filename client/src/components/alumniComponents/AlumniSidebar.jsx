@@ -7,7 +7,6 @@ import { GrCertificate, GrConnect } from 'react-icons/gr';
 import { IoCalendarClearOutline } from 'react-icons/io5';
 import NavBar from '../NavBar';
 import SmallNameCard from './SmallNameCard';
-import AlumniInfoCard from './AlumniInfoCard';
 
 const AlumniSidebar = () => {
   const sideOptions = (
@@ -66,17 +65,12 @@ const AlumniSidebar = () => {
   return (
     <>
       {/* <NavBar /> */}
-      <div className="flex">
-        <ul className="menu p-4 w-60 bg-#FFFBFB bg-white shadow-xl h-screen flex-row flex-wrap ">
-          <div>{sideOptions}</div>
-          <div className="m-auto">
-            <SmallNameCard />
-          </div>
-        </ul>
-        <div>
-          <AlumniInfoCard />
+      <ul className="menu p-4 w-60 bg-#FFFBFB bg-white shadow-xl h-screen flex-row flex-wrap ">
+        <div>{sideOptions}</div>
+        <div className="m-auto">
+          <SmallNameCard />
         </div>
-      </div>
+      </ul>
     </>
   );
 };
