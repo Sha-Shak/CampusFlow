@@ -33,6 +33,7 @@ const addProject = async (req, res) => {
 };
 
 const getProjects = async (req, res) => {
+  // id of doneby
   const { id } = req.params;
   try {
     const projects = await Project.find({ doneBy: id });
@@ -44,4 +45,5 @@ const getProjects = async (req, res) => {
 
 module.exports = {
   addProject,
+  getProjects,
 };

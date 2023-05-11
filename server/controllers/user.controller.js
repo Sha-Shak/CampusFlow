@@ -4,6 +4,7 @@ const check = async (req, res) => {
   await res.send('test');
 };
 
+// TODO: rename it to createOrgsMembers
 const createUser = async (req, res) => {
   const { name, email, role } = req.body;
   try {
