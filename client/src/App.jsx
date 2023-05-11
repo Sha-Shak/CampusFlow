@@ -20,6 +20,7 @@ import StudentInfo from './pages/StudentInfo';
 import MarkStudents from './pages/MarkStudents.page';
 import AlumniInfoCard from './components/alumniComponents/AlumniInfoCard';
 import AlumniSidebar from './components/alumniComponents/AlumniSidebar';
+import SiteChip from './components/alumniComponents/SiteChip';
 function App() {
   return (
     <div>
@@ -44,6 +45,8 @@ function App() {
           <Route path="/repoAccess" element={<RepoAccess />} />
           <Route path="test" element={<SkillsRadarChart />} />
           <Route path="/alumni/info" element={<AlumniInfoCard />} />
+          <Route path="/alumni/sidebar" element={<AlumniSidebar />} />
+          <Route path="/alumni/chip" element={<SiteChip />} />
           <Route path="*" element={<div>404</div>} />
         </Routes>
       </Router>
