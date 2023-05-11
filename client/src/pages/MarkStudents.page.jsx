@@ -1,30 +1,43 @@
-import * as React from 'react';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Layout from '../components/Layout';
-import { Box, Divider, Typography } from '@mui/material';
-import { minHeight } from '@mui/system';
-import { useGetStudentByCohortNameQuery } from '../features/student/studentApi';
-import { useGetAllCohortQuery } from '../features/cohort/cohortApi';
+import {
+  Box,
+  Divider,
+  Typography,
+  Stepper,
+  Step,
+  StepLabel,
+  StepButton,
+} from '@mui/material';
+
+import {
+  useGetAllCohortQuery,
+  useGetAllCohortStudentsQuery,
+} from '../features/cohort/cohortApi';
+import { useEffect, useState } from 'react';
+import MarkStudent from '../components/MarkStudent';
+import StepMarking from '../components/StepMarking';
 
 function MarkStudents() {
+  const [cohort, setCohort] = useState('');
+  const [students, setStudents] = useState([]);
+
   const { data: cohorts, isSuccess: isCohortsSuccess } = useGetAllCohortQuery();
-  const [cohort, setCohort] = React.useState('student-nov-2023');
-  const { data: students, isSuccess: isStudentSuccess } =
-    useGetStudentByCohortNameQuery(cohort);
+  const { data: cohortStudents, isSuccess: isStudentFetchSuccess } =
+    useGetAllCohortStudentsQuery(cohort);
+  useEffect(() => {
+    if (isStudentFetchSuccess) {
+      setStudents(cohortStudents.students);
+    }
+  }, [isStudentFetchSuccess]);
   const handleChange = (event) => {
     setCohort(event.target.value);
   };
 
-  React.useEffect(() => {
-    if (cohort) {
-      setCohort(cohort);
-    }
-  }, [cohort]);
-  console.log(students);
   return (
     <div>
       <Layout>
@@ -68,14 +81,20 @@ function MarkStudents() {
                 </MenuItem>
                 {isCohortsSuccess &&
                   cohorts.map((cohort, index) => (
-                    <MenuItem key={index} value={cohort.name}>
-                      {cohort.name}
+                    <MenuItem key={index} value={cohort.cohortName}>
+                      {cohort.cohortName}
                     </MenuItem>
                   ))}
               </Select>
             </FormControl>
           </Box>
           <Divider variant="middle" />
+          {isStudentFetchSuccess && (
+            <StepMarking
+              students={students}
+              isStudentFetchSuccess={isStudentFetchSuccess}
+            />
+          )}
         </Box>
       </Layout>
     </div>

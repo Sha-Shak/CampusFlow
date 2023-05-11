@@ -35,6 +35,12 @@ export const cohortApi = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    getAllCohortStudents: builder.query({
+      query: (cohortName) => ({
+        url: `/cohort/students/${cohortName}`,
+        method: 'GET',
+      }),
+    }),
   }),
 });
 
@@ -44,4 +50,5 @@ export const {
   useAddStudentToCohortMutation,
   useChangeCohortStatusMutation,
   useCreateCohortMutation,
+  useGetAllCohortStudentsQuery,
 } = cohortApi;

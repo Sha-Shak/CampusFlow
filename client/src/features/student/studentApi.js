@@ -23,7 +23,7 @@ export const studentApi = apiSlice.injectEndpoints({
 
     addSoftTechSkillsByStudentID: builder.mutation({
       query: (data) => ({
-        url: `/student/addSoftTechSkillsByID/${data.id}`,
+        url: `/student/addSoftTechSkillsByID/${data.studentId}`,
         method: 'POST',
         body: data,
       }),
@@ -38,7 +38,7 @@ export const studentApi = apiSlice.injectEndpoints({
     //donebysaimon
     getStudentWeekInfo: builder.query({
       query: (data) => ({
-        url: `/student/getStudentWeekInfo/${data.id}/${data.week}`,
+        url: `/student/getStudentWeekInfo/${data.studentId}/${data.week}`,
         method: 'GET',
       }),
     }),
