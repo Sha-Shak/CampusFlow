@@ -19,6 +19,7 @@ import SkillsRadarChart from './components/SkillsRadarChart';
 import StudentInfo from './pages/StudentInfo';
 import MarkStudents from './pages/MarkStudents.page';
 import AlumniInfoCard from './components/alumniComponents/AlumniInfoCard';
+import AlumniSidebar from './components/alumniComponents/AlumniSidebar';
 function App() {
   return (
     <div>
