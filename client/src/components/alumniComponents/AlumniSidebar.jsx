@@ -5,58 +5,82 @@ import { RiUserSettingsLine } from 'react-icons/ri';
 import { BsBriefcase } from 'react-icons/bs';
 import { GrCertificate, GrConnect } from 'react-icons/gr';
 import { IoCalendarClearOutline } from 'react-icons/io5';
-import NavBar from '../NavBar';
 import SmallNameCard from './SmallNameCard';
-import AlumniInfoCard from './AlumniInfoCard';
 
 const AlumniSidebar = () => {
+  const handleDashboard = () => {
+    console.log('Dashboard');
+  };
+  const handleProjectCode = () => {
+    console.log('Project Code');
+  };
+  const handleTechSkill = () => {
+    console.log('Tech Skill');
+  };
+  const handleSoftSkill = () => {
+    console.log('Soft Skill');
+  };
+  const handleJunior = () => {
+    console.log('Junior');
+  };
+  const handleSenior = () => {
+    console.log('Senior');
+  };
+  const handleExperience = () => {
+    console.log('Experience');
+  };
+  const handleCertification = () => {
+    console.log('Certification');
+  };
+
+  // JSX fragments
   const sideOptions = (
     <>
       <li>
-        <a>
+        <a onClick={handleDashboard}>
           <RxDashboard color="gray" />
           Overview
         </a>
       </li>
       <li>
-        <a>
+        <a onClick={handleProjectCode}>
           {' '}
           <FaCode color="gray" />
           Project Code
         </a>
       </li>
       <li>
-        <a>
+        <a onClick={handleTechSkill}>
           <RiUserSettingsLine color="gray" />
           Tech Skills
         </a>
       </li>
       <li>
-        <a>
+        <a onClick={handleSoftSkill}>
           <FaBrain color="gray" />
           Soft Skills
         </a>
       </li>
       <li>
-        <a>
+        <a onClick={handleJunior}>
           <IoCalendarClearOutline color="gray" />
           Junior
         </a>
       </li>
       <li>
-        <a>
+        <a onClick={handleSenior}>
           <GrConnect />
           Senior
         </a>
       </li>
       <li>
-        <a>
+        <a onClick={handleExperience}>
           <BsBriefcase color="gray" />
           Experience
         </a>
       </li>
       <li>
-        <a>
+        <a onClick={handleCertification}>
           <GrCertificate />
           Certifications
         </a>
@@ -65,18 +89,12 @@ const AlumniSidebar = () => {
   );
   return (
     <>
-      {/* <NavBar /> */}
-      <div className="flex">
-        <ul className="menu p-4 w-60 bg-#FFFBFB bg-white shadow-xl h-screen flex-row flex-wrap ">
-          <div>{sideOptions}</div>
-          <div className="m-auto">
-            <SmallNameCard />
-          </div>
-        </ul>
-        <div>
-          <AlumniInfoCard />
+      <ul className="menu p-4 w-60 bg-#FFFBFB bg-white shadow-xl h-screen flex-row flex-wrap ">
+        <div>{sideOptions}</div>
+        <div className="m-auto">
+          <SmallNameCard />
         </div>
-      </div>
+      </ul>
     </>
   );
 };

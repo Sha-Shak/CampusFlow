@@ -9,7 +9,10 @@ const SmallNameCard = () => {
         </div>
       </div>
       <div className="flex flex-col justify-center ml-2">
-        <div className="font-semibold">Md Zahid Hossain</div>
+        <div className="font-semibold">
+          {/* TODO: fix href */}
+          <a href="/">Md Zahid Hossain</a>
+        </div>
         <div className="text-xs text-gray-500">Alumni</div>
       </div>
     </div>
