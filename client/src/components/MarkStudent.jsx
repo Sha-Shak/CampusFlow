@@ -9,6 +9,7 @@ import {
   useGetStudentWeekInfoQuery,
   useSetStudentWeekInfoMutation,
 } from '../features/student/studentApi';
+import MarkSlider from './MarkSlider';
 
 const MarkStudent = ({ studentId, week, handleMarkSubmission }) => {
   console.log(studentId, week);
@@ -175,28 +176,11 @@ const MarkStudent = ({ studentId, week, handleMarkSubmission }) => {
       >
         {/* Assessment Mark Slider */}
         <form onSubmit={handleSubmit}>
-          <Grid
-            container
-            spacing={2}
-            sx={{ mt: 2 }}
-            alignItems="stretch"
-            justifyContent={'space-around'}
-          >
-            <Grid item xs={4}>
-              <Typography variant="body1">Assessment Mark</Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <Slider
-                min={0}
-                max={10}
-                step={1}
-                defaultValue={0}
-                name="assessmentMark"
-                marks={sliderMarks}
-                onChange={handleAssessmentMarkChange}
-              />
-            </Grid>
-          </Grid>
+          <MarkSlider
+            title={'Assesment Marks'}
+            name={assessmentMark}
+            onChange={handleAssessmentMarkChange}
+          />
           <Divider />
           {/* Assessment Mark Slider Finished */}
           {/* Soft Skill Sliders */}
@@ -207,29 +191,13 @@ const MarkStudent = ({ studentId, week, handleMarkSubmission }) => {
           <Grid item xs={12} sx={{ mt: 2 }}>
             <FormGroup>
               {modifiedSoftSkills?.map((skill, index) => (
-                <Grid
-                  container
-                  spacing={2}
-                  alignItems="stretch"
-                  justifyContent={'space-around'}
-                  key={index}
-                >
-                  <Grid item xs={4}>
-                    <Typography variant="body1">{skill?.skillName}</Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Slider
-                      min={0}
-                      max={10}
-                      step={1}
-                      defaultValue={0}
-                      // value={skill?.marks}
-                      name={skill?._id}
-                      marks={sliderMarks}
-                      onChange={handleSoftSliderChange}
-                    />
-                  </Grid>
-                </Grid>
+                <div key={index}>
+                  <MarkSlider
+                    title={skill?.skillName}
+                    name={skill?._id}
+                    onChange={handleSoftSliderChange}
+                  />
+                </div>
               ))}
             </FormGroup>
           </Grid>
