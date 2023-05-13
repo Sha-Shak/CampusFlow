@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const githubController = require('../controllers/github.controller');
+const authMiddleware = require('../middleware/auth.middleware');
 // login to github
 router.post('/access', githubController.getGithubAccessToken);
 
@@ -20,13 +21,21 @@ router.delete(
 );
 router.post('/addCohort', githubController.addCohort);
 
-router.get('/getGithubInstructor', githubController.getGithubInstructor);
+router.get(
+  '/getGithubInstructor',
+
+  githubController.getGithubInstructor
+);
 router.get('/getGithubMaintainers', githubController.getGithubMaintainers);
 router.get('/getGithubTeams', githubController.getGithubTeams);
 router.get('/getGithubOrgRepos', githubController.getGithubOrgRepos);
 module.exports = router;
 
-router.get('/getAccessToGithubRepo', githubController.getAccessToGithubRepo);
+router.get(
+  '/getAccessToGithubRepo',
+  authMiddleware,
+  githubController.getAccessToGithubRepo
+);
 router.get(
   '/removeAccessToGithubRepo',
   githubController.removeAccessToGithubRepo

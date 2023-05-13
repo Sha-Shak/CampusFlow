@@ -20,13 +20,14 @@ const getGithubAccessToken = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
 const getGithubUser = async (req, res) => {
   const url = `https://api.github.com/user`;
   const githubAccessToken = req.headers['github-access-token'];
   try {
     const response = await axios.get(url, {
       headers: {
-        Authorization: `Bearer ${gh_personal_token}`,
+        Authorization: `Bearer ${githubAccessToken}`,
         'github-access-token': githubAccessToken,
       },
     });
@@ -36,13 +37,25 @@ const getGithubUser = async (req, res) => {
     console.error(error);
     res.status(500).json({ message: 'Server error' });
   }
+  // const githubAccessToken = req.headers['github-access-token'];
+  // try {
+  //   const url = 'https://api.github.com/user';
+  //   const headers = {
+  //     Authorization: `Bearer ${githubAccessToken}`,
+  //   };
+  //   const res = await axios.get(url, { headers });
+  //   console.log(res);
+  //   res.status(200).json(res);
+  // } catch (error) {
+  //   throw new Error(error);
+  // }
 };
 
 const getAllOrganizationMembers = async (req, res) => {
   // const orgName = 'student-tool';
   const githubAccessToken = req.headers['github-access-token'];
 
-  const url = `https://api.github.com/orgs/${orgName}/teams/staff-instructors/members`;
+  const url = `https://api.github.com/orgs/${orgName}/members`;
   try {
     const response = await axios.get(url, {
       headers: {
@@ -276,21 +289,27 @@ const getAccessToGithubRepo = async (req, res) => {
   const url = `https://api.github.com/orgs/${orgName}/teams/${teamSlug}/repos/${orgName}/${repoName}`;
 
   const githubAccessToken = req.headers['github-access-token'];
-  try {
-    const response = await axios.put(
-      url,
-      { permission: 'pull' },
-      {
-        headers: {
-          Authorization: `Bearer ${gh_personal_token}`,
-          'github-access-token': githubAccessToken,
-        },
-      }
-    );
-    res.status(200).json(response.data);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Server error' });
+
+  if (req.body.role === 'instructor') {
+    try {
+      const response = await axios.put(
+        url,
+        { permission: 'pull' },
+        {
+          headers: {
+            Authorization: `Bearer ${gh_personal_token}`,
+            'github-access-token': githubAccessToken,
+          },
+        }
+      );
+      res.status(200).json('repository added');
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Server error' });
+    }
+  } else {
+    console.log('Here');
+    res.status(401).json({ message: 'Unauthorized' });
   }
 };
 const removeAccessToGithubRepo = async (req, res) => {
@@ -335,6 +354,69 @@ const addInstructor = async (req, res) => {
   }
 };
 
+// utils
+async function getCurrentUser(token) {
+  try {
+    const url = 'https://api.github.com/user';
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    const res = await axios.get(url, { headers });
+    return res.data;
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
+async function getOrgInstructors(githubAccessToken) {
+  try {
+    const url = `https://api.github.com/orgs/${orgName}/teams/staff-instructors/members`;
+
+    const res = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${gh_personal_token}`,
+        'github-access-token': githubAccessToken,
+      },
+    });
+    const user = res.data;
+    return user;
+  } catch (error) {
+    console.log(error);
+  }
+}
+async function getOrgInstructors(githubAccessToken) {
+  try {
+    const url = `https://api.github.com/orgs/${orgName}/teams/staff-instructors/members`;
+
+    const res = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${gh_personal_token}`,
+        'github-access-token': githubAccessToken,
+      },
+    });
+    const user = res.data;
+    return user;
+  } catch (error) {
+    console.log(error);
+  }
+}
+async function getOrgMembers(githubAccessToken) {
+  try {
+    const url = `https://api.github.com/orgs/${orgName}/members`;
+
+    const res = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${gh_personal_token}`,
+        'github-access-token': githubAccessToken,
+      },
+    });
+    const user = res.data;
+    return user;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 module.exports = {
   getGithubAccessToken,
   getGithubUser,
@@ -351,4 +433,7 @@ module.exports = {
   getAccessToGithubRepo,
   removeAccessToGithubRepo,
   addInstructor,
+  getCurrentUser,
+  getOrgInstructors,
+  getOrgMembers,
 };
