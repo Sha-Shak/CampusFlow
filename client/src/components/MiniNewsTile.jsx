@@ -19,11 +19,38 @@ function MiniNewsTile() {
   }, []);
 
   return (
-    <div>
-      {news.slice(0, 2).map((news, index) => (
-        <NewsCard key={news.publishedAt} news={news} index={index} />
-      ))}
-    </div>
+    <>
+      <div>
+        {news.slice(0, 1).map((news, index) => (
+          <NewsCard
+            key={news.publishedAt}
+            news={news}
+            index={index}
+            noImg={false}
+          />
+        ))}
+      </div>
+      <div>
+        {news.slice(1, 2).map((news, index) => (
+          <NewsCard
+            key={news.publishedAt}
+            news={news}
+            index={index}
+            noImg={true}
+          />
+        ))}
+      </div>
+      {/* <div>
+        {news.slice(2, 3).map((news, index) => (
+          <NewsCard
+            key={news.publishedAt}
+            news={news}
+            index={index}
+            noImg={true}
+          />
+        ))}
+      </div> */}
+    </>
   );
 }
 export default MiniNewsTile;

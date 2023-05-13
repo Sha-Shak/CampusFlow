@@ -3,6 +3,7 @@ import Layout from '../components/Layout';
 import MiniCalender from '../components/MiniCalender';
 import MiniLectures from '../components/MiniLectures';
 import MiniNewsTile from '../components/MiniNewsTile';
+import MiniTodoList from '../components/MiniTodoList';
 import NavBar from '../components/NavBar';
 import RecentStudents from '../components/RecentStudents';
 
@@ -22,6 +23,9 @@ function Dashboard() {
         </div>
         <div className="m-4">
           <MiniCalender />
+        </div>
+        <div>
+          <MiniTodoList />
         </div>
       </div>
     </Layout>

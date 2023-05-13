@@ -156,6 +156,9 @@ const MarkStudent = ({ studentId, week, handleMarkSubmission }) => {
 
     // handleMarkSubmission(data);
     setWeekInfo(data);
+    setAssessmentMark(initialAssessmentMark);
+
+    setUnitMarks({});
     // toast.success('Marking Successful');
   };
 
@@ -170,19 +173,6 @@ const MarkStudent = ({ studentId, week, handleMarkSubmission }) => {
           // boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
         }}
       >
-        {/* Header */}
-        {/* <Grid item xs={12}>
-          <Typography
-            variant="h4"
-            sx={{
-              mt: 1,
-            }}
-          >
-            Mark Saimon
-          </Typography>
-        </Grid> */}
-        {/* Header Finished */}
-
         {/* Assessment Mark Slider */}
         <form onSubmit={handleSubmit}>
           <Grid
@@ -304,7 +294,7 @@ const MarkStudent = ({ studentId, week, handleMarkSubmission }) => {
                       min={0}
                       max={10}
                       step={1}
-                      defaultValue={3}
+                      defaultValue={0}
                       // value={skill?.marks}
                       marks={sliderMarks}
                       name={unit?.unitName}
