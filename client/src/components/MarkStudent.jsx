@@ -5,7 +5,10 @@ import FormGroup from '@mui/material/FormGroup';
 import Grid from '@mui/material/Grid';
 import { Button, Divider, Paper } from '@mui/material';
 import { useGetSkillsByCategoryQuery } from '../features/skill/skillApi';
-import { useGetStudentWeekInfoQuery } from '../features/student/studentApi';
+import {
+  useGetStudentWeekInfoQuery,
+  useSetStudentWeekInfoMutation,
+} from '../features/student/studentApi';
 
 const MarkStudent = ({ studentId, week, handleMarkSubmission }) => {
   console.log(studentId, week);
@@ -17,9 +20,7 @@ const MarkStudent = ({ studentId, week, handleMarkSubmission }) => {
     studentId,
     week,
   });
-
-  // Creating the initial state for the soft skills and tech skills
-  // Creating the initial state for Assessment Mark with week
+  const [setWeekInfo, { data: weekInfo }] = useSetStudentWeekInfoMutation();
   const initialAssessmentMark = {
     assessmentMark: 0,
   };
@@ -31,6 +32,9 @@ const MarkStudent = ({ studentId, week, handleMarkSubmission }) => {
   const [modifiedTechSkills, setModifiedTechSkills] = useState([]);
   const [initialSoftSkillMarks, setInitialSoftSkillMarks] = useState({});
   const [initialTechSkillMarks, setInitialTechSkillMarks] = useState({});
+  const [unitMarks, setUnitMarks] = useState({});
+  const studentUnitMarks = studentWeekInfo?.unitMarks;
+
   let initialMarks = {};
   useEffect(() => {
     if (!studentWeekInfo?.softSkills[0]?.skill) {
@@ -99,6 +103,12 @@ const MarkStudent = ({ studentId, week, handleMarkSubmission }) => {
       [event.target.name]: event.target.value,
     }));
   };
+  const handleUnitMarkChange = (event) => {
+    setUnitMarks((prev) => ({
+      ...prev,
+      [event.target.name]: event.target.value,
+    }));
+  };
 
   const handleSoftSliderChange = (event) => {
     setSoftSkillMarks((prev) => ({
@@ -128,20 +138,25 @@ const MarkStudent = ({ studentId, week, handleMarkSubmission }) => {
         marks: mark,
       })
     );
+    const allUnitMarks = Object.entries(unitMarks).map(([unit, mark]) => ({
+      unitName: unit,
+      marks: mark,
+    }));
 
     const data = {
       studentId,
       week,
+      assessmentMarks: assessmentMark.assessmentMark,
       softSkills: allSoftSkillMarks,
       techSkills: allTechSkillMarks,
+      unitMarks: allUnitMarks,
     };
     console.log(data);
     console.log('submit');
-    setSoftSkillMarks(initialSoftSkillMarks);
-    setTechSkillMarks(initialTechSkillMarks);
-    setAssessmentMark(initialAssessmentMark);
-    handleMarkSubmission(data);
-    toast.success('Marking Successful');
+
+    // handleMarkSubmission(data);
+    setWeekInfo(data);
+    // toast.success('Marking Successful');
   };
 
   return (
@@ -194,7 +209,6 @@ const MarkStudent = ({ studentId, week, handleMarkSubmission }) => {
           </Grid>
           <Divider />
           {/* Assessment Mark Slider Finished */}
-
           {/* Soft Skill Sliders */}
           <Grid item xs={12} sx={{ mt: 2 }}>
             <Typography variant="h5">Soft Skill Marks</Typography>
@@ -235,7 +249,6 @@ const MarkStudent = ({ studentId, week, handleMarkSubmission }) => {
             <Typography variant="h5">Tech Skill Marks</Typography>
           </Grid>
           <Divider sx={{ mt: 2 }} />
-
           {/* Tech Skill Sliders */}
           <Grid item xs={12} sx={{ mt: 2 }}>
             <FormGroup>
@@ -268,6 +281,41 @@ const MarkStudent = ({ studentId, week, handleMarkSubmission }) => {
           </Grid>
           <Divider sx={{ mt: 2 }} />
           {/* Tech Skill Sliders Finished */}
+          <Grid item xs={12} sx={{ mt: 2 }}>
+            <Typography variant="h5">Unit Marks</Typography>
+          </Grid>
+          <Divider sx={{ mt: 2 }} />
+          {/* Tech Skill Sliders */}
+          <Grid item xs={12} sx={{ mt: 2 }}>
+            <FormGroup>
+              {studentUnitMarks?.map((unit, index) => (
+                <Grid
+                  container
+                  spacing={2}
+                  alignItems="stretch"
+                  justifyContent={'space-around'}
+                  key={index}
+                >
+                  <Grid item xs={4}>
+                    <Typography variant="body1">{unit?.unitName}</Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Slider
+                      min={0}
+                      max={10}
+                      step={1}
+                      defaultValue={3}
+                      // value={skill?.marks}
+                      marks={sliderMarks}
+                      name={unit?.unitName}
+                      onChange={handleUnitMarkChange}
+                    />
+                  </Grid>
+                </Grid>
+              ))}
+            </FormGroup>
+          </Grid>
+          <Divider sx={{ mt: 2 }} />
           <Button
             type="submit"
             variant="contained"

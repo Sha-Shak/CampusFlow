@@ -42,6 +42,14 @@ export const studentApi = apiSlice.injectEndpoints({
         method: 'GET',
       }),
     }),
+
+    setStudentWeekInfo: builder.mutation({
+      query: (data) => ({
+        url: `/student/setStudentWeekInfo/${data.studentId}/${data.week}`,
+        method: 'PUT',
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -50,4 +58,5 @@ export const {
   useAddSoftTechSkillsByStudentIDMutation,
   useGetStudentByCohortNameQuery,
   useGetStudentWeekInfoQuery,
+  useSetStudentWeekInfoMutation,
 } = studentApi;

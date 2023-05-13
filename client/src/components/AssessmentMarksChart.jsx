@@ -11,21 +11,33 @@ import {
 } from 'recharts';
 
 const data = [
-  { unitName: 'Unit Testing', marks: 9 },
-  { unitName: 'Advanced Javascript', marks: 6 },
-  { unitName: 'Data Structures', marks: 2 },
-  { unitName: 'Algorithms', marks: 10 },
-  { unitName: 'Networking', marks: 4 },
-  { unitName: 'Backend Frameworks', marks: 3 },
-  { unitName: 'Databases', marks: 8 },
-  { unitName: 'Advanced HTML & CSS', marks: 1 },
-  { unitName: 'TypeScript', marks: 7 },
-  { unitName: 'Angular', marks: 5 },
-  { unitName: 'GraphQL', marks: 10 },
-  { unitName: 'React', marks: 2 },
+  {
+    weekName: 'week-1',
+    assessmentMarks: 8,
+  },
+  {
+    weekName: 'week-2',
+    assessmentMarks: 7,
+  },
+  {
+    weekName: 'week-3',
+    assessmentMarks: 9,
+  },
+  {
+    weekName: 'week-4',
+    assessmentMarks: 8,
+  },
+  {
+    weekName: 'week-5',
+    assessmentMarks: 6,
+  },
+  {
+    weekName: 'week-6',
+    assessmentMarks: 8,
+  },
 ];
 
-const UnitMarksChart = () => {
+const AssessmentMarksChart = () => {
   return (
     <ResponsiveContainer>
       <ComposedChart
@@ -38,14 +50,14 @@ const UnitMarksChart = () => {
         }}
       >
         <CartesianGrid stroke="#f5f5f5" />
-        <XAxis dataKey="unitName" />
+        <XAxis dataKey="weekName" />
         <YAxis />
         <Tooltip />
         <Legend />
-        <Bar dataKey="marks" barSize={20} fill="#7e22ceaf" />
+        <Bar dataKey="assessmentMarks" barSize={15} fill="#7e22ceaf" />
         <Line
           type="monotone"
-          dataKey="marks"
+          dataKey="assessmentMarks"
           stroke="#ff7300"
           strokeWidth={2}
           dot={false}
@@ -61,4 +73,4 @@ const UnitMarksChart = () => {
   );
 };
 
-export default UnitMarksChart;
+export default AssessmentMarksChart;

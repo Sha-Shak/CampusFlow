@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { IoLogOutOutline } from 'react-icons/io5';
 function NavBar() {
   return (
     <div className=" pt-5 px-5 sticky top-0 z-[100]">
@@ -9,20 +9,22 @@ function NavBar() {
             CampusFlow
           </a>
         </div>
-        <div className="flex-none gap-2">
-          <div className="form-control">
+        <div tabIndex={0} className="flex-none mx-4 pl-2 rounded-xl shadow-md">
+          {/* <div className="form-control">
             <input
               type="text"
               placeholder="Search"
               className="input input-bordered"
             />
-          </div>
-          <div className="dropdown dropdown-end">
+          </div> */}
+
+          <div className="dropdown dropdown-end flex">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
               <div className="w-10 rounded-full">
                 <img src="https://raw.githubusercontent.com/zahidtwt/zahidlive/main/277801721_1146010236235641_4251157026316733609_n.jpg" />
               </div>
             </label>
+
             <ul
               tabIndex={0}
               className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
@@ -41,6 +43,13 @@ function NavBar() {
               </li>
             </ul>
           </div>
+          <div className=" ml-3 mr-5">
+            <div className="font-bold">Zahid Ul Islam</div>
+            <div className="text-sm text-gray-500">Student</div>
+          </div>
+        </div>
+        <div className=" mr-3">
+          <IoLogOutOutline className="text-3xl" color="gray" />
         </div>
       </div>
     </div>
