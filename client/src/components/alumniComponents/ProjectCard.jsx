@@ -1,13 +1,13 @@
 import React from 'react';
 import { FaCheckCircle } from 'react-icons/fa';
 
-const ProjectCard = () => {
+const ProjectCard = ({ widthCustom }) => {
   return (
-    <div className="m-10">
-      <div className="card w-96 bg-base-100 shadow-xl">
+    <>
+      <div className={`card w-${widthCustom} h-56 bg-base-100 shadow-md`}>
         <figure>
           <img
-            src="https://picsum.photos/id/1005/400/250"
+            src="https://raw.githubusercontent.com/zahidtwt/zahidlive/main/277801721_1146010236235641_4251157026316733609_n.jpg"
             alt="project photo"
           />
         </figure>
@@ -29,7 +29,7 @@ const ProjectCard = () => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

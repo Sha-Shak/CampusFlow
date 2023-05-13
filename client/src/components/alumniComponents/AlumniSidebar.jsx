@@ -62,18 +62,6 @@ const AlumniSidebar = () => {
         </a>
       </li>
       <li>
-        <a onClick={handleJunior}>
-          <IoCalendarClearOutline color="gray" />
-          Junior
-        </a>
-      </li>
-      <li>
-        <a onClick={handleSenior}>
-          <GrConnect />
-          Senior
-        </a>
-      </li>
-      <li>
         <a onClick={handleExperience}>
           <BsBriefcase color="gray" />
           Experience
