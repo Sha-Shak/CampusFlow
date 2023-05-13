@@ -93,6 +93,32 @@ const getStudentWeekInfo = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
+const setStudentWeekInfo = async (req, res) => {
+  const { id, week } = req.params;
+  const { softSkills, techSkills, assessmentMarks, unitMarks } = req.body;
+  try {
+    const student = await Student.findById(id);
+    if (!student) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+    const { type } = student;
+    const weekInfo = student[type][week - 1];
+
+    weekInfo.softSkills = softSkills;
+    weekInfo.techSkills = techSkills;
+    weekInfo.assessmentMarks = assessmentMarks;
+    weekInfo.unitMarks = unitMarks;
+
+    await student.save();
+
+    res.status(200).json(weekInfo);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
 const addSoftTechSkillsByStudentID = async (req, res) => {
   const { id } = req.params;
   const { week, softSkills, techSkills } = req.body;
@@ -349,6 +375,7 @@ module.exports = {
   getStudentByID,
   getJuniorSoftSkillsFirstWeek,
   getStudentWeekInfo,
+  setStudentWeekInfo,
   addSoftTechSkillsByStudentID,
   changeJuniorStudentToSenior,
   saveMidEndJuniorData,

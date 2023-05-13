@@ -13,6 +13,10 @@ router.get(
   '/getStudentWeekInfo/:id/:week',
   studentsControllers.getStudentWeekInfo
 );
+router.put(
+  '/setStudentWeekInfo/:id/:week',
+  studentsControllers.setStudentWeekInfo
+);
 router.post(
   '/addSoftTechSkillsByID/:id',
   studentsControllers.addSoftTechSkillsByStudentID
