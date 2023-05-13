@@ -38,22 +38,7 @@ function AlumniInfoCard() {
       </button>
     </div>
   );
-  return (
-    <div className="p-24">
-      <div className="card w-[55vw] bg-base-100 shadow-xl ">
-        <div className="card-body">
-          {cardHead}
-          <p className="text-2xl font-light mt-3 text-justify ">
-            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
-            commodo ligula eget dolor. Aenean massa. Cum sociis natoque
-            penatibus et magnis dis parturient montes, nascetur
-            ridiculusmus.Donec qu
-          </p>
-          {cardButtons}
-        </div>
-      </div>
-    </div>
-  );
+  return <div className="p-24"></div>;
 }
 
 export default AlumniInfoCard;
