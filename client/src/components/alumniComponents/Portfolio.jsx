@@ -1,8 +1,11 @@
 import React from 'react';
-import ProjectSlider from './ProjectSection';
+import ProjectSection from './ProjectSection';
+import Todo from './Todo';
 
 const Portfolio = () => {
-  return <div className="bg-white flex flex-col"></div>;
+  return <div>
+    <Todo />
+  </div>;
 };
 
 export default Portfolio;

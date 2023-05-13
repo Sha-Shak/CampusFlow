@@ -4,7 +4,7 @@ import ProjectCardSmall from './ProjectCardSmall';
 
 const ProjectSection = () => {
   return (
-    <div className="p-24 flex gap-2">
+    <div className="flex gap-2">
       <div className="flex gap-2">
         <ProjectCardSmall customWidth="[20vw]" customHeight="[35vh]" />
         <ProjectCardSmall customWidth="[20vw]" customHeight="[35vh]" />
