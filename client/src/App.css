@@ -1,6 +1,22 @@
-body {
-  background-color: rgb(246, 246, 246);
+html, body {
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	font-family: 'Helvetia', sans-serif;
+	background: #f5f5f5;
+	overflow-x: hidden;
+	background: rgba(201, 179, 255, 0.121);
+
+	background: linear-gradient(-45deg, rgba(217, 202, 255, 0.08) 0%, rgba(226, 214, 255, 0.146) 0%, rgba(255, 255, 255, 0.804) 61%);
+	
+	background: -moz-linear-gradient(-90deg, rgba(220, 207, 255, 0.115) 0%, rgba(226, 214, 255, 0.159) 0%, rgba(255, 255, 255, 0.833) 61%);
+	
+	background: -webkit-linear-gradient(-45deg, rgba(221, 207, 255, 0.143) 0%, rgba(200, 223, 249, 0.208) 61%);
+	
+	filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#C9B3FF", endColorstr="#E4D8FF", GradientType=1 );
 }
+
 .MuiOutlinedInput-notchedOutline {
   border-color: rgba(196, 146, 245, 0.529) !important;
   border-radius: 10px !important;
@@ -11,12 +27,14 @@ body {
   box-shadow: 0px !important;
 }
 /* .MuiModal-root {
+  /* background-color: rgba(225, 151, 245, 0.3)!important;
+   */
    background: linear-gradient(-45deg, #ae82ff62, #9774f657);
    background-size: 400% 400%;
    animation: gradient 10s ease infinite;
 
 } */
-.boxbg {
+.boxbg{
   background: hsla(257, 100%, 85%, 1);
 
   background: linear-gradient(
@@ -69,10 +87,4 @@ body {
   100% {
     background-position: 0% 50%;
   }
-}
-
-.customSlider .slick-center {
-  transform: scale(1.1);
-  transition: all 0.5s ease-in-out;
-  z-index: 1;
 }

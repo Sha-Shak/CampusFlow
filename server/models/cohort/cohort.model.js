@@ -21,6 +21,9 @@ const CohortSchema = new mongoose.Schema({
     type: [mongoose.Schema.Types.ObjectId],
     ref: 'Student',
   },
+  github: {
+    type: String,
+  },
 });
 
 const Cohort = mongoose.model('Cohort', CohortSchema);

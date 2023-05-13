@@ -78,7 +78,7 @@ const CreateStudentModal = ({ createStudentOpen, onStudentClose, id }) => {
 
   useEffect(() => {
     if (newStudent) {
-      toast.info('Student added to Cohort');
+      toast.success('Student added to Cohort');
       console.log('debug', newStudent._id, cohort);
       addStudentToCohort({
         studentId: newStudent._id,

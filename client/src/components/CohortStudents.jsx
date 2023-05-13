@@ -2,13 +2,14 @@ import React from 'react';
 import { FaGithub, FaEnvelope } from 'react-icons/fa';
 import { RiWhatsappFill } from 'react-icons/ri';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { useGetStudentByCohortNameQuery } from '../features/student/studentApi';
+import { useGetAllCohortStudentsQuery } from '../features/cohort/cohortApi';
 import Layout from './Layout';
 import TableSkeleton from './TableSkeleton';
 
 const CohortStudents = () => {
   const { cohort } = useParams();
-  const { data: students, isSuccess } = useGetStudentByCohortNameQuery(cohort);
+  const { data: students, isSuccess } = useGetAllCohortStudentsQuery(cohort);
+  console.log(cohort);
   console.log(students);
   const navigate = useNavigate();
   const handleNavigate = () => {};
@@ -39,7 +40,7 @@ const CohortStudents = () => {
           </thead>
           <tbody>
             {/* row 1 */}
-            {students?.map((student) => (
+            {students?.students?.map((student) => (
               <tr className="hover:bg-indigo-100 rounded-xl cursor-pointer hover:shadow-lg">
                 <td>
                   <div className="flex items-center space-x-3">

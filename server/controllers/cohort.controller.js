@@ -8,6 +8,7 @@ const CreateCohort = async (req, res) => {
       cohortName,
       jrStartDate,
       status: 'jrActive',
+      github: `https://github.com/orgs/student-tool/teams/${cohortName}`,
     });
     await cohort.save();
     res.status(201).json(cohort);
@@ -81,10 +82,26 @@ const addStudentToCohort = async (req, res) => {
   }
 };
 
+const getAllCohortStudents = async (req, res) => {
+  console.log('hit');
+  try {
+    const { cohortName } = req.params;
+
+    const students = await Cohort.findOne({ cohortName }).populate('students');
+    if (!students) {
+      return res.status(404).json({ message: 'Cohort not found' });
+    }
+    res.status(200).json(students);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
 module.exports = {
   CreateCohort,
   GetAllCohorts,
   GetCohortByName,
   changeCohortStatus,
   addStudentToCohort,
+  getAllCohortStudents,
 };

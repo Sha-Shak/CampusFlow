@@ -7,8 +7,8 @@ function getRandomGradient() {
   }, 50%, 80%))`;
 }
 
-function CohortItem({ name, html_url }) {
-  const date = new Date(name.slice(8));
+function CohortItem({ cohortName, github }) {
+  const date = new Date(cohortName.slice(8));
   const navigate = useNavigate();
   const monthYearText = date.toLocaleString('default', {
     month: 'long',
@@ -34,10 +34,10 @@ function CohortItem({ name, html_url }) {
           </p>
         </div>
         <div className="card-body">
-          <h2 className="card-title uppercase">{name}</h2>
+          <h2 className="card-title uppercase">{cohortName}</h2>
 
           <div className="flex card-actions items-center">
-            <a href={html_url} target="_blank" rel="noopener noreferrer">
+            <a href={github} target="_blank" rel="noopener noreferrer">
               <button className="btn btn-md btn-outline rounded-lg bg-black font-semibold text-white mr-2 flex-1">
                 <FaGithub className="mr-2" />
                 GitHub
@@ -45,8 +45,8 @@ function CohortItem({ name, html_url }) {
             </a>
             <button
               onClick={() => {
-                navigate(`/cohorts/${name}/students`);
-                console.log('clicked', name);
+                navigate(`/cohorts/${cohortName}/students`);
+                console.log('clicked', cohortName);
               }}
               className="btn btn-md btn-outline rounded-lg flex-1"
             >
