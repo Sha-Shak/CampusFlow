@@ -2,21 +2,17 @@ import React from 'react';
 
 const ProjectCardSmall = ({ customWidth, customHeight }) => {
   return (
-    <div className=" overflow-hidden ">
-      <div
-        className="hero w-52 h-36 rounded-xl shadow-xl bg-cover bg-center bg-light-blacks-800 opacity-50"
-        style={{
-          backgroundImage: `url("https://res.cloudinary.com/dru7kzv3i/image/upload/v1682913113/ix3evsc4bk3dlfwlfaz0.jpg")`,
-        }}
-      >
-        <div className="hero"></div>
-        <div className="hero-content text-center text-[#181828] ">
-          <div className="max-w-md mb-[30vh]">
-            <h2 className="mb-5 text-2xl font-bold ">
-              <span className="text-[#ffffff]">Project Title</span>
-            </h2>
-          </div>
-        </div>
+    <div
+      className={`w-${customWidth} h-${customHeight} rounded-lg shadow-2xl overflow-hidden relative`}
+    >
+      <img
+        className="absolute inset-0 h-full w-full object-cover"
+        src="https://cdn.pixabay.com/photo/2022/08/28/01/40/cyberpunk-city-7415576_1280.jpg"
+        alt=""
+      />
+      <div className="absolute inset-0 bg-gray-900 bg-opacity-50"></div>
+      <div className="flex h-full items-end relative p-4 font-light">
+        <h1 className="text-xl text-white tracking">Easyhome</h1>
       </div>
     </div>
   );
