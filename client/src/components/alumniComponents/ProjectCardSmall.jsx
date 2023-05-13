@@ -12,7 +12,7 @@ const ProjectCardSmall = ({ customWidth, customHeight }) => {
       />
       <div className="absolute inset-0 bg-gray-900 bg-opacity-50"></div>
       <div className="flex h-full items-end relative p-4 font-light">
-        <h1 className="text-xl text-white tracking">Easyhome</h1>
+        <h1 className="text-xl text-white tracking">Campus Flow</h1>
       </div>
     </div>
   );
