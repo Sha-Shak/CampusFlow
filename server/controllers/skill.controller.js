@@ -37,6 +37,48 @@ const addCategoryToSkill = async (req, res) => {
   }
 };
 
+const addCategoriesToSkills = async (req, res) => {
+  try {
+    const { categoryList, skillIds } = req.body;
+    const result = [];
+
+    for (let i = 0; i < skillIds.length; i++) {
+      const skill = await Skill.findById(skillIds[i]);
+      if (!skill) {
+        return res
+          .status(404)
+          .json({ message: `Skill with id ${skillIds[i]} not found` });
+      }
+
+      for (let j = 0; j < categoryList.length; j++) {
+        const category = categoryList[j].toLowerCase();
+        if (skill.category.includes(category)) {
+          result.push({
+            id: skillIds[i],
+            category,
+            success: false,
+            message: 'Category already added',
+          });
+        } else {
+          skill.category.push(category);
+          await skill.save();
+          result.push({
+            id: skillIds[i],
+            category,
+            success: true,
+            message: 'Category added successfully',
+          });
+        }
+      }
+    }
+
+    res.status(201).json(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
 const addCategoryToSkills = async (req, res) => {
   try {
     const { skills } = req.body;
@@ -148,4 +190,5 @@ module.exports = {
   removeCategoryFromSkill,
   getSkillsByCategory,
   addCategoryToSkills,
+  addCategoriesToSkills,
 };

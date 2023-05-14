@@ -9,6 +9,7 @@ const typeformRoute = require('./routes/typeform.route');
 const userRouter = require('./routes/user.route');
 const projectsRoute = require('./routes/project.route');
 const peerRatingRoute = require('./routes/peerRating.route');
+const cohortRoute = require('./routes/cohort.route');
 const app = express();
 const PORT = process.env.PORT || 8080;
 
@@ -30,7 +31,7 @@ app.use('/typeform', typeformRoute);
 app.use('/user', userRouter);
 app.use('/projects', projectsRoute);
 app.use('/peerRating', peerRatingRoute);
-
+app.use('/cohort', cohortRoute);
 app.listen(PORT, () => {
   console.log(`🚀  Listening on port ${PORT}`);
 });

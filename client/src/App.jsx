@@ -18,6 +18,7 @@ import Cohorts from './pages/Cohorts.page';
 import SkillsRadarChart from './components/SkillsRadarChart';
 import StudentInfo from './pages/StudentInfo';
 import MarkStudents from './pages/MarkStudents.page';
+import AddSkill from './components/AddSkill';
 function App() {
   return (
     <div>
@@ -39,6 +40,7 @@ function App() {
             element={<CohortStudents />}
           />
           <Route path="/student/:id" element={<StudentInfo />} />
+          <Route path="/addSkills" element={<AddSkill />} />
           <Route path="/repoAccess" element={<RepoAccess />} />
           <Route path="test" element={<SkillsRadarChart />} />
           <Route path="*" element={<div>404</div>} />

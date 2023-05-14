@@ -20,7 +20,7 @@ html, body {
 .MuiOutlinedInput-notchedOutline {
   border-color: rgba(196, 146, 245, 0.529)!important;
   border-radius: 10px!important;
-  height: 3.5rem!important;
+
 }
 .MuiButtonBase-root {
   border-radius: 10px!important;
@@ -93,4 +93,9 @@ filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#C9B3FF", en
 }
 .steps-vertical {
 	grid-auto-rows: 0.2fr;
+}
+.badge-outline {
+	background-color: transparent;
+	border: 1px solid #c7c6c6;
+	color: #5b5562;
 }
