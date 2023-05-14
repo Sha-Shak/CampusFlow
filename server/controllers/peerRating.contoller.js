@@ -38,20 +38,11 @@ const addRating = async (req, res) => {
       const savedRating = await newRating.save();
       res.status(200).json(savedRating);
     }
-    // const newRating = new PeerRating({
-    //   givenBy: id,
-    //   givenTo: givenTo,
-    //   rate: rate,
-    //   description: description,
-    // });
-    // const savedRating = await newRating.save();
-    // res.status(200).json(savedRating);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
 
-// get givento rating
 const getRating = async (req, res) => {
   const { id } = req.params;
   try {
