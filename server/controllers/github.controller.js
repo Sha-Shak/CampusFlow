@@ -6,15 +6,49 @@ const gh_personal_token = process.env.GITHUB_PERSONAL_TOKEN;
 const orgName = 'student-tool';
 
 const getGithubAccessToken = async (req, res) => {
-  const { code } = req.body;
+  const { code, role } = req.body;
   console.log(code);
   const url = `https://github.com/login/oauth/access_token?client_id=${gh_client_id}&client_secret=${gh_client_secret}&code=${code}`;
   try {
     const response = await axios.post(url);
     const resultData = response.data;
-    const accessToken = resultData.split('&')[0].split('=')[1];
-    console.log(accessToken);
-    res.status(200).send(accessToken);
+    const githubAccessToken = resultData.split('&')[0].split('=')[1];
+    console.log(githubAccessToken);
+
+    // Assign role to user
+    const currentUser = await getCurrentUser(githubAccessToken);
+    const currentUserName = currentUser.login;
+    const instructorsList = await getOrgInstructors(githubAccessToken);
+    const members = await getOrgMembers(githubAccessToken);
+    let role = '';
+
+    let isInstructor = false;
+    let isMember = false;
+    instructorsList.forEach((instructor) => {
+      if (instructor.login === currentUserName) {
+        isInstructor = true;
+      }
+    });
+    members.forEach((member) => {
+      if (member.login === currentUserName) {
+        isMember = true;
+      }
+    });
+
+    if (!isInstructor) {
+      if (isMember) {
+        // console.log(isMember, 'student');
+        // console.log(isInstructor, 'instructor');
+        role = 'student';
+      } else {
+        res.status(401).send('Unauthorized Member');
+      }
+      //   res.status(401).send('You are not an instructor');
+    } else {
+      //   console.log(members);
+      role = 'instructor';
+    }
+    res.status(200).send({ accessToken: githubAccessToken, role });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error' });
@@ -110,7 +144,7 @@ const getAllCohorts = async (req, res) => {
   }
 };
 const getStudentsInCohort = async (req, res) => {
-  const cohortName = 'student-nov-2023';
+  const cohortName = req.body.cohortName;
   // const cohortID = 7855410;
   const githubAccessToken = req.headers['github-access-token'];
   const url = `https://api.github.com/orgs/${orgName}/teams/${cohortName}/members`;
@@ -130,9 +164,9 @@ const getStudentsInCohort = async (req, res) => {
 };
 
 const deleteStudentFromCohort = async (req, res) => {
-  const cohortName = 'student-nov-2023';
+  const cohortName = req.body.cohortName;
   const githubAccessToken = req.headers['github-access-token'];
-  const username = 'zahidtwt';
+  const username = req.body.username;
   const url = `https://api.github.com/orgs/student-tool/teams/${cohortName}/memberships/${username}`;
   try {
     const response = await axios.delete(url, {
@@ -150,7 +184,7 @@ const deleteStudentFromCohort = async (req, res) => {
 
 //post request
 const addCohort = async (req, res) => {
-  const cohortName = 'studen-zahid-2033';
+  const { cohortName } = req.body;
   const githubAccessToken = req.headers['github-access-token'];
   const url = `https://api.github.com/orgs/${orgName}/teams`;
   try {
@@ -158,9 +192,9 @@ const addCohort = async (req, res) => {
       url,
       {
         name: cohortName,
-        description: 'March 2023 cohort',
+        description: '',
         privacy: 'closed',
-        parent_team_id: 7855405,
+        parent_team_id: 7881229,
       },
       {
         headers: {
@@ -225,7 +259,7 @@ const getGithubInstructor = async (req, res) => {
 
 // getOrgMaintainers;
 const getGithubMaintainers = async (req, res) => {
-  const url = `https://api.github.com/orgs/${orgName}/teams/staff-maintainers/members`;
+  const url = `https://api.github.com/orgs/${orgName}/teams/staff-maintainer/members`;
   const githubAccessToken = req.headers['github-access-token'];
   try {
     const response = await axios.get(url, {
@@ -302,13 +336,14 @@ const getAccessToGithubRepo = async (req, res) => {
           },
         }
       );
-      res.status(200).json('repository added');
+      res.status(200).json({
+        message: `Instructor access granted to ${repoName} for ${teamSlug}`,
+      });
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: 'Server error' });
     }
   } else {
-    console.log('Here');
     res.status(401).json({ message: 'Unauthorized' });
   }
 };
@@ -324,7 +359,9 @@ const removeAccessToGithubRepo = async (req, res) => {
         'github-access-token': githubAccessToken,
       },
     });
-    res.status(200).json(response.data);
+    res.status(200).json({
+      message: `Instructor access removed from ${repoName} for ${teamSlug}`,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error' });

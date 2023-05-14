@@ -6,6 +6,7 @@ const {
 } = require('../controllers/github.controller');
 
 async function authMiddleware(req, res, next) {
+  console.log('authMiddleware to check');
   try {
     const githubAccessToken = req.headers['github-access-token'];
     const currentUser = await getCurrentUser(githubAccessToken);
@@ -25,12 +26,12 @@ async function authMiddleware(req, res, next) {
         isMember = true;
       }
     });
-
     if (!isInstructor) {
       if (isMember) {
-        console.log(isMember, 'student');
-        console.log(isInstructor, 'instructor');
+        // console.log(isMember, 'student');
+        // console.log(isInstructor, 'instructor');
         req.body.role = 'student';
+        console.log('Assigned role student');
         next();
       } else {
         res.status(401).send('Unauthorized Member');
@@ -39,6 +40,7 @@ async function authMiddleware(req, res, next) {
     } else {
       //   console.log(members);
       req.body.role = 'instructor';
+      console.log('Assigned role instructor');
       next();
     }
   } catch (error) {
