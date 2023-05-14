@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const { schema } = require('./skill.model');
-const project = new mongoose.Schema({
+
+const projectSchema = new mongoose.Schema({
   projectName: {
     type: String,
     required: true,
@@ -24,6 +24,12 @@ const project = new mongoose.Schema({
   thirdPartyApi: {
     type: [String],
   },
+  // TODO: Replace ref with Alumni model
+  doneBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Student',
+    required: true,
+  },
   ratigns: {
     type: [
       {
@@ -36,5 +42,6 @@ const project = new mongoose.Schema({
     ],
   },
 });
-const Skill = mongoose.model('Skill', SkillSchema);
-module.exports = Skill;
+
+const Project = mongoose.model('Project', projectSchema);
+module.exports = Project;

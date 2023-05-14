@@ -1,4 +1,3 @@
-const Skill = require('../models/student/skill.model');
 const Student = require('../models/student/student.model');
 const juniorWeeks = require('./juniorWeeks.json');
 const seniorWeeks = require('./seniorWeeks.json');

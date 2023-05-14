@@ -1,38 +1,66 @@
 const express = require('express');
 const router = express.Router();
 const githubController = require('../controllers/github.controller');
+const authMiddleware = require('../middleware/auth.middleware');
 // login to github
 router.post('/access', githubController.getGithubAccessToken);
 
-router.get('/getGithubUser', githubController.getGithubUser);
+router.get('/getGithubUser', authMiddleware, githubController.getGithubUser);
 router.get(
   '/getAllOrganizationMembers',
+  authMiddleware,
   githubController.getAllOrganizationMembers
 );
-router.get('/getAllCohorts', githubController.getAllCohorts);
-router.get('/getStudentsInCohort', githubController.getStudentsInCohort);
+router.get('/getAllCohorts', authMiddleware, githubController.getAllCohorts);
+router.get(
+  '/getStudentsInCohort',
+  authMiddleware,
+  githubController.getStudentsInCohort
+);
 
-router.put('/addStudentToCohort', githubController.addStudentToCohort);
+router.put(
+  '/addStudentToCohort',
+  authMiddleware,
+  githubController.addStudentToCohort
+);
 
 router.delete(
   '/deleteStudentFromCohort',
+  authMiddleware,
   githubController.deleteStudentFromCohort
 );
-router.post('/addCohort', githubController.addCohort);
+router.post('/addCohort', authMiddleware, githubController.addCohort);
 
-router.get('/getGithubInstructor', githubController.getGithubInstructor);
-router.get('/getGithubMaintainers', githubController.getGithubMaintainers);
-router.get('/getGithubTeams', githubController.getGithubTeams);
-router.get('/getGithubOrgRepos', githubController.getGithubOrgRepos);
+router.get(
+  '/getGithubInstructor',
+  authMiddleware,
+  githubController.getGithubInstructor
+);
+router.get(
+  '/getGithubMaintainers',
+  authMiddleware,
+  githubController.getGithubMaintainers
+);
+router.get('/getGithubTeams', authMiddleware, githubController.getGithubTeams);
+router.get(
+  '/getGithubOrgRepos',
+  authMiddleware,
+  githubController.getGithubOrgRepos
+);
 module.exports = router;
 
-router.get('/getAccessToGithubRepo', githubController.getAccessToGithubRepo);
+router.get(
+  '/getAccessToGithubRepo',
+  authMiddleware,
+  githubController.getAccessToGithubRepo
+);
 router.get(
   '/removeAccessToGithubRepo',
+  authMiddleware,
   githubController.removeAccessToGithubRepo
 );
 
-router.put('/addInstructor', githubController.addInstructor);
+router.put('/addInstructor', authMiddleware, githubController.addInstructor);
 
 // debug
 // router.put(

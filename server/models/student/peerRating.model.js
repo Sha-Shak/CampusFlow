@@ -1,5 +1,10 @@
 const mongoose = require('mongoose');
 const peerRating = new mongoose.Schema({
+  givenBy: {
+    type: String,
+    required: true,
+    ref: 'Student',
+  },
   givenTo: {
     type: String,
     required: true,
@@ -14,7 +19,7 @@ const peerRating = new mongoose.Schema({
   },
   count: {
     type: Number,
-    default: 0,
+    default: 1,
   },
 });
 

@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-import { studentApi } from './../../../client/src/features/student/studentApi';
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -14,10 +13,12 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  student: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Student',
-  },
+
+  // user, student, alumni, admin, hr are separate entities
+  // student: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'Student',
+  // },
 });
 const User = mongoose.model('User', userSchema);
 module.exports = User;
