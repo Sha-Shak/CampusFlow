@@ -26,6 +26,7 @@ import ProjectCard from './components/alumniComponents/ProjectCard';
 import Experience from './components/alumniComponents/Experience';
 import Portfolio from './components/alumniComponents/Portfolio';
 import ProjectSection from './components/alumniComponents/ProjectSection';
+import SelectIndustry from './components/alumniComponents/SelectIndustry';
 function App() {
   return (
     <div>
@@ -55,6 +56,7 @@ function App() {
           <Route path="/alumni/chip" element={<SiteChip />} />
           <Route path="/alumni/experience" element={<Experience />} />
           <Route path="/alumni/portfolio" element={<ProjectSection />} />
+          <Route path="/search" element={<SelectIndustry />} />
           <Route path="*" element={<div>404</div>} />
         </Routes>
       </Router>

@@ -35,7 +35,7 @@ body {
 .MuiOutlinedInput-notchedOutline {
   border-color: rgba(196, 146, 245, 0.529) !important;
   border-radius: 10px !important;
-  height: 3.5rem !important;
+  /* height: 3.5rem !important; */
 }
 .MuiButtonBase-root {
   border-radius: 10px !important;
