@@ -27,15 +27,12 @@ function StepMarking({ students, isStudentFetchSuccess }) {
   const [activeStep, setActiveStep] = useState(0);
   const [completed, setCompleted] = useState({});
   const [studentToMark, setStudentToMark] = useState(students[0]?._id);
-  const [addSoftTechSkillsByStudentID, { isSuccess }] =
-    useAddSoftTechSkillsByStudentIDMutation();
 
   useEffect(() => {
     setStudentToMark(students[0]?._id);
   }, [students]);
 
-  function handleMarkSubmission(data) {
-    addSoftTechSkillsByStudentID(data);
+  function handleNext() {
     nextStep();
   }
 
@@ -63,10 +60,6 @@ function StepMarking({ students, isStudentFetchSuccess }) {
     return completedSteps() === totalSteps();
   };
 
-  if (isSuccess) {
-    toast.success('Marking Successful');
-  }
-
   const handleStep = (step, studentId) => () => {
     console.log(studentId);
     setStudentToMark(studentId);
@@ -79,13 +72,7 @@ function StepMarking({ students, isStudentFetchSuccess }) {
     const newCompleted = completed;
     newCompleted[activeStep] = true;
     setCompleted(newCompleted);
-    handleMarkSubmission();
   };
-
-  // const handleReset = () => {
-  //   setActiveStep(0);
-  //   setCompleted({});
-  // };
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -169,7 +156,7 @@ function StepMarking({ students, isStudentFetchSuccess }) {
         {isStudentFetchSuccess && (
           <MarkStudent
             studentId={studentToMark}
-            handleMarkSubmission={handleMarkSubmission}
+            handleNext={handleNext}
             week={week}
           />
         )}

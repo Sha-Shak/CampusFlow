@@ -5,8 +5,8 @@ import Grid from '@mui/material/Grid';
 import { Button, Divider, Paper } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
-function MarkSlider({ title, name, defaultValue, onChange }) {
-  const [defaultMark, setDefaultMark] = useState(3);
+function MarkSlider({ title, name, defaultValue = 4, onChange }) {
+  const [defaultMark, setDefaultMark] = useState();
   useEffect(() => {
     setDefaultMark(defaultValue);
   }, [defaultValue]);
@@ -14,6 +14,7 @@ function MarkSlider({ title, name, defaultValue, onChange }) {
     value: i + 1,
     label: i + 1,
   }));
+
   return (
     <>
       <Grid
@@ -32,20 +33,14 @@ function MarkSlider({ title, name, defaultValue, onChange }) {
             max={10}
             step={1}
             name={name}
-            defaultValue={defaultMark}
+            value={defaultMark}
             marks={sliderMarks}
-            onChange={onChange}
+            onChange={() => {
+              setDefaultMark(event.target.value);
+            }}
           />
         </Grid>
       </Grid>
-      <div
-        onClick={() => {
-          setDefaultMark(0);
-          console.log(defaultMark);
-        }}
-      >
-        Submit
-      </div>
     </>
   );
 }
