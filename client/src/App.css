@@ -91,3 +91,6 @@ filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#C9B3FF", en
 	border-radius: 100px!important;
 	line-height: 20px!important;
 }
+.steps-vertical {
+	grid-auto-rows: 0.2fr;
+}

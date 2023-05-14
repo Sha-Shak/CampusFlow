@@ -10,21 +10,28 @@ import {
   useSetStudentWeekInfoMutation,
 } from '../features/student/studentApi';
 import DaisyMark from './DaisyMark';
+import toast, { Toaster } from 'react-hot-toast';
 
 const MarkStudent = ({ studentId, week, handleNext }) => {
   const { data: softSkills } = useGetSkillsByCategoryQuery('softskill');
 
   const { data: techSkills } = useGetSkillsByCategoryQuery('techskill');
 
-  const { data: studentWeekInfo } = useGetStudentWeekInfoQuery({
-    studentId,
-    week,
-  });
-  const [setWeekInfo, { data: weekInfo }] = useSetStudentWeekInfoMutation();
+  const { data: studentWeekInfo, refetch: refetchStudentInfo } =
+    useGetStudentWeekInfoQuery({
+      studentId,
+      week,
+    });
+
+  useEffect(() => {
+    refetchStudentInfo();
+  }, [week, studentId]);
+  const [setWeekInfo, { data: weekInfo, isSuccess, isError }] =
+    useSetStudentWeekInfoMutation();
   const initialAssessmentMark = {
     assessmentMark: 0,
   };
-
+  console.log(studentId);
   const [assessmentMark, setAssessmentMark] = useState(initialAssessmentMark);
   const [softSkillMarks, setSoftSkillMarks] = useState();
   const [techSkillMarks, setTechSkillMarks] = useState();
@@ -54,7 +61,7 @@ const MarkStudent = ({ studentId, week, handleNext }) => {
       setInitialTechSkillMarks(initialMarks);
       setTechSkillMarks(initialTechSkillMarks);
     }
-  }, [studentWeekInfo, techSkills, softSkills]);
+  }, [studentWeekInfo, techSkills, softSkills, studentId, week]);
 
   // slider default value and marks
 
@@ -118,6 +125,7 @@ const MarkStudent = ({ studentId, week, handleNext }) => {
     }));
   };
 
+  console.log(softSkillMarks);
   const handleSubmit = (event) => {
     event.preventDefault();
     const allSoftSkillMarks = Object.entries(softSkillMarks).map(
@@ -154,9 +162,18 @@ const MarkStudent = ({ studentId, week, handleNext }) => {
     setWeekInfo(data);
     setAssessmentMark(initialAssessmentMark);
     handleNext();
+    refetchStudentInfo();
     setUnitMarks({});
     // toast.success('Marking Successful');
   };
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success('Marking Successful');
+    }
+    if (isError) {
+      toast.error('Marking Failed');
+    }
+  }, [isSuccess, isError]);
 
   return (
     <>
@@ -167,6 +184,7 @@ const MarkStudent = ({ studentId, week, handleNext }) => {
           bgcolor: 'white',
         }}
       >
+        <Toaster />
         {/* Assessment Mark Slider */}
         <form onSubmit={handleSubmit}>
           <div className="divider font-600 uppercase">Weekly Assessment</div>
