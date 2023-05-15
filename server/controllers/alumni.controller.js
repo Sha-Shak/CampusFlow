@@ -30,7 +30,7 @@ const convertToAlumni = async (req, res) => {
     // update student status
     student.status = !student.status;
     student.type = 'alumni';
-    student.alumiId = alumni._id;
+    student.alumniId = alumni._id;
     await student.save();
 
     res.status(200).send({ message: 'Student converted to alumni', alumni });
@@ -122,6 +122,24 @@ const deleteInfo = async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 };
+const addSkills = async (req, res) => {
+  const items = req.body.info;
+  const { id } = req.params;
+  try {
+    const alumni = await Alumni.findById(id);
+    alumni.skills = items.map((item) => {
+      //   console.log(item);
+      return item;
+    });
+
+    // console.log(alumni.skills);
+    await alumni.save();
+    res.status(200).send({ message: 'Skills added', alumni });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send('Internal Server Error');
+  }
+};
 
 // const deleteEducation = async (req, res) => {
 //   const { id } = req.params; // alumni id
@@ -178,6 +196,7 @@ module.exports = {
   convertToAlumni,
   postInfo,
   deleteInfo,
+  addSkills,
   //   addEducation,
   //   deleteEducation,
   //   addExperience,
