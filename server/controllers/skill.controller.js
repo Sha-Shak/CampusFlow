@@ -2,11 +2,16 @@ const Skill = require('../models/student/skill.model');
 
 const addSkill = async (req, res) => {
   try {
-    const { skillName, description, category } = req.body;
+    const { skillName, description } = req.body;
+
+    const existingSkill = await Skill.findOne({
+      skillName: { $regex: new RegExp(`^${skillName}$`, 'i') },
+    });
+    if (existingSkill) {
+      return res.status(400).json({ message: 'Skill already exists' });
+    }
 
     const skill = new Skill({ skillName, description });
-    const categories = category.split(',').map((c) => c.trim());
-    skill.category.push(...categories);
     await skill.save();
     res.status(201).json(skill);
   } catch (error) {
@@ -51,7 +56,7 @@ const addCategoriesToSkills = async (req, res) => {
       }
 
       for (let j = 0; j < categoryList.length; j++) {
-        const category = categoryList[j].toLowerCase();
+        const category = categoryList[j];
         if (skill.category.includes(category)) {
           result.push({
             id: skillIds[i],

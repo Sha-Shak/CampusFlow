@@ -7,53 +7,85 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import {
   useAddCategoriesToSkillsMutation,
+  useCreateSkillMutation,
   useGetAllSkillsQuery,
 } from '../features/skill/skillApi';
 import Layout from './Layout';
 import SkillsChips from './SkillsChips.component';
-
+import toast, { Toaster } from 'react-hot-toast';
 // Todo: Importing the skills from the database (dummy data on line 161)
 
 const AddSkill = () => {
-  const { data: skillsName, isSuccess } = useGetAllSkillsQuery();
+  const {
+    data: skillsName,
+    isSuccess,
+    refetch: refetchSkills,
+  } = useGetAllSkillsQuery();
   const [
     addCategoriesToSkills,
-    { data, isSuccess: isAddSkillsSuccess, isError, isLoading, error },
+    { isSuccess: isAddSkillsSuccess, isError: isAddSkilsError },
   ] = useAddCategoriesToSkillsMutation();
-
+  const [
+    createSkill,
+    {
+      isSuccess: isCreateSkillSuccess,
+      isError: isCreateSkillError,
+      error: createSkillError,
+    },
+  ] = useCreateSkillMutation();
   const [selectedSkills, setSelectedSkills] = useState([]);
   const [newSkillName, setNewSkillName] = useState('');
   const [newSkillDescription, setNewSkillDescription] = useState('');
   const [category, setCategory] = useState([]);
 
-  useEffect(() => {}, [skillsName]);
+  useEffect(() => {
+    if (isAddSkillsSuccess) {
+      toast.success('Skill Added Successfully');
+    }
+    if (isAddSkilsError) {
+      toast.error('Something went wrong');
+    }
+  }, [isAddSkillsSuccess, isAddSkilsError]);
+
+  useEffect(() => {
+    if (isCreateSkillSuccess) {
+      toast.success('Skill Created Successfully');
+      refetchSkills();
+    }
+    if (isCreateSkillError) {
+      toast.error(createSkillError?.data?.message);
+    }
+  }, [isCreateSkillSuccess, isCreateSkillError]);
 
   const handleCategoryChange = (event) => {
-    console.log(event.target.value);
     setCategory([...category, event.target.value]);
   };
   const handleAddSkill = (event) => {
     event.preventDefault();
+    const skillIds = selectedSkills.map((skill) => skill._id);
+    const categoryList = category;
+    const data = {
+      skillIds,
+      categoryList,
+    };
+    addCategoriesToSkills(data);
   };
-  console.log(selectedSkills);
-  const handleSelecteSkillsChange = (event) => {
-    console.log(event.target.value);
-    setSelectedSkills([...selectedSkills, event.target.value]);
+
+  const handleSelecteSkillsChange = (event, value) => {
+    setSelectedSkills(value);
   };
   const handleCreateSkill = (event) => {
     event.preventDefault();
     const newSkill = {
       skillName: newSkillName,
-      skillDescription: newSkillDescription,
-      junior: junior,
-      senior: senior,
+      description: newSkillDescription,
     };
-    console.log(newSkill);
-    console.log('Create Skill');
+    createSkill(newSkill);
   };
 
   return (
     <Layout>
+      <Toaster />
       <div className="bg-white flex p-10 h-[80vh] rounded-xl">
         <div className="flex-[0.4]  mr-32">
           <SkillsChips skillsName={skillsName} type={'Soft Skills'} />
@@ -73,18 +105,17 @@ const AddSkill = () => {
               <Grid item xs={10}>
                 {isSuccess && (
                   <Autocomplete
+                    onChange={handleSelecteSkillsChange}
+                    value={selectedSkills}
                     multiple
-                    id="tags-standard"
                     options={skillsName}
                     getOptionLabel={(option) => option?.skillName}
                     renderInput={(params) => (
                       <TextField
-                        value={selectedSkills}
                         {...params}
                         variant="outlined"
                         placeholder="Select skills"
                         size="small"
-                        onChange={handleSelecteSkillsChange}
                       />
                     )}
                   />
@@ -98,12 +129,12 @@ const AddSkill = () => {
               sx={{
                 display: 'flex',
                 flexDirection: 'row',
-                justifyContent: 'space-around',
+                justifyContent: 'space-between',
                 alignItems: 'center',
                 mt: 2,
               }}
             >
-              <Typography variant="h6">Skill For:</Typography>
+              <Typography variant="p">Skill For:</Typography>
 
               <FormControlLabel
                 control={
@@ -137,6 +168,85 @@ const AddSkill = () => {
                   />
                 }
                 label="Alumni"
+              />
+            </Box>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                mt: 2,
+              }}
+            >
+              <Typography variant="p">Skill Type:</Typography>
+
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    // checked={junior}
+                    onChange={handleCategoryChange}
+                    color="primary"
+                    value={'frontend'}
+                  />
+                }
+                label="Frontend"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    // checked={senior}
+                    onChange={handleCategoryChange}
+                    color="primary"
+                    value={'backend'}
+                  />
+                }
+                label="Backend"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    // checked={senior}
+                    onChange={handleCategoryChange}
+                    color="primary"
+                    value={'testing'}
+                  />
+                }
+                label="Testing"
+              />
+            </Box>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                mt: 2,
+              }}
+            >
+              <Typography variant="p">Skill Category:</Typography>
+
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    // checked={junior}
+                    onChange={handleCategoryChange}
+                    color="primary"
+                    value={'softskill'}
+                  />
+                }
+                label="Soft Skill"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    // checked={senior}
+                    onChange={handleCategoryChange}
+                    color="primary"
+                    value={'techskill'}
+                  />
+                }
+                label="Techskill"
               />
             </Box>
             <Button
@@ -174,7 +284,6 @@ const AddSkill = () => {
               </div>
               <div className="flex-[0.6] ">
                 <TextField
-                  required
                   id="skillDescription"
                   name="skillDescription"
                   label="Skill Description"

@@ -38,6 +38,7 @@ export const skillApi = apiSlice.injectEndpoints({
 });
 
 export const {
+  useCreateSkillMutation,
   useGetSkillsByCategoryQuery,
   useGetAllSkillsQuery,
   useAddCategoriesToSkillsMutation,

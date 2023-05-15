@@ -13,6 +13,7 @@ import DaisyMark from './DaisyMark';
 import toast, { Toaster } from 'react-hot-toast';
 
 const MarkStudent = ({ studentId, week, handleNext }) => {
+  console.log(week);
   const { data: softSkills } = useGetSkillsByCategoryQuery('softskill');
 
   const { data: techSkills } = useGetSkillsByCategoryQuery('techskill');
