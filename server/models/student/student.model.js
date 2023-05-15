@@ -19,7 +19,7 @@ const StudentSchema = new mongoose.Schema({
   },
   status: {
     type: Boolean,
-    default: false,
+    default: true,
   },
   type: {
     type: String,
@@ -49,6 +49,10 @@ const StudentSchema = new mongoose.Schema({
   },
   checkpoints: {
     type: [weekMarksSchema],
+  },
+  alumniId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Alumni',
   },
 });
 
