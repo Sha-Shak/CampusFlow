@@ -19,6 +19,8 @@ import SkillsRadarChart from './components/SkillsRadarChart';
 import StudentInfo from './pages/StudentInfo';
 import MarkStudents from './pages/MarkStudents.page';
 import AddSkill from './pages/AddSkills.page';
+import MigrateStudents from './pages/MigrateStudents.page';
+
 function App() {
   return (
     <div>
@@ -41,6 +43,7 @@ function App() {
           />
           <Route path="/student/:id" element={<StudentInfo />} />
           <Route path="/addSkills" element={<AddSkill />} />
+          <Route path="/migratestudents" element={<MigrateStudents />} />
           <Route path="/repoAccess" element={<RepoAccess />} />
           <Route path="test" element={<SkillsRadarChart />} />
           <Route path="*" element={<div>404</div>} />
