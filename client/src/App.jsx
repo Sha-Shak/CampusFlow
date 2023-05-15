@@ -18,15 +18,7 @@ import Cohorts from './pages/Cohorts.page';
 import SkillsRadarChart from './components/SkillsRadarChart';
 import StudentInfo from './pages/StudentInfo';
 import MarkStudents from './pages/MarkStudents.page';
-import AlumniInfoCard from './components/alumniComponents/AlumniInfoCard';
-import AlumniSidebar from './components/alumniComponents/AlumniSidebar';
-import SiteChip from './components/alumniComponents/SiteChip';
-import SmallNavProfile from './components/alumniComponents/SmallNavProfile';
-import ProjectCard from './components/alumniComponents/ProjectCard';
-import Experience from './components/alumniComponents/Experience';
-import Portfolio from './components/alumniComponents/Portfolio';
-import ProjectSection from './components/alumniComponents/ProjectSection';
-import SelectIndustry from './components/alumniComponents/SelectIndustry';
+import AddSkill from './components/AddSkill';
 function App() {
   return (
     <div>
@@ -48,6 +40,7 @@ function App() {
             element={<CohortStudents />}
           />
           <Route path="/student/:id" element={<StudentInfo />} />
+          <Route path="/addSkills" element={<AddSkill />} />
           <Route path="/repoAccess" element={<RepoAccess />} />
           <Route path="test" element={<SkillsRadarChart />} />
           <Route path="/alumni/info" element={<AlumniInfoCard />} />

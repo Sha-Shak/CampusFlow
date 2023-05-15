@@ -21,10 +21,12 @@ import {
 import { useEffect, useState } from 'react';
 import MarkStudent from '../components/MarkStudent';
 import StepMarking from '../components/StepMarking';
+import MultiStepForm from '../components/DaisyStep';
 
 function MarkStudents() {
   const [cohort, setCohort] = useState('');
   const [students, setStudents] = useState([]);
+  const [week, setWeek] = useState(1);
 
   const { data: cohorts, isSuccess: isCohortsSuccess } = useGetAllCohortQuery();
   const { data: cohortStudents, isSuccess: isStudentFetchSuccess } =
@@ -36,6 +38,9 @@ function MarkStudents() {
   }, [isStudentFetchSuccess]);
   const handleChange = (event) => {
     setCohort(event.target.value);
+  };
+  const handleWeekChange = (event) => {
+    setWeek(event.target.value);
   };
 
   return (
@@ -69,6 +74,22 @@ function MarkStudents() {
                 {cohort}
               </Typography>
             </Box>
+
+            <FormControl sx={{ mb: '5px' }}>
+              <InputLabel id="demo-simple-select-label">Select Week</InputLabel>
+              <Select
+                value={week}
+                label="Select Week"
+                onChange={handleWeekChange}
+              >
+                <MenuItem value={1}>Week 1</MenuItem>
+                <MenuItem value={2}>Week 2</MenuItem>
+                <MenuItem value={3}>Week 3</MenuItem>
+                <MenuItem value={4}>Week 4</MenuItem>
+                <MenuItem value={5}>Week 5</MenuItem>
+                <MenuItem value={6}>Week 6</MenuItem>
+              </Select>
+            </FormControl>
             <FormControl sx={{ m: 1, minWidth: 220 }}>
               <InputLabel>Select Cohort</InputLabel>
               <Select
@@ -90,7 +111,8 @@ function MarkStudents() {
           </Box>
           <Divider variant="middle" />
           {isStudentFetchSuccess && (
-            <StepMarking
+            <MultiStepForm
+              week={week}
               students={students}
               isStudentFetchSuccess={isStudentFetchSuccess}
             />

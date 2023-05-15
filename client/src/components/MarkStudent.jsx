@@ -9,23 +9,29 @@ import {
   useGetStudentWeekInfoQuery,
   useSetStudentWeekInfoMutation,
 } from '../features/student/studentApi';
-import MarkSlider from './MarkSlider';
+import DaisyMark from './DaisyMark';
+import toast, { Toaster } from 'react-hot-toast';
 
-const MarkStudent = ({ studentId, week, handleMarkSubmission }) => {
-  console.log(studentId, week);
+const MarkStudent = ({ studentId, week, handleNext }) => {
   const { data: softSkills } = useGetSkillsByCategoryQuery('softskill');
 
   const { data: techSkills } = useGetSkillsByCategoryQuery('techskill');
 
-  const { data: studentWeekInfo } = useGetStudentWeekInfoQuery({
-    studentId,
-    week,
-  });
-  const [setWeekInfo, { data: weekInfo }] = useSetStudentWeekInfoMutation();
+  const { data: studentWeekInfo, refetch: refetchStudentInfo } =
+    useGetStudentWeekInfoQuery({
+      studentId,
+      week,
+    });
+
+  useEffect(() => {
+    refetchStudentInfo();
+  }, [week, studentId]);
+  const [setWeekInfo, { data: weekInfo, isSuccess, isError }] =
+    useSetStudentWeekInfoMutation();
   const initialAssessmentMark = {
     assessmentMark: 0,
   };
-
+  console.log(studentId);
   const [assessmentMark, setAssessmentMark] = useState(initialAssessmentMark);
   const [softSkillMarks, setSoftSkillMarks] = useState();
   const [techSkillMarks, setTechSkillMarks] = useState();
@@ -44,7 +50,6 @@ const MarkStudent = ({ studentId, week, handleMarkSubmission }) => {
         return acc;
       }, {});
       setInitialSoftSkillMarks(initialMarks);
-
       setSoftSkillMarks(initialSoftSkillMarks);
     }
 
@@ -54,10 +59,9 @@ const MarkStudent = ({ studentId, week, handleMarkSubmission }) => {
         return acc;
       }, {});
       setInitialTechSkillMarks(initialMarks);
-
       setTechSkillMarks(initialTechSkillMarks);
     }
-  }, [studentWeekInfo, techSkills, softSkills]);
+  }, [studentWeekInfo, techSkills, softSkills, studentId, week]);
 
   // slider default value and marks
 
@@ -86,22 +90,16 @@ const MarkStudent = ({ studentId, week, handleMarkSubmission }) => {
     });
     setModifiedTechSkills(generate);
   }, [studentWeekInfo, techSkills]);
-
   const sliderMarks = Array.from({ length: 10 }, (_, i) => ({
     value: i + 1,
     label: i + 1,
   }));
 
-  // TODO: Add the week from the database
-  const handleWeekChange = (event) => {
-    setWeek(event.target.value);
-    console.log(week);
-  };
-
   const handleAssessmentMarkChange = (event) => {
+    const assesmark = +event.target.value;
     setAssessmentMark((prev) => ({
       ...prev,
-      [event.target.name]: event.target.value,
+      [event.target.name]: assesmark,
     }));
   };
   const handleUnitMarkChange = (event) => {
@@ -112,19 +110,22 @@ const MarkStudent = ({ studentId, week, handleMarkSubmission }) => {
   };
 
   const handleSoftSliderChange = (event) => {
+    const mark = +event.target.value;
     setSoftSkillMarks((prev) => ({
       ...prev,
-      [event.target.name]: event.target.value,
+      [event.target.name]: mark,
     }));
   };
 
   const handleTechSliderChange = (event) => {
+    const mark = +event.target.value;
     setTechSkillMarks((prev) => ({
       ...prev,
-      [event.target.name]: event.target.value,
+      [event.target.name]: mark,
     }));
   };
 
+  console.log(softSkillMarks);
   const handleSubmit = (event) => {
     event.preventDefault();
     const allSoftSkillMarks = Object.entries(softSkillMarks).map(
@@ -135,7 +136,7 @@ const MarkStudent = ({ studentId, week, handleMarkSubmission }) => {
     );
     const allTechSkillMarks = Object.entries(techSkillMarks).map(
       ([skill, mark]) => ({
-        skillName: skill,
+        skill: skill,
         marks: mark,
       })
     );
@@ -144,6 +145,7 @@ const MarkStudent = ({ studentId, week, handleMarkSubmission }) => {
       marks: mark,
     }));
 
+    console.log(assessmentMark.assessmentMark);
     const data = {
       studentId,
       week,
@@ -156,12 +158,22 @@ const MarkStudent = ({ studentId, week, handleMarkSubmission }) => {
     console.log('submit');
 
     // handleMarkSubmission(data);
+
     setWeekInfo(data);
     setAssessmentMark(initialAssessmentMark);
-
+    handleNext();
+    refetchStudentInfo();
     setUnitMarks({});
     // toast.success('Marking Successful');
   };
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success('Marking Successful');
+    }
+    if (isError) {
+      toast.error('Marking Failed');
+    }
+  }, [isSuccess, isError]);
 
   return (
     <>
@@ -169,119 +181,65 @@ const MarkStudent = ({ studentId, week, handleMarkSubmission }) => {
         elevation={0}
         sx={{
           px: 5,
-          // borderRadius: '20px',
           bgcolor: 'white',
-          // boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
         }}
       >
+        <Toaster />
         {/* Assessment Mark Slider */}
         <form onSubmit={handleSubmit}>
-          <MarkSlider
+          <div className="divider font-600 uppercase">Weekly Assessment</div>
+
+          <DaisyMark
             title={'Assesment Marks'}
-            name={assessmentMark}
             onChange={handleAssessmentMarkChange}
+            name={'assessmentMark'}
+            defaultValue={studentWeekInfo?.assessmentMarks || 0}
           />
-          <Divider />
           {/* Assessment Mark Slider Finished */}
           {/* Soft Skill Sliders */}
-          <Grid item xs={12} sx={{ mt: 2 }}>
-            <Typography variant="h5">Soft Skill Marks</Typography>
-          </Grid>
-          <Divider sx={{ mt: 2 }} />
-          <Grid item xs={12} sx={{ mt: 2 }}>
-            <FormGroup>
-              {modifiedSoftSkills?.map((skill, index) => (
-                <div key={index}>
-                  <MarkSlider
-                    title={skill?.skillName}
-                    name={skill?._id}
-                    onChange={handleSoftSliderChange}
-                  />
-                </div>
-              ))}
-            </FormGroup>
-          </Grid>
-          <Divider sx={{ mt: 2 }} />
-          {/* Soft Skill Sliders Finished */}
-          <Grid item xs={12} sx={{ mt: 2 }}>
-            <Typography variant="h5">Tech Skill Marks</Typography>
-          </Grid>
-          <Divider sx={{ mt: 2 }} />
+          <div className="divider font-600 uppercase">Soft Skills </div>
+
+          {modifiedSoftSkills?.map((skill, index) => (
+            <div key={index}>
+              <DaisyMark
+                title={skill?.skillName}
+                onChange={handleSoftSliderChange}
+                name={skill?._id}
+                defaultValue={skill?.marks || 0}
+              />
+            </div>
+          ))}
+
           {/* Tech Skill Sliders */}
-          <Grid item xs={12} sx={{ mt: 2 }}>
-            <FormGroup>
-              {modifiedTechSkills?.map((skill, index) => (
-                <Grid
-                  container
-                  spacing={2}
-                  alignItems="stretch"
-                  justifyContent={'space-around'}
-                  key={index}
-                >
-                  <Grid item xs={4}>
-                    <Typography variant="body1">{skill?.skillName}</Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Slider
-                      min={0}
-                      max={10}
-                      step={1}
-                      // defaultValue={skill?.marks || 0}
-                      // value={skill?.marks}
-                      marks={sliderMarks}
-                      name={skill?._id}
-                      onChange={handleTechSliderChange}
-                    />
-                  </Grid>
-                </Grid>
-              ))}
-            </FormGroup>
-          </Grid>
-          <Divider sx={{ mt: 2 }} />
-          {/* Tech Skill Sliders Finished */}
-          <Grid item xs={12} sx={{ mt: 2 }}>
-            <Typography variant="h5">Unit Marks</Typography>
-          </Grid>
-          <Divider sx={{ mt: 2 }} />
-          {/* Tech Skill Sliders */}
-          <Grid item xs={12} sx={{ mt: 2 }}>
-            <FormGroup>
-              {studentUnitMarks?.map((unit, index) => (
-                <Grid
-                  container
-                  spacing={2}
-                  alignItems="stretch"
-                  justifyContent={'space-around'}
-                  key={index}
-                >
-                  <Grid item xs={4}>
-                    <Typography variant="body1">{unit?.unitName}</Typography>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <Slider
-                      min={0}
-                      max={10}
-                      step={1}
-                      defaultValue={0}
-                      // value={skill?.marks}
-                      marks={sliderMarks}
-                      name={unit?.unitName}
-                      onChange={handleUnitMarkChange}
-                    />
-                  </Grid>
-                </Grid>
-              ))}
-            </FormGroup>
-          </Grid>
-          <Divider sx={{ mt: 2 }} />
-          <Button
-            type="submit"
-            variant="contained"
-            size="large"
-            color="primary"
-          >
+          <div className="divider font-600 uppercase">Tech Skills</div>
+
+          {modifiedTechSkills?.map((skill, index) => (
+            <div key={index}>
+              <DaisyMark
+                title={skill?.skillName}
+                onChange={handleTechSliderChange}
+                name={skill?._id}
+                defaultValue={skill?.marks || 0}
+              />
+            </div>
+          ))}
+
+          <div className="">
+            <div className="divider font-600 uppercase">Unit Marks</div>
+            {studentUnitMarks?.map((unit, index) => (
+              <div className=" p-2 pt-1 rounded-lg" key={index}>
+                <DaisyMark
+                  title={unit?.unitName}
+                  onChange={handleUnitMarkChange}
+                  name={unit?.unitName}
+                  defaultValue={unit?.marks || 0}
+                />
+              </div>
+            ))}
+          </div>
+          <button className="btn" type="submit">
             Submit Marks
-          </Button>
+          </button>
         </form>
       </Paper>
     </>

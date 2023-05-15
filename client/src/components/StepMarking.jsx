@@ -16,6 +16,7 @@ import {
   MenuItem,
   Select,
 } from '@mui/material';
+import MultiStepForm from './DaisyStep';
 const steps = [
   'Select campaign settings',
   'Create an ad group',
@@ -27,15 +28,12 @@ function StepMarking({ students, isStudentFetchSuccess }) {
   const [activeStep, setActiveStep] = useState(0);
   const [completed, setCompleted] = useState({});
   const [studentToMark, setStudentToMark] = useState(students[0]?._id);
-  const [addSoftTechSkillsByStudentID, { isSuccess }] =
-    useAddSoftTechSkillsByStudentIDMutation();
 
   useEffect(() => {
     setStudentToMark(students[0]?._id);
   }, [students]);
 
-  function handleMarkSubmission(data) {
-    addSoftTechSkillsByStudentID(data);
+  function handleNext() {
     nextStep();
   }
 
@@ -63,10 +61,6 @@ function StepMarking({ students, isStudentFetchSuccess }) {
     return completedSteps() === totalSteps();
   };
 
-  if (isSuccess) {
-    toast.success('Marking Successful');
-  }
-
   const handleStep = (step, studentId) => () => {
     console.log(studentId);
     setStudentToMark(studentId);
@@ -79,13 +73,7 @@ function StepMarking({ students, isStudentFetchSuccess }) {
     const newCompleted = completed;
     newCompleted[activeStep] = true;
     setCompleted(newCompleted);
-    handleMarkSubmission();
   };
-
-  // const handleReset = () => {
-  //   setActiveStep(0);
-  //   setCompleted({});
-  // };
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -102,6 +90,10 @@ function StepMarking({ students, isStudentFetchSuccess }) {
             <MenuItem value={6}>Week 6</MenuItem>
           </Select>
         </FormControl>
+        <MultiStepForm
+          students={students}
+          isStudentFetchSuccess={isStudentFetchSuccess}
+        />
         <Stepper nonLinear activeStep={activeStep} orientation="vertical">
           {students.map((student, index) => (
             <Step key={student?.name} completed={completed[index]}>
@@ -120,22 +112,10 @@ function StepMarking({ students, isStudentFetchSuccess }) {
               <Typography sx={{ mt: 2, mb: 1 }}>
                 All Student Marking Successful!
               </Typography>
-              {/* <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-                <Box sx={{ flex: '1 1 auto' }} />
-                <Button ></Button>
-              </Box> */}
             </>
           ) : (
             <>
               <Box>
-                {/* <Button
-                  color="inherit"
-                  disabled={activeStep === 0}
-                  onClick={handleBack}
-                  sx={{ mr: 1 }}
-                >
-                  Back
-                </Button> */}
                 <Box sx={{ flex: '1 1 auto' }} />
 
                 {activeStep !== students?.length &&
@@ -147,18 +127,17 @@ function StepMarking({ students, isStudentFetchSuccess }) {
                       Mark already submitted.
                     </Typography>
                   ) : (
-                    ''
-                    // <Button
-                    //   sx={{ mt: '10px', position: 'fixed', bottom: '60px' }}
-                    //   onClick={handleComplete}
-                    //   variant="contained"
-                    //   size="large"
-                    //   color="primary"
-                    // >
-                    //   {completedSteps() === totalSteps() - 1
-                    //     ? 'Submit & Finish'
-                    //     : 'Submit Marks & Next'}
-                    // </Button>
+                    <Button
+                      sx={{ mt: '10px', position: 'fixed', bottom: '60px' }}
+                      onClick={handleComplete}
+                      variant="contained"
+                      size="large"
+                      color="primary"
+                    >
+                      {completedSteps() === totalSteps() - 1
+                        ? 'Submit & Finish'
+                        : 'Submit Marks & Next'}
+                    </Button>
                   ))}
               </Box>
             </>
@@ -169,7 +148,7 @@ function StepMarking({ students, isStudentFetchSuccess }) {
         {isStudentFetchSuccess && (
           <MarkStudent
             studentId={studentToMark}
-            handleMarkSubmission={handleMarkSubmission}
+            handleNext={handleNext}
             week={week}
           />
         )}

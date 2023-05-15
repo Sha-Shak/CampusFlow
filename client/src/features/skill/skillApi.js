@@ -27,7 +27,18 @@ export const skillApi = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    addCategoriesToSkills: builder.mutation({
+      query: (data) => ({
+        url: `/skill/addCategoriesToSkills`,
+        method: 'POST',
+        body: data,
+      }),
+    }),
   }),
 });
 
-export const { useGetSkillsByCategoryQuery, useGetAllSkillsQuery } = skillApi;
+export const {
+  useGetSkillsByCategoryQuery,
+  useGetAllSkillsQuery,
+  useAddCategoriesToSkillsMutation,
+} = skillApi;
