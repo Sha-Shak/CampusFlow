@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -9,13 +10,18 @@ const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 const SelectIndustry = () => {
+  const [selectedIndustry, setSelectedIndustry] = useState([]);
   const industries = industriesData.industries;
 
   const option = industries.map((industry) => {
     return industry;
   });
 
-  console.log(option);
+  const handleSelectedIndustry = (e, value) => {
+    console.log(value);
+    setSelectedIndustry(value);
+  }
+
   return (
     <div className="p-24">
       <Autocomplete
@@ -24,6 +30,8 @@ const SelectIndustry = () => {
         // limitTags={4}
         disableCloseOnSelect
         getOptionLabel={(option) => option}
+        onChange={handleSelectedIndustry}
+        value={selectedIndustry}
         renderOption={(props, option, { selected }) => (
           <li {...props}>
             <Checkbox
