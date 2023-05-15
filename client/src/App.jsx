@@ -19,6 +19,13 @@ import SkillsRadarChart from './components/SkillsRadarChart';
 import StudentInfo from './pages/StudentInfo';
 import MarkStudents from './pages/MarkStudents.page';
 import AddSkill from './components/AddSkill';
+import AlumniInfoCard from './components/alumniComponents/AlumniInfoCard';
+import AlumniSidebar from './components/alumniComponents/AlumniSidebar';
+import ProjectCard from './components/alumniComponents/ProjectCard';
+import SiteChip from './components/alumniComponents/SiteChip';
+import Experience from './components/alumniComponents/Experience';
+import ProjectSection from './components/alumniComponents/ProjectSection';
+import SelectIndustry from './components/alumniComponents/SelectIndustry';
 function App() {
   return (
     <div>
