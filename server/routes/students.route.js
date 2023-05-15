@@ -22,10 +22,7 @@ router.post(
   studentsControllers.addSoftTechSkillsByStudentID
 );
 
-router.put(
-  '/changeJuniorStudentToSenior/:id',
-  studentsControllers.changeJuniorStudentToSenior
-);
+router.put('/changeStudentsType/', studentsControllers.changeStudentsType);
 
 router.post(
   '/saveMidEndJuniorData/:id',

@@ -3,7 +3,7 @@ const router = express.Router();
 const alumniController = require('../controllers/alumni.controller');
 
 router.get('/test', alumniController.test);
-router.post('/convertToAlumni/:id', alumniController.convertToAlumni);
+router.post('/convertToAlumni/', alumniController.convertToAlumni);
 router.post('/postInfo/:id', alumniController.postInfo);
 // router.post('/postAbout/:id', alumniController.postAbout);
 // router.post('/addEducation/:id', alumniController.addEducation);

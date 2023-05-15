@@ -10,6 +10,10 @@ import {
 } from '../features/cohort/cohortApi';
 import { FaLongArrowAltRight } from 'react-icons/fa';
 import { Button } from '@mui/material';
+import { useChangeStudentsTypeMutation } from '../features/student/studentApi';
+import { useConvertToAlumniMutation } from '../features/alumni/alumniApi';
+import toast, { Toaster } from 'react-hot-toast';
+
 function MigrateByStudent() {
   const [cohort, setCohort] = useState('');
   const [migration, setMigration] = useState('');
@@ -20,6 +24,14 @@ function MigrateByStudent() {
   const { data: cohorts, isSuccess: isCohortsSuccess } = useGetAllCohortQuery();
   const { data: cohortStudents, isSuccess: isStudentFetchSuccess } =
     useGetAllCohortStudentsQuery(cohort);
+  const [
+    changeStudentType,
+    { isSuccess: isStudentTypeChangeSuccess, error: changeStudentTypeError },
+  ] = useChangeStudentsTypeMutation();
+  const [
+    convertToAlumni,
+    { isSuccess: isConvertToAlumniSuccess, error: convertToAlumniError },
+  ] = useConvertToAlumniMutation();
 
   useEffect(() => {
     if (isStudentFetchSuccess) {
@@ -35,8 +47,41 @@ function MigrateByStudent() {
   const handleMigrationChange = (event) => {
     setMigration(event.target.value);
   };
+  const handleMigrate = () => {
+    if (migration === 'alumni') {
+      const data = { ids: [student] };
+      convertToAlumni(data);
+    } else {
+      const data = { ids: [student], type: migration };
+      changeStudentType(data);
+    }
+  };
+
+  useEffect(() => {
+    if (isConvertToAlumniSuccess) {
+      toast.success('Student converted to alumni successfully');
+      setStudent('');
+      setMigration('');
+    }
+    if (convertToAlumniError) {
+      toast.error(convertToAlumniError.data.message);
+    }
+  }, [isConvertToAlumniSuccess, convertToAlumniError]);
+
+  useEffect(() => {
+    if (isStudentTypeChangeSuccess) {
+      toast.success('Student type changed successfully');
+      setStudent('');
+      setMigration('');
+    }
+    if (changeStudentTypeError) {
+      toast.error(changeStudentTypeError.data.message);
+    }
+  }, [isStudentTypeChangeSuccess, changeStudentTypeError]);
+
   return (
     <>
+      <Toaster />
       <div className="flex flex-column items-center justify-center gap-5 mt-10">
         <div>
           <FormControl sx={{ m: 1, minWidth: 220 }}>
@@ -93,9 +138,12 @@ function MigrateByStudent() {
         </div>
       </div>
       <div className="flex flex-row items-center justify-center mt-5">
-        <Button variant="contained" sx={{ width: '200px', height: '40px' }}>
-          {' '}
-          Migrate{' '}
+        <Button
+          variant="contained"
+          sx={{ width: '200px', height: '40px' }}
+          onClick={handleMigrate}
+        >
+          Migrate
         </Button>
       </div>
     </>

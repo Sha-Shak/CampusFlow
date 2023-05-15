@@ -7,33 +7,41 @@ const test = async (req, res) => {
 };
 
 const convertToAlumni = async (req, res) => {
-  const { id } = req.params;
+  const { ids } = req.body;
   try {
-    const student = await Student.findById(id);
-    if (!student) {
-      return res.status(404).send('Student not found');
+    const alumniList = [];
+    for (const id of ids) {
+      const student = await Student.findById(id);
+      if (!student) {
+        return res.status(404).send(`Student with ID ${id} not found`);
+      }
+      if (student.type == 'alumni') {
+        return res.status(200).send({
+          message: `Student with ID ${id} already converted to alumni`,
+        });
+      }
+
+      // create alumni
+      const newAlumni = {
+        name: student.name,
+        image: student.profileImg,
+      };
+      const alumni = await Alumni.create(newAlumni);
+      await alumni.save();
+
+      // update student status
+      student.status = !student.status;
+      student.type = 'alumni';
+      student.alumniId = alumni._id;
+      await student.save();
+
+      alumniList.push(alumni);
     }
-    if (student.status === false) {
-      return res
-        .status(400)
-        .send({ message: 'Student already converted to alumni' });
-    }
 
-    // create alumni
-    const newAlumni = {
-      name: student.name,
-      image: student.profileImg,
-    };
-    const alumni = await Alumni.create(newAlumni);
-    await alumni.save();
-
-    // update student status
-    student.status = !student.status;
-    student.type = 'alumni';
-    student.alumiId = alumni._id;
-    await student.save();
-
-    res.status(200).send({ message: 'Student converted to alumni', alumni });
+    res.status(200).send({
+      message: 'Students converted to alumni',
+      alumniList,
+    });
   } catch (err) {
     console.log(err);
     return res.status(500).send('Internal Server Error');

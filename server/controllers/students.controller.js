@@ -147,19 +147,37 @@ const addSoftTechSkillsByStudentID = async (req, res) => {
   // give me a json data like this
 };
 
-const changeJuniorStudentToSenior = async (req, res) => {
-  const { id } = req.params;
+const changeStudentsType = async (req, res) => {
+  const { type } = req.body;
+  const { ids } = req.body;
+  const validTypes = ['junior', 'senior'];
+
+  // Validate input parameters
+  if (!validTypes.includes(type)) {
+    return res.status(400).json({ message: `Invalid student type: ${type}` });
+  }
+  if (!Array.isArray(ids) || ids.length === 0) {
+    return res.status(400).json({ message: 'Invalid student IDs' });
+  }
+
   try {
-    const student = await Student.findById(id);
-    if (!student) {
-      return res.status(404).json({ message: 'Student not found' });
+    const students = await Student.find({ _id: { $in: ids } });
+    const updatedStudents = [];
+
+    for (const student of students) {
+      if (!student) {
+        return res.status(404).json({ message: 'Student not found' });
+      }
+      if (student.type === type) {
+        continue;
+      }
+      student.type = type;
+      student.status = true;
+      await student.save();
+      updatedStudents.push(student);
     }
-    if (student.type === 'senior') {
-      return res.status(400).json({ message: 'Student is already a senior' });
-    }
-    student.type = 'senior';
-    await student.save();
-    res.status(200).json(student);
+
+    res.status(200).json({ message: 'Student type updated', updatedStudents });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error' });
@@ -380,7 +398,7 @@ module.exports = {
   getStudentWeekInfo,
   setStudentWeekInfo,
   addSoftTechSkillsByStudentID,
-  changeJuniorStudentToSenior,
+  changeStudentsType,
   saveMidEndJuniorData,
   getStudentByCohortName,
   getUnitMarksByStudentID,
