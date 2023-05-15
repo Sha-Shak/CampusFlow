@@ -7,13 +7,13 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import {
   useAddCategoriesToSkillsMutation,
+  useAddSkillsTypeMutation,
   useCreateSkillMutation,
   useGetAllSkillsQuery,
 } from '../features/skill/skillApi';
 import Layout from '../components/Layout';
 import SkillsChips from '../components/SkillsChips.component';
 import toast, { Toaster } from 'react-hot-toast';
-// Todo: Importing the skills from the database (dummy data on line 161)
 
 const AddSkill = () => {
   const {
@@ -22,9 +22,9 @@ const AddSkill = () => {
     refetch: refetchSkills,
   } = useGetAllSkillsQuery();
   const [
-    addCategoriesToSkills,
+    addSkillsType,
     { isSuccess: isAddSkillsSuccess, isError: isAddSkilsError },
-  ] = useAddCategoriesToSkillsMutation();
+  ] = useAddSkillsTypeMutation();
   const [
     createSkill,
     {
@@ -37,6 +37,8 @@ const AddSkill = () => {
   const [newSkillName, setNewSkillName] = useState('');
   const [newSkillDescription, setNewSkillDescription] = useState('');
   const [category, setCategory] = useState([]);
+  const [studentType, setStudentType] = useState([]);
+  const [stack, setStack] = useState([]);
 
   useEffect(() => {
     if (isAddSkillsSuccess) {
@@ -58,17 +60,35 @@ const AddSkill = () => {
   }, [isCreateSkillSuccess, isCreateSkillError]);
 
   const handleCategoryChange = (event) => {
-    setCategory([...category, event.target.value]);
+    if (!category.includes(event.target.value)) {
+      setCategory([...category, event.target.value]);
+    }
   };
+  const handleStudentTypeChange = (event) => {
+    if (!studentType.includes(event.target.value)) {
+      setStudentType([...studentType, event.target.value]);
+    }
+  };
+  const handleStackChange = (event) => {
+    if (!stack.includes(event.target.value)) {
+      setStack([...stack, event.target.value]);
+    }
+  };
+
   const handleAddSkill = (event) => {
     event.preventDefault();
-    const skillIds = selectedSkills.map((skill) => skill._id);
+    const ids = selectedSkills.map((skill) => skill._id);
     const categoryList = category;
     const data = {
-      skillIds,
+      ids,
       categoryList,
+      studentTypes: studentType,
+      stackList: stack,
     };
-    addCategoriesToSkills(data);
+    console.log(data);
+    addSkillsType(data);
+
+    // addCategoriesToSkills(data);
   };
 
   const handleSelecteSkillsChange = (event, value) => {
@@ -152,7 +172,7 @@ const AddSkill = () => {
                 control={
                   <Checkbox
                     // checked={junior}
-                    onChange={handleCategoryChange}
+                    onChange={handleStudentTypeChange}
                     color="primary"
                     value={'junior'}
                   />
@@ -163,7 +183,7 @@ const AddSkill = () => {
                 control={
                   <Checkbox
                     // checked={senior}
-                    onChange={handleCategoryChange}
+                    onChange={handleStudentTypeChange}
                     color="primary"
                     value={'senior'}
                   />
@@ -174,7 +194,7 @@ const AddSkill = () => {
                 control={
                   <Checkbox
                     // checked={alumni}
-                    onChange={handleCategoryChange}
+                    onChange={handleStudentTypeChange}
                     color="primary"
                     value={'alumni'}
                   />
@@ -197,7 +217,7 @@ const AddSkill = () => {
                 control={
                   <Checkbox
                     // checked={junior}
-                    onChange={handleCategoryChange}
+                    onChange={handleStackChange}
                     color="primary"
                     value={'frontend'}
                   />
@@ -208,7 +228,7 @@ const AddSkill = () => {
                 control={
                   <Checkbox
                     // checked={senior}
-                    onChange={handleCategoryChange}
+                    onChange={handleStackChange}
                     color="primary"
                     value={'backend'}
                   />
@@ -219,7 +239,7 @@ const AddSkill = () => {
                 control={
                   <Checkbox
                     // checked={senior}
-                    onChange={handleCategoryChange}
+                    onChange={handleStackChange}
                     color="primary"
                     value={'testing'}
                   />

@@ -37,5 +37,6 @@ router.delete(
 
 router.post('/addCategoriesToSkills', skillControllers.addCategoriesToSkills);
 router.delete('/deleteSkill/:id', skillControllers.deleteSkill);
+router.put('/addSkillsType', skillControllers.addSkillsType);
 
 module.exports = router;

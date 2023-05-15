@@ -201,6 +201,94 @@ const deleteSkill = async (req, res) => {
   }
 };
 
+const addSkillsType = async (req, res) => {
+  try {
+    const { stackList, categoryList, studentTypes, ids } = req.body;
+    const result = [];
+
+    for (let i = 0; i < ids.length; i++) {
+      const skill = await Skill.findById(ids[i]);
+      if (!skill) {
+        return res
+          .status(404)
+          .json({ message: `Skill with id ${ids[i]} not found` });
+      }
+      if (stackList) {
+        for (let j = 0; j < stackList.length; j++) {
+          const stack = stackList[j];
+          if (skill.stack.includes(stack)) {
+            result.push({
+              id: ids[i],
+              stack,
+              success: false,
+              message: 'Stack already added',
+            });
+          } else {
+            skill.stack.push(stack);
+            await skill.save();
+            result.push({
+              id: ids[i],
+              stack,
+              success: true,
+              message: 'Stack added successfully',
+            });
+          }
+        }
+      }
+
+      if (categoryList) {
+        for (let j = 0; j < categoryList.length; j++) {
+          const category = categoryList[j];
+          if (skill.category.includes(category)) {
+            result.push({
+              id: ids[i],
+              category,
+              success: false,
+              message: 'Category already added',
+            });
+          } else {
+            skill.category.push(category);
+            await skill.save();
+            result.push({
+              id: ids[i],
+              category,
+              success: true,
+              message: 'Stack added successfully',
+            });
+          }
+        }
+      }
+      if (studentTypes) {
+        for (let j = 0; j < studentTypes.length; j++) {
+          const studentType = studentTypes[j];
+          if (skill.studentType.includes(studentType)) {
+            result.push({
+              id: ids[i],
+              studentType,
+              success: false,
+              message: 'Student type already added',
+            });
+          } else {
+            skill.studentType.push(studentType);
+            await skill.save();
+            result.push({
+              id: ids[i],
+              studentType,
+              success: true,
+              message: 'Student type added successfully',
+            });
+          }
+        }
+      }
+    }
+
+    res.status(201).json(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
 module.exports = {
   addSkill,
   getAllSkills,
@@ -212,4 +300,5 @@ module.exports = {
   addCategoryToSkills,
   addCategoriesToSkills,
   deleteSkill,
+  addSkillsType,
 };
