@@ -18,7 +18,7 @@ import Cohorts from './pages/Cohorts.page';
 import SkillsRadarChart from './components/SkillsRadarChart';
 import StudentInfo from './pages/StudentInfo';
 import MarkStudents from './pages/MarkStudents.page';
-import AddSkill from './components/AddSkill';
+import AddSkill from './pages/AddSkills.page';
 function App() {
   return (
     <div>

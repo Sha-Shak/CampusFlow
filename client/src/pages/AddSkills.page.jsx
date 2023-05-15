@@ -10,8 +10,8 @@ import {
   useCreateSkillMutation,
   useGetAllSkillsQuery,
 } from '../features/skill/skillApi';
-import Layout from './Layout';
-import SkillsChips from './SkillsChips.component';
+import Layout from '../components/Layout';
+import SkillsChips from '../components/SkillsChips.component';
 import toast, { Toaster } from 'react-hot-toast';
 // Todo: Importing the skills from the database (dummy data on line 161)
 
@@ -88,10 +88,22 @@ const AddSkill = () => {
       <Toaster />
       <div className="bg-white flex p-10 h-[80vh] rounded-xl">
         <div className="flex-[0.4]  mr-32">
-          <SkillsChips skillsName={skillsName} type={'Soft Skills'} />
+          <SkillsChips
+            skillsName={skillsName}
+            type={'Soft Skills'}
+            refetchSkills={refetchSkills}
+          />
 
-          <SkillsChips skillsName={skillsName} type={'Tech Skills'} />
-          <SkillsChips skillsName={skillsName} type={'Alumni Skills'} />
+          <SkillsChips
+            skillsName={skillsName}
+            type={'Tech Skills'}
+            refetchSkills={refetchSkills}
+          />
+          <SkillsChips
+            skillsName={skillsName}
+            type={'Alumni Skills'}
+            refetchSkills={refetchSkills}
+          />
         </div>
 
         <div className="flex-[0.7]">

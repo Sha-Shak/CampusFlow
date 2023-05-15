@@ -186,6 +186,21 @@ const getSeniorSkills = async (req, res) => {
   }
 };
 
+const deleteSkill = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const skill = Skill.findById(id);
+    if (!skill) {
+      return res.status(404).json({ message: 'Skill not found' });
+    }
+    await Skill.findByIdAndDelete(id);
+    res.status(200).json({ message: 'Skill deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
 module.exports = {
   addSkill,
   getAllSkills,
@@ -196,4 +211,5 @@ module.exports = {
   getSkillsByCategory,
   addCategoryToSkills,
   addCategoriesToSkills,
+  deleteSkill,
 };
