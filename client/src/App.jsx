@@ -10,7 +10,7 @@ import RedirectOAuth from './pages/RedirectOAuth.page';
 import CandidateList from './pages/CandidateList';
 import CreateStudent from './components/CreateStudentModal';
 import MarkStudent from './components/MarkStudent';
-import RepoAccess from './components/RepoAccess';
+import RepoAccess from './pages/RepoAccess.page';
 import Dashboard from './pages/Dashboard.page';
 import CurriculumComponent from './pages/Curriculum.page';
 import CohortStudents from './components/CohortStudents';
