@@ -35,6 +35,7 @@ import Portfolio from './components/AlumniComponents/Portfolio';
 import GithubGraph from './components/AlumniComponents/GithubGraph';
 import useZoom from './hooks/useZoom';
 import useAuthCheck from './hooks/useAuthCheck';
+import AlumniUpdateProfile from './pages/AlumniUpdateProfile.page';
 function App() {
   const zoomLevel = useZoom();
   const authChecked = useAuthCheck();
@@ -73,6 +74,10 @@ function App() {
           <Route path="/alumni/experience" element={<Experience />} />
           <Route path="/alumni/portfolio" element={<Portfolio />} />
           <Route path="/alumni/profile" element={<AlumniProfile />} />
+          <Route
+            path="/alumni/update-profile"
+            element={<AlumniUpdateProfile />}
+          />
           <Route path="/search" element={<SelectIndustry />} />
           <Route path="/languageStats" element={<LanguageStats />} />
           <Route path="/graph" element={<GithubGraph />} />
