@@ -33,52 +33,53 @@ const AlumniSidebar = () => {
     console.log('Certification');
   };
 
-  // JSX fragments
-  const sideOptions = (
-    <>
-      <li>
-        <a onClick={handleDashboard}>
-          <RxDashboard color="gray" />
-          Overview
-        </a>
-      </li>
-      <li>
-        <a onClick={handleProjectCode}>
-          {' '}
-          <FaCode color="gray" />
-          Project Code
-        </a>
-      </li>
-      <li>
-        <a onClick={handleTechSkill}>
-          <RiUserSettingsLine color="gray" />
-          Tech Skills
-        </a>
-      </li>
-      <li>
-        <a onClick={handleSoftSkill}>
-          <FaBrain color="gray" />
-          Soft Skills
-        </a>
-      </li>
-      <li>
-        <a onClick={handleExperience}>
-          <BsBriefcase color="gray" />
-          Experience
-        </a>
-      </li>
-      <li>
-        <a onClick={handleCertification}>
-          <GrCertificate />
-          Certifications
-        </a>
-      </li>
-    </>
-  );
   return (
     <>
-      <ul className="menu p-4 w-60 bg-#FFFBFB bg-white shadow-xl h-screen flex-row flex-wrap ">
-        <div>{sideOptions}</div>
+      <ul className="menu p-4 w-64 bg-#FFFBFB bg-white shadow-xl h-screen flex-col flex-wrap">
+        <div className="flex">
+          <a className="btn btn-ghost normal-case text-xl text-purple-700">
+            CampusFlow
+          </a>
+        </div>
+        <div className="mt-4">
+          <li>
+            <a onClick={handleDashboard}>
+              <RxDashboard color="gray" />
+              Overview
+            </a>
+          </li>
+          <li>
+            <a onClick={handleProjectCode}>
+              {' '}
+              <FaCode color="gray" />
+              Project Code
+            </a>
+          </li>
+          <li>
+            <a onClick={handleTechSkill}>
+              <RiUserSettingsLine color="gray" />
+              Tech Skills
+            </a>
+          </li>
+          <li>
+            <a onClick={handleSoftSkill}>
+              <FaBrain color="gray" />
+              Soft Skills
+            </a>
+          </li>
+          <li>
+            <a onClick={handleExperience}>
+              <BsBriefcase color="gray" />
+              Experience
+            </a>
+          </li>
+          <li>
+            <a onClick={handleCertification}>
+              <GrCertificate />
+              Certifications
+            </a>
+          </li>
+        </div>
         <div className="m-auto">
           <SmallNameCard />
         </div>

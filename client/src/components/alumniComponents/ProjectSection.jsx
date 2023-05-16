@@ -6,19 +6,17 @@ const ProjectSection = () => {
   return (
     <div className="flex gap-2">
       <div className="flex gap-2">
-        <ProjectCardSmall customWidth="[20vw]" customHeight="[35vh]" />
-        <ProjectCardSmall customWidth="[20vw]" customHeight="[35vh]" />
+        <ProjectCardSmall customWidth="[24rem]" customHeight="[14.5rem]" />
+        <ProjectCardSmall customWidth="[24rem]" customHeight="[14.5rem]" />
       </div>
       {/* Right side */}
       <div className="flex gap-2">
         <div className="flex flex-col gap-2">
-          <ProjectCardSmall customWidth="[10vw]" customHeight="[17vh]" />
-          <ProjectCardSmall customWidth="[10vw]" customHeight="[17vh]" />
+          <ProjectCardSmall customWidth="[12rem]" customHeight="[7rem]" />
+          <ProjectCardSmall customWidth="[12rem]" customHeight="[12vh]" />
         </div>
-        <div className="flex flex-col gap-2">
-          <ProjectCardSmall customWidth="[10vw]" customHeight="[17vh]" />
-          <ProjectCardSmall customWidth="[10vw]" customHeight="[17vh]" />
-        </div>
+
+        <div className="text-indigo-600 text-xs font-semibold">View all</div>
       </div>
     </div>
   );
