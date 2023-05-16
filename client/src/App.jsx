@@ -37,7 +37,7 @@ import useZoom from './hooks/useZoom';
 import useAuthCheck from './hooks/useAuthCheck';
 import AlumniUpdateProfile from './pages/AlumniUpdateProfile.page';
 function App() {
-  const zoomLevel = useZoom();
+  // const zoomLevel = useZoom();
   const authChecked = useAuthCheck();
   return !authChecked ? (
     // <Spinner size={'xl'}></Spinner>
