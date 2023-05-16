@@ -3,11 +3,11 @@ import React from 'react';
 const ProjectCardSmall = ({ customWidth, customHeight }) => {
   return (
     <div
-      className={`w-${customWidth} h-${customHeight} rounded-lg shadow-2xl overflow-hidden relative`}
+      className={`w-${customWidth} h-${customHeight} rounded-lg shadow-md overflow-hidden relative`}
     >
       <img
         className="absolute inset-0 h-full w-full "
-        src="https://img.youtube.com/vi/pCWGCw9G42U/maxresdefault.jpg"
+        src="https://img.youtube.com/vi/9vLIYBn3us8/maxresdefault.jpg"
         alt=""
       />
       <div className="absolute inset-0 bg-gray-900 bg-opacity-50"></div>
