@@ -32,8 +32,8 @@ body {
 
   filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#C9B3FF", endColorstr="#E4D8FF", GradientType=1 );
 }
-.range-primary{
-	--range-shdw: 271.89 94.378% 51.176%;
+.range-primary {
+  --range-shdw: 271.89 94.378% 51.176%;
 }
 .MuiOutlinedInput-notchedOutline {
   border-color: rgba(196, 146, 245, 0.529) !important;
@@ -121,13 +121,25 @@ body {
 }
 .react-calendar {
   border: 0px !important;
-  color: rgb(111, 12, 209);
-  padding: 20px !important;
+  padding: 10px !important;
 }
 .react-calendar__tile {
   border-radius: 100px !important;
   line-height: 20px !important;
 }
+
+.react-calendar__tile--weekend {
+  background: none !important;
+  color: inherit !important;
+}
+.react-calendar__month-view__days__day--weekend {
+  color: #000;
+}
+
+.friday {
+  color: red !important;
+}
+
 .steps-vertical {
   grid-auto-rows: 0.2fr;
 }

@@ -5,8 +5,11 @@ const GithubGraph = () => {
   let userName = 'khrrsn';
   return (
     <div className="p-24">
-      <div className="bg-white p-10 w-5/12">
+      <div className="bg-white p-10">
         <GitHubCalendar
+          blockMargin={5}
+          blockRadius={7}
+          blockSize={14}
           username={`${userName}`}
           theme={{
             light: ['ccc', 'purple'],
