@@ -1,103 +1,138 @@
-html, body {
-	height: 100%;
-	width: 100%;
-	margin: 0;
-	padding: 0;
-	font-family: 'Helvetia', sans-serif;
-	background: #f5f5f5;
-	overflow-x: hidden;
-	background: rgba(201, 179, 255, 0.121);
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Helvetia', sans-serif;
+  background: #f5f5f5;
+  overflow-x: hidden;
+  background: rgba(201, 179, 255, 0.121);
 
-	background: linear-gradient(-45deg, rgba(200, 180, 251, 0.255) 0%, rgba(217, 200, 255, 0.345) 0%, rgba(146, 216, 249, 0.097) 61%);
-	
-	background: -moz-linear-gradient(-45deg, rgba(200, 180, 251, 0.255) 0%, rgba(217, 200, 255, 0.345) 0%, rgba(146, 216, 249, 0.097) 61%);
-	
-	background: -webkit-linear-gradient(-45deg, rgba(200, 180, 251, 0.099) 0%, rgba(217, 200, 255, 0.1) 0%, rgba(146, 216, 249, 0.097) 61%);
-	
-	filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#C9B3FF", endColorstr="#E4D8FF", GradientType=1 );
+  background: linear-gradient(
+    -45deg,
+    rgba(200, 180, 251, 0.255) 0%,
+    rgba(217, 200, 255, 0.345) 0%,
+    rgba(146, 216, 249, 0.097) 61%
+  );
+
+  background: -moz-linear-gradient(
+    -45deg,
+    rgba(200, 180, 251, 0.255) 0%,
+    rgba(217, 200, 255, 0.345) 0%,
+    rgba(146, 216, 249, 0.097) 61%
+  );
+
+  background: -webkit-linear-gradient(
+    -45deg,
+    rgba(200, 180, 251, 0.099) 0%,
+    rgba(217, 200, 255, 0.1) 0%,
+    rgba(146, 216, 249, 0.097) 61%
+  );
+
+  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#C9B3FF", endColorstr="#E4D8FF", GradientType=1 );
 }
 .range-primary{
 	--range-shdw: 271.89 94.378% 51.176%;
 }
 .MuiOutlinedInput-notchedOutline {
-  border-color: rgba(196, 146, 245, 0.529)!important;
-  border-radius: 10px!important;
-
+  border-color: rgba(196, 146, 245, 0.529) !important;
+  border-radius: 10px !important;
 }
 .MuiButtonBase-root {
-  border-radius: 10px!important;
-  box-shadow: 0px!important;
+  border-radius: 10px !important;
+  box-shadow: 0px !important;
 }
 /* .MuiModal-root {
   /* background-color: rgba(225, 151, 245, 0.3)!important;
    */
-   /* background: linear-gradient(-45deg, #ae82ff62, #9774f657);
+/* background: linear-gradient(-45deg, #ae82ff62, #9774f657);
    background-size: 400% 400%;
    animation: gradient 10s ease infinite;
 
-} */ */
-.boxbg{
+} */
+*/ .boxbg {
   background: hsla(257, 100%, 85%, 1);
 
-background: linear-gradient(-45deg, hsla(257, 100%, 85%, 1) 0%, hsla(258, 100%, 92%, 1) 0%, hsla(0, 0%, 100%, 1) 61%);
+  background: linear-gradient(
+    -45deg,
+    hsla(257, 100%, 85%, 1) 0%,
+    hsla(258, 100%, 92%, 1) 0%,
+    hsla(0, 0%, 100%, 1) 61%
+  );
 
-background: -moz-linear-gradient(-90deg, hsla(257, 100%, 85%, 1) 0%, hsla(258, 100%, 92%, 1) 0%, hsla(0, 0%, 100%, 1) 61%);
+  background: -moz-linear-gradient(
+    -90deg,
+    hsla(257, 100%, 85%, 1) 0%,
+    hsla(258, 100%, 92%, 1) 0%,
+    hsla(0, 0%, 100%, 1) 61%
+  );
 
-background: -webkit-linear-gradient(-45deg, rgb(195, 175, 244) 0%, rgb(200, 223, 249) 61%);
+  background: -webkit-linear-gradient(
+    -45deg,
+    rgb(195, 175, 244) 0%,
+    rgb(200, 223, 249) 61%
+  );
 
-filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#C9B3FF", endColorstr="#E4D8FF", GradientType=1 );
+  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#C9B3FF", endColorstr="#E4D8FF", GradientType=1 );
 }
 
 .bgGradientGlobal {
-	background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-	background-size: 400% 400%;
-	animation: gradient 15s ease infinite;
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
 }
 .bgGradient {
-	background: linear-gradient(-45deg, #ee76524d, #e73c7e3e, #23a5d53c, #23d5ab32);
-	background-size: 400% 400%;
-	animation: gradient 5s ease infinite;
+  background: linear-gradient(
+    -45deg,
+    #ee76524d,
+    #e73c7e3e,
+    #23a5d53c,
+    #23d5ab32
+  );
+  background-size: 400% 400%;
+  animation: gradient 5s ease infinite;
 }
 
 @keyframes gradient {
-	0% {
-		background-position: 0% 50%;
-	}
-	50% {
-		background-position: 100% 50%;
-	}
-	100% {
-		background-position: 0% 50%;
-	}
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
-.recharts-text{
-	font-size: 12px!important;
-	/* font-weight: bold; */
-	color:rgba(196, 146, 245, 0.529)!important;
-	text-overflow: clip!important;
-	font-style: italic!important;
+.recharts-text {
+  font-size: 12px !important;
+  /* font-weight: bold; */
+  color: rgba(196, 146, 245, 0.529) !important;
+  text-overflow: clip !important;
+  font-style: italic !important;
 }
 .react-calendar__tile--now {
-	background: rgb(146, 43, 250)!important;
-	color: rgba(236, 233, 239, 0.91)!important;
-	border-radius: 100px!important;
-	font-weight: bold!important;
+  background: rgb(146, 43, 250) !important;
+  color: rgba(236, 233, 239, 0.91) !important;
+  border-radius: 100px !important;
+  font-weight: bold !important;
 }
-.react-calendar{
-	border: 0px!important;
-	color:rgb(111, 12, 209)
-	padding: 20px!important;
-	}
+.react-calendar {
+  border: 0px !important;
+  color: rgb(111, 12, 209);
+  padding: 20px !important;
+}
 .react-calendar__tile {
-	border-radius: 100px!important;
-	line-height: 20px!important;
+  border-radius: 100px !important;
+  line-height: 20px !important;
 }
 .steps-vertical {
-	grid-auto-rows: 0.2fr;
+  grid-auto-rows: 0.2fr;
 }
 .badge-outline {
-	background-color: transparent;
-	border: 1px solid #c7c6c6;
-	color: #5b5562;
+  background-color: transparent;
+  border: 1px solid #c7c6c6;
+  color: #5b5562;
 }
