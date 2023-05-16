@@ -6,16 +6,27 @@ import StudentSidebar from '../components/StudentSidebar';
 import UnitMarksChart from '../components/UnitMarks';
 import WeekDropdown from '../components/WeekDropdown';
 import { useState } from 'react';
+import { useGetStudentWeekInfoQuery } from '../features/student/studentApi';
 
 function StudentInfo() {
   const [selectedWeek, setSelectedWeek] = useState('Week 1');
+  const [weekSelected, setWeekSelected] = useState(1);
+  const { data: studentWeekInfo } = useGetStudentWeekInfoQuery({
+    studentId: '64631226db442509e170a1e5',
+    week: weekSelected,
+  });
+
+  console.log(studentWeekInfo?.softSkills);
+
   const [selectedCheckpoint, setSelectedCheckpoint] = useState(null);
 
   const weeks = ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6'];
   const checkpoints = ['Mid Junior', 'End Junior', 'Mid Senior', 'End Senior'];
 
-  const handleSelect = (week) => {
+  const handleSelect = (week, index) => {
+    const weekSelected = index + 1;
     setSelectedWeek(week);
+    setWeekSelected(weekSelected);
   };
   const handleCheckPointSelect = (checkpoint) => {
     setSelectedCheckpoint(checkpoint);
@@ -42,8 +53,8 @@ function StudentInfo() {
               tabIndex={0}
               className="dropdown-content menu p-2  bg-base-100 rounded-box w-32  text-center  bg-purple-50 shadow-2xl"
             >
-              {weeks.map((week) => (
-                <li key={week} onClick={() => handleSelect(week)}>
+              {weeks.map((week, index) => (
+                <li key={week} onClick={() => handleSelect(week, index)}>
                   <a>{week}</a>
                 </li>
               ))}
@@ -76,13 +87,13 @@ function StudentInfo() {
               <span className="text-white bg-purple-500 p-3 rounded-full">
                 Soft Skills
               </span>
-              <SkillsRadarChart />
+              <SkillsRadarChart skills={studentWeekInfo?.softSkills || []} />
             </div>
             <div className="flex-[0.5] h-80 bg-white rounded-3xl p-5 shadow-md pb-10">
               <span className="text-white bg-purple-500 p-3 rounded-full">
                 Tech Skills
               </span>
-              <SkillsRadarChart />
+              <SkillsRadarChart skills={studentWeekInfo?.techSkills || []} />
             </div>
           </div>
           <div className="flex justify-between mt-5">

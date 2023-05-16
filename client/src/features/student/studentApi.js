@@ -7,11 +7,6 @@ export const studentApi = apiSlice.injectEndpoints({
         url: `/student/getAllStudents`,
       }),
     }),
-    getStudentById: builder.query({
-      query: (id) => ({
-        url: `/student/${id}`,
-      }),
-    }),
 
     createStudent: builder.mutation({
       query: (data) => ({

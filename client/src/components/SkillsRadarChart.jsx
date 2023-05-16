@@ -22,35 +22,22 @@ const dummyData = [
   { skill: 'Negotiation', value: 10 },
 ];
 
-const SkillsRadarChart = () => {
-  const {
-    data: studentWeekInfo,
-    isSuccess,
-    error,
-    isLoading,
-  } = useGetStudentWeekInfoQuery({
-    id: '6459f36db9399a5969db9038',
-    week: 1,
-  });
-
-  console.log('studentWeekInfo', studentWeekInfo);
-
-  const softSkills = studentWeekInfo?.softSkills;
-
-  const createFormattedData = (softSkills) => {
-    return softSkills?.map((skills) => {
+const SkillsRadarChart = ({ skills }) => {
+  const createFormattedData = (skills) => {
+    return skills.map((skill) => {
       return {
-        skill: skills.skill.skillName,
-        value: skills.marks,
+        skill: skill.skill.skillName,
+        value: skill.marks,
       };
     });
   };
 
-  const data = createFormattedData(softSkills);
+  const data = createFormattedData(skills);
+  console.log('data', data);
 
   return (
     <ResponsiveContainer height={'100%'} width={'100%'}>
-      <RadarChart cx="50%" cy="50%" outerRadius="85%" data={dummyData}>
+      <RadarChart cx="50%" cy="50%" outerRadius="85%" data={data}>
         <PolarGrid />
         <PolarAngleAxis dataKey="skill" />
         <PolarRadiusAxis angle={30} domain={[0, 10]} />
