@@ -89,7 +89,7 @@ function PeerRatings() {
 
   return (
     <Layout>
-      <div className="flex flex-col justify-center gap-2 p-5 bg-white rounded-xl">
+      <div className="flex flex-col justify-center gap-2 p-10 bg-white rounded-xl">
         <Toaster />
         <div>
           <FormControl sx={{ m: 1, minWidth: 220 }}>

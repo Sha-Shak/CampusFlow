@@ -25,7 +25,7 @@ function DaisyMark({ onChange, name, defaultValue, title }) {
             step="1"
             onChange={changeSlider}
             name={name}
-            className="range  range-xs"
+            className="range  range-xs range-primary"
           />
           <div className="w-full flex justify-between text-xs px-2">
             <span>0</span>
