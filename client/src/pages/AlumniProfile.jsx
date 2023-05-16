@@ -41,7 +41,7 @@ const AlumniProfile = () => {
 
           {/* <LanguageStats /> */}
 
-          <div className="p-2 bg-white rounded-2xl min-h-[39vh] ">
+          <div className="p-2 bg-white rounded-2xl min-h-[39vh] shadow-md ">
             <div className="tabs">
               <button
                 className={`tab tab-lifted ${activeTab1}`}
