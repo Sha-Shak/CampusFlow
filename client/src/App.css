@@ -16,7 +16,9 @@ html, body {
 	
 	filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#C9B3FF", endColorstr="#E4D8FF", GradientType=1 );
 }
-
+.range-primary{
+	--range-shdw: 271.89 94.378% 51.176%;
+}
 .MuiOutlinedInput-notchedOutline {
   border-color: rgba(196, 146, 245, 0.529)!important;
   border-radius: 10px!important;
