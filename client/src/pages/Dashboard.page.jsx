@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Layout from '../components/Layout';
 import MiniCalender from '../components/MiniCalender';
 import MiniLectures from '../components/MiniLectures';
@@ -8,8 +8,13 @@ import NavBar from '../components/NavBar';
 import RecentStudents from '../components/RecentStudents';
 
 function Dashboard() {
-  const user = JSON.parse(localStorage.getItem('user'));
-  const firstName = user?.name.split(' ')[0];
+  const [user, setUser] = useState({});
+  // const user = JSON.parse(localStorage.getItem('user'));
+  const firstName = user?.name?.split(' ')[0];
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    setUser(user);
+  }, []);
 
   return (
     <Layout>

@@ -1,9 +1,16 @@
 import React from 'react';
+import { useEffect, useState } from 'react';
 import { IoLogOutOutline } from 'react-icons/io5';
 function NavBar() {
-  const user = JSON.parse(localStorage.getItem('user'));
-  console.log(user);
-  const role = JSON.parse(localStorage.getItem('role'));
+  const [user, setUser] = useState({});
+  const [role, setRole] = useState('');
+  // const user = JSON.parse(localStorage.getItem('user'));
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    setUser(user);
+    const role = localStorage.getItem('role');
+    setRole(role);
+  }, []);
 
   return (
     <div className=" pt-5 px-5 sticky top-0 z-[100]">
