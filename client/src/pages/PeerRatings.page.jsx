@@ -9,6 +9,7 @@ import DaisyMark from '../components/DaisyMark';
 import { Button } from '@mui/material';
 import toast, { Toaster } from 'react-hot-toast';
 import { useAddRatingMutation } from '../features/peerRating/peerRatingApi';
+import { useSelector } from 'react-redux';
 
 const ratingParameters = [
   {
@@ -45,7 +46,7 @@ function PeerRatings() {
     addRating,
     { isSuccess: isRatingSuccess, isError: isRatingError, error: ratingError },
   ] = useAddRatingMutation();
-
+  const { user } = useSelector((state) => state.auth.user);
   useEffect(() => {
     if (isStudentFetchSuccess) {
       setStudents(cohortStudents.students);
@@ -75,6 +76,7 @@ function PeerRatings() {
   const submitRating = () => {
     const avgRate = Object.values(rate).reduce((acc, curr) => acc + curr, 0);
     const finalRate = avgRate / Object.values(rate).length;
+    id = user?._id;
     const data = {
       id: '645bb9c27865c6e61157875f',
       givenTo: student,
