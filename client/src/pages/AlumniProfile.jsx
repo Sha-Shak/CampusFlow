@@ -1,11 +1,3 @@
-import React from 'react';
-import AlumniSidebar from '../components/AlumniComponents/AlumniSidebar';
-import AlumniInfoCard from '../components/AlumniComponents/AlumniInfoCard';
-import Experience from '../components/AlumniComponents/Experience';
-import ProjectSection from '../components/AlumniComponents/ProjectSection';
-import Portfolio from '../components/AlumniComponents/Portfolio';
-import AlumniLayout from '../components/AlumniComponents/AlumniLayout';
-import GithubGraph from '../components/AlumniComponents/GithubGraph';
 import React, { useState } from 'react';
 import AlumniSidebar from '../components/alumniComponents/AlumniSidebar';
 import AlumniInfoCard from '../components/alumniComponents/AlumniInfoCard';
@@ -15,9 +7,10 @@ import Portfolio from '../components/alumniComponents/Portfolio';
 import AlumniLayout from '../components/alumniComponents/AlumniLayout';
 import GithubGraph from '../components/alumniComponents/GithubGraph';
 import SiteChip from '../components/alumniComponents/SiteChip';
-import SkillsRadarChart from '../components/SkillsRadarChart';
+
 import LanguageStats from '../components/alumniComponents/LanguageStats';
 import SkillsTabs from './SkillsTabs';
+import SkillsRadarChart from '../components/StudentInfo/SkillsRadarChart';
 
 const AlumniProfile = () => {
   const [activeTab1, setActiveTab1] = useState('tab-active');
