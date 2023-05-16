@@ -10,7 +10,7 @@ import RedirectOAuth from './pages/RedirectOAuth.page';
 import CandidateList from './pages/CandidateList';
 import CreateStudent from './components/CreateStudentModal';
 import MarkStudent from './components/MarkStudent';
-import RepoAccess from './components/RepoAccess';
+import RepoAccess from './pages/RepoAccess.page';
 import Dashboard from './pages/Dashboard.page';
 import CurriculumComponent from './pages/Curriculum.page';
 import CohortStudents from './components/CohortStudents';
@@ -18,7 +18,10 @@ import Cohorts from './pages/Cohorts.page';
 import SkillsRadarChart from './components/SkillsRadarChart';
 import StudentInfo from './pages/StudentInfo';
 import MarkStudents from './pages/MarkStudents.page';
-import AddSkill from './components/AddSkill';
+import AddSkill from './pages/AddSkills.page';
+import MigrateStudents from './pages/MigrateStudents.page';
+import PeerRatings from './pages/PeerRatings.page';
+
 import AlumniInfoCard from './components/alumniComponents/AlumniInfoCard';
 import AlumniSidebar from './components/alumniComponents/AlumniSidebar';
 import ProjectCard from './components/alumniComponents/ProjectCard';
@@ -45,6 +48,7 @@ function App() {
           <Route path="/createStudent/:id" element={<CreateStudent />} />
           <Route path="/markStudent/:id/:week" element={<MarkStudent />} />
           <Route path="/markstudents" element={<MarkStudents />} />
+          <Route path="peerratings" element={<PeerRatings />} />
           <Route path="/cohorts" element={<Cohorts />}></Route>
           <Route
             path="/cohorts/:cohort/students/"
@@ -52,6 +56,7 @@ function App() {
           />
           <Route path="/student/:id" element={<StudentInfo />} />
           <Route path="/addSkills" element={<AddSkill />} />
+          <Route path="/migratestudents" element={<MigrateStudents />} />
           <Route path="/repoAccess" element={<RepoAccess />} />
           <Route path="test" element={<SkillsRadarChart />} />
           <Route path="/alumni/info" element={<AlumniInfoCard />} />

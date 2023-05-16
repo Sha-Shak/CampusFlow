@@ -71,6 +71,7 @@ const CreateStudentModal = ({ createStudentOpen, onStudentClose, id }) => {
         type: 'junior',
         githubUsername: gitUsername,
         cohortName: cohort,
+        profileImg: `https://avatars.githubusercontent.com/${gitUsername}`,
       });
       clearForm();
     }

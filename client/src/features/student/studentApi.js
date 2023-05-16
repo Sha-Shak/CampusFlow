@@ -50,6 +50,14 @@ export const studentApi = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+
+    changeStudentsType: builder.mutation({
+      query: (data) => ({
+        url: `/student/changeStudentsType`,
+        method: 'PUT',
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -59,4 +67,5 @@ export const {
   useGetStudentByCohortNameQuery,
   useGetStudentWeekInfoQuery,
   useSetStudentWeekInfoMutation,
+  useChangeStudentsTypeMutation,
 } = studentApi;

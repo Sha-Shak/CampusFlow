@@ -2,11 +2,16 @@ const Skill = require('../models/student/skill.model');
 
 const addSkill = async (req, res) => {
   try {
-    const { skillName, description, category } = req.body;
+    const { skillName, description } = req.body;
+
+    const existingSkill = await Skill.findOne({
+      skillName: { $regex: new RegExp(`^${skillName}$`, 'i') },
+    });
+    if (existingSkill) {
+      return res.status(400).json({ message: 'Skill already exists' });
+    }
 
     const skill = new Skill({ skillName, description });
-    const categories = category.split(',').map((c) => c.trim());
-    skill.category.push(...categories);
     await skill.save();
     res.status(201).json(skill);
   } catch (error) {
@@ -51,7 +56,7 @@ const addCategoriesToSkills = async (req, res) => {
       }
 
       for (let j = 0; j < categoryList.length; j++) {
-        const category = categoryList[j].toLowerCase();
+        const category = categoryList[j];
         if (skill.category.includes(category)) {
           result.push({
             id: skillIds[i],
@@ -181,6 +186,109 @@ const getSeniorSkills = async (req, res) => {
   }
 };
 
+const deleteSkill = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const skill = Skill.findById(id);
+    if (!skill) {
+      return res.status(404).json({ message: 'Skill not found' });
+    }
+    await Skill.findByIdAndDelete(id);
+    res.status(200).json({ message: 'Skill deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+const addSkillsType = async (req, res) => {
+  try {
+    const { stackList, categoryList, studentTypes, ids } = req.body;
+    const result = [];
+
+    for (let i = 0; i < ids.length; i++) {
+      const skill = await Skill.findById(ids[i]);
+      if (!skill) {
+        return res
+          .status(404)
+          .json({ message: `Skill with id ${ids[i]} not found` });
+      }
+      if (stackList) {
+        for (let j = 0; j < stackList.length; j++) {
+          const stack = stackList[j];
+          if (skill.stack.includes(stack)) {
+            result.push({
+              id: ids[i],
+              stack,
+              success: false,
+              message: 'Stack already added',
+            });
+          } else {
+            skill.stack.push(stack);
+            await skill.save();
+            result.push({
+              id: ids[i],
+              stack,
+              success: true,
+              message: 'Stack added successfully',
+            });
+          }
+        }
+      }
+
+      if (categoryList) {
+        for (let j = 0; j < categoryList.length; j++) {
+          const category = categoryList[j];
+          if (skill.category.includes(category)) {
+            result.push({
+              id: ids[i],
+              category,
+              success: false,
+              message: 'Category already added',
+            });
+          } else {
+            skill.category.push(category);
+            await skill.save();
+            result.push({
+              id: ids[i],
+              category,
+              success: true,
+              message: 'Stack added successfully',
+            });
+          }
+        }
+      }
+      if (studentTypes) {
+        for (let j = 0; j < studentTypes.length; j++) {
+          const studentType = studentTypes[j];
+          if (skill.studentType.includes(studentType)) {
+            result.push({
+              id: ids[i],
+              studentType,
+              success: false,
+              message: 'Student type already added',
+            });
+          } else {
+            skill.studentType.push(studentType);
+            await skill.save();
+            result.push({
+              id: ids[i],
+              studentType,
+              success: true,
+              message: 'Student type added successfully',
+            });
+          }
+        }
+      }
+    }
+
+    res.status(201).json(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
 module.exports = {
   addSkill,
   getAllSkills,
@@ -191,4 +299,6 @@ module.exports = {
   getSkillsByCategory,
   addCategoryToSkills,
   addCategoriesToSkills,
+  deleteSkill,
+  addSkillsType,
 };

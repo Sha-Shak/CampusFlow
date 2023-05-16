@@ -47,7 +47,6 @@ router.get(
   authMiddleware,
   githubController.getGithubOrgRepos
 );
-module.exports = router;
 
 router.get(
   '/getAccessToGithubRepo',
@@ -62,9 +61,4 @@ router.get(
 
 router.put('/addInstructor', authMiddleware, githubController.addInstructor);
 
-// debug
-// router.put(
-//   '/addStudentToCohortDebug',
-//   githubController.addStudentToCohortDebug
-// );
 module.exports = router;

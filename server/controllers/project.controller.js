@@ -1,8 +1,10 @@
 const Project = require('../models/student/projects.model');
+const Alumni = require('../models/alumni/alumni.model');
 
+// you need to send alumni id in params
+// this controller will post project to project model and add project id to alumni model
 const addProject = async (req, res) => {
-  // TODO: Replace id with Alumni Id
-  const { id } = req.params;
+  const { id } = req.params; // this should be alumni id
   try {
     const {
       projectName,
@@ -26,6 +28,12 @@ const addProject = async (req, res) => {
     });
 
     const savedProject = await newProject.save();
+
+    // findAlumnibyID
+    const alumni = await Alumni.findById(id);
+    alumni.projects.push(savedProject._id);
+    await alumni.save();
+
     res.status(200).json(savedProject);
   } catch (err) {
     res.status(500).json({ message: err.message });

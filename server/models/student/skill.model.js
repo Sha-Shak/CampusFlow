@@ -8,7 +8,13 @@ const SkillSchema = new mongoose.Schema({
     type: String,
   },
   category: {
-    type: [String],
+    type: [String], // softskill, techskill
+  },
+  studentType: {
+    type: [String], //junior, senior, alumni
+  },
+  stack: {
+    type: [String], //frontend, backend, testing
   },
 });
 const Skill = mongoose.model('Skill', SkillSchema);

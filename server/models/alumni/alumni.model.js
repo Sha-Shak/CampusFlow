@@ -90,7 +90,12 @@ const alumniSchema = new mongoose.Schema({
       ref: 'Project',
     },
   ],
-  socialLinks: [String],
+  socialLinks: [
+    {
+      name: String,
+      url: String,
+    },
+  ],
 });
-const Alumni = mongoose.model('User', alumniSchema);
+const Alumni = mongoose.model('Alumni', alumniSchema);
 module.exports = Alumni;
