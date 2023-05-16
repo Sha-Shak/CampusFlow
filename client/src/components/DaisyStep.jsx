@@ -80,23 +80,4 @@ function Step({ index, name, isCurrentStep, isCompleted, onClick }) {
   );
 }
 
-function StudentForm({ studentId, onNext, onBack }) {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // submit form data here
-    onNext();
-  };
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <h2>Marking {studentId}</h2>
-      {/* your form elements here */}
-      <button type="button" onClick={onBack}>
-        Back
-      </button>
-      <button type="submit">Next</button>
-    </form>
-  );
-}
-
 export default MultiStepForm;

@@ -6,12 +6,13 @@ const check = async (req, res) => {
 
 // TODO: rename it to createOrgsMembers
 const createUser = async (req, res) => {
-  const { name, email, role } = req.body;
+  const { name, email, role, githubUsername } = req.body;
   try {
     let user = new User({
       name,
       email,
       role,
+      githubUsername,
     });
     await user.save();
     res.status(201).json({ success: true, data: user });

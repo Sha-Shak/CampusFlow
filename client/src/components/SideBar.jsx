@@ -10,9 +10,9 @@ function SideBar() {
     ['Cohorts']: ['/cohorts'],
     ['Mark Students']: ['/markstudents'],
     ['Add Skills']: ['/addskills'],
-    ['Instructors']: ['/instructors'],
     ['Migrate Students']: ['/migratestudents'],
     ['Repo Access']: ['/repoaccess'],
+    ['Peer Ratings']: ['/peerratings'],
   };
 
   return (

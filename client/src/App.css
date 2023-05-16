@@ -11,31 +11,31 @@ body {
 
   background: linear-gradient(
     -45deg,
-    rgba(217, 202, 255, 0.08) 0%,
-    rgba(226, 214, 255, 0.146) 0%,
-    rgba(255, 255, 255, 0.804) 61%
+    rgba(200, 180, 251, 0.255) 0%,
+    rgba(217, 200, 255, 0.345) 0%,
+    rgba(146, 216, 249, 0.097) 61%
   );
 
   background: -moz-linear-gradient(
-    -90deg,
-    rgba(220, 207, 255, 0.115) 0%,
-    rgba(226, 214, 255, 0.159) 0%,
-    rgba(255, 255, 255, 0.833) 61%
+    -45deg,
+    rgba(200, 180, 251, 0.255) 0%,
+    rgba(217, 200, 255, 0.345) 0%,
+    rgba(146, 216, 249, 0.097) 61%
   );
 
   background: -webkit-linear-gradient(
     -45deg,
-    rgba(221, 207, 255, 0.143) 0%,
-    rgba(200, 223, 249, 0.208) 61%
+    rgba(200, 180, 251, 0.099) 0%,
+    rgba(217, 200, 255, 0.1) 0%,
+    rgba(146, 216, 249, 0.097) 61%
   );
 
   filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#C9B3FF", endColorstr="#E4D8FF", GradientType=1 );
 }
 
 .MuiOutlinedInput-notchedOutline {
-  border-color: rgba(196, 146, 245, 0.529)!important;
-  border-radius: 10px!important;
-
+  border-color: rgba(196, 146, 245, 0.529) !important;
+  border-radius: 10px !important;
 }
 .MuiButtonBase-root {
   border-radius: 10px !important;
@@ -127,10 +127,10 @@ body {
   line-height: 20px !important;
 }
 .steps-vertical {
-	grid-auto-rows: 0.2fr;
+  grid-auto-rows: 0.2fr;
 }
 .badge-outline {
-	background-color: transparent;
-	border: 1px solid #c7c6c6;
-	color: #5b5562;
+  background-color: transparent;
+  border: 1px solid #c7c6c6;
+  color: #5b5562;
 }

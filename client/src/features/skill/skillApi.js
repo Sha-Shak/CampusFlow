@@ -34,11 +34,29 @@ export const skillApi = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+
+    deleteSkill: builder.mutation({
+      query: (id) => ({
+        url: `/skill/deleteSkill/${id}`,
+        method: 'DELETE',
+      }),
+    }),
+
+    addSkillsType: builder.mutation({
+      query: (data) => ({
+        url: `/skill/addSkillsType`,
+        method: 'PUT',
+        body: data,
+      }),
+    }),
   }),
 });
 
 export const {
+  useDeleteSkillMutation,
+  useCreateSkillMutation,
   useGetSkillsByCategoryQuery,
   useGetAllSkillsQuery,
   useAddCategoriesToSkillsMutation,
+  useAddSkillsTypeMutation,
 } = skillApi;
