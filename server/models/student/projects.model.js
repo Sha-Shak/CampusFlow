@@ -18,6 +18,9 @@ const projectSchema = new mongoose.Schema({
   projectLink: {
     type: String,
   },
+  youtubeLink: {
+    type: String,
+  },
   techStack: {
     type: [String],
   },
@@ -30,7 +33,7 @@ const projectSchema = new mongoose.Schema({
     ref: 'Student',
     required: true,
   },
-  ratigns: {
+  ratings: {
     type: [
       {
         givenBy: {
