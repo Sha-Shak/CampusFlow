@@ -132,12 +132,13 @@ body {
   background: none !important;
   color: inherit !important;
 }
+.react-calendar__month-view_days--day--weekend,
 .react-calendar__month-view__days__day--weekend {
-  color: #000;
+  color: #000 !important;
 }
 
 .friday {
-  color: red !important;
+  color: red;
 }
 
 .steps-vertical {
