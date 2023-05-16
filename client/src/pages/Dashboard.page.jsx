@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import Layout from '../components/Layout';
-import MiniCalender from '../components/MiniCalender';
-import MiniLectures from '../components/MiniLectures';
-import MiniNewsTile from '../components/MiniNewsTile';
-import MiniTodoList from '../components/MiniTodoList';
-import RecentStudents from '../components/RecentStudents';
+import Layout from '../components/common/Layout';
+import MiniCalender from '../components/Dashboard/MiniCalender';
+import MiniLectures from '../components/Dashboard/MiniLectures';
+import MiniNewsTile from '../components/Dashboard/MiniNewsTile';
+import MiniTodoList from '../components/Dashboard/MiniTodoList';
+import RecentStudents from '../components/Dashboard/RecentStudents';
+import useAuthCheck from '../hooks/useAuthCheck';
 
 function Dashboard() {
   const [user, setUser] = useState({});

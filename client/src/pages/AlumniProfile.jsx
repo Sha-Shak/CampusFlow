@@ -1,11 +1,11 @@
 import React from 'react';
-import AlumniSidebar from '../components/alumniComponents/AlumniSidebar';
-import AlumniInfoCard from '../components/alumniComponents/AlumniInfoCard';
-import Experience from '../components/alumniComponents/Experience';
-import ProjectSection from '../components/alumniComponents/ProjectSection';
-import Portfolio from '../components/alumniComponents/Portfolio';
-import AlumniLayout from '../components/alumniComponents/AlumniLayout';
-import GithubGraph from '../components/alumniComponents/GithubGraph';
+import AlumniSidebar from '../components/AlumniComponents/AlumniSidebar';
+import AlumniInfoCard from '../components/AlumniComponents/AlumniInfoCard';
+import Experience from '../components/AlumniComponents/Experience';
+import ProjectSection from '../components/AlumniComponents/ProjectSection';
+import Portfolio from '../components/AlumniComponents/Portfolio';
+import AlumniLayout from '../components/AlumniComponents/AlumniLayout';
+import GithubGraph from '../components/AlumniComponents/GithubGraph';
 
 const AlumniProfile = () => {
   return (

@@ -2,9 +2,8 @@ import React from 'react';
 import { FaGithub, FaEnvelope } from 'react-icons/fa';
 import { RiWhatsappFill } from 'react-icons/ri';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { useGetAllCohortStudentsQuery } from '../features/cohort/cohortApi';
-import Layout from './Layout';
-import TableSkeleton from './TableSkeleton';
+import { useGetAllCohortStudentsQuery } from '../../features/cohort/cohortApi';
+import Layout from '../common/Layout';
 
 const CohortStudents = () => {
   const { cohort } = useParams();

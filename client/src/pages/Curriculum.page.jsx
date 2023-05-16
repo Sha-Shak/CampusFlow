@@ -1,8 +1,8 @@
 import React from 'react';
 import juniorCurriculum from '../assets/juniorCurriculum.json';
 import seniorCurriculum from '../assets/seniorCurriculum.json';
-import Layout from '../components/Layout';
-import WeekCollapseComponent from '../components/WeekCollapse.component';
+import Layout from '../components/common/Layout';
+import WeekCollapseComponent from '../components/Curriculum/WeekCollapse.component';
 
 function CurriculumComponent() {
   return (

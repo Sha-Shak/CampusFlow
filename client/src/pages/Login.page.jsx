@@ -5,7 +5,7 @@ import logo from '../../public/projectcode.png';
 
 function LoginPage() {
   return (
-    <div className="bg-indigo-900 h-[100vh]">
+    <div className="bg-indigo-900 w-[100%] h-[120vh] overscroll-none ">
       <div className="flex items-center gap-96 justify-center">
         <div>
           <img

@@ -4,11 +4,11 @@ import Slider from '@mui/material/Slider';
 import FormGroup from '@mui/material/FormGroup';
 import Grid from '@mui/material/Grid';
 import { Button, Divider, Paper } from '@mui/material';
-import { useGetSkillsByCategoryQuery } from '../features/skill/skillApi';
+import { useGetSkillsByCategoryQuery } from '../../features/skill/skillApi';
 import {
   useGetStudentWeekInfoQuery,
   useSetStudentWeekInfoMutation,
-} from '../features/student/studentApi';
+} from '../../features/student/studentApi';
 import DaisyMark from './DaisyMark';
 import toast, { Toaster } from 'react-hot-toast';
 

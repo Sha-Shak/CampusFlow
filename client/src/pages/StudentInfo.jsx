@@ -1,10 +1,10 @@
 import React from 'react';
-import AssessmentMarksChart from '../components/AssessmentMarksChart';
-import Layout from '../components/Layout';
-import SkillsRadarChart from '../components/SkillsRadarChart';
-import StudentSidebar from '../components/StudentSidebar';
-import UnitMarksChart from '../components/UnitMarks';
-import WeekDropdown from '../components/WeekDropdown';
+import AssessmentMarksChart from '../components/StudentInfo/AssessmentMarksChart';
+import Layout from '../components/common/Layout';
+import SkillsRadarChart from '../components/StudentInfo/SkillsRadarChart';
+import StudentSidebar from '../components/StudentInfo/StudentSidebar';
+import UnitMarksChart from '../components/MarkStudents/UnitMarks';
+import WeekDropdown from '../components/Curriculum/WeekDropdown';
 import { useState } from 'react';
 
 function StudentInfo() {

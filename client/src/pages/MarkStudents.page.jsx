@@ -3,7 +3,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import Layout from '../components/Layout';
+import Layout from '../components/common/Layout';
 import {
   Box,
   Divider,
@@ -19,9 +19,9 @@ import {
   useGetAllCohortStudentsQuery,
 } from '../features/cohort/cohortApi';
 import { useEffect, useState } from 'react';
-import MarkStudent from '../components/MarkStudent';
-import StepMarking from '../components/StepMarking';
-import MultiStepForm from '../components/DaisyStep';
+import MarkStudent from '../components/MarkStudents/MarkStudent';
+import StepMarking from '../components/MarkStudents/StepMarking';
+import MultiStepForm from '../components/MarkStudents/DaisyStep';
 
 function MarkStudents() {
   const [cohort, setCohort] = useState('');

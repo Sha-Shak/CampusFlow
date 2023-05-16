@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDeleteSkillMutation } from '../features/skill/skillApi';
+import { useDeleteSkillMutation } from '../../features/skill/skillApi';
 import toast, { Toaster } from 'react-hot-toast';
 
 function SkillsChips({ skillsName, type, refetchSkills }) {

@@ -11,8 +11,8 @@ import {
   useCreateSkillMutation,
   useGetAllSkillsQuery,
 } from '../features/skill/skillApi';
-import Layout from '../components/Layout';
-import SkillsChips from '../components/SkillsChips.component';
+import Layout from '../components/common/Layout';
+import SkillsChips from '../components/AddSkills/SkillsChips.component';
 import toast, { Toaster } from 'react-hot-toast';
 
 const AddSkill = () => {

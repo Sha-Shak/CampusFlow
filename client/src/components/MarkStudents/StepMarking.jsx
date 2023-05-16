@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import MarkStudent from './MarkStudent';
 import toast, { Toaster } from 'react-hot-toast';
 
-import { useAddSoftTechSkillsByStudentIDMutation } from '../features/student/studentApi';
+import { useAddSoftTechSkillsByStudentIDMutation } from '../../features/student/studentApi';
 import {
   FormControl,
   Input,

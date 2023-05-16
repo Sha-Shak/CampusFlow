@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
-import Layout from '../components/Layout';
+import Layout from '../components/common/Layout';
 
 // Import Repo Access Information from github (dummy data for now line 126)
 

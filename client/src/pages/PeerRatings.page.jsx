@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { useGetAllCohortStudentsQuery } from '../features/cohort/cohortApi';
-import Layout from '../components/Layout';
-import DaisyMark from '../components/DaisyMark';
+import Layout from '../components/common/Layout';
+import DaisyMark from '../components/MarkStudents/DaisyMark';
 import { Button } from '@mui/material';
 import toast, { Toaster } from 'react-hot-toast';
 import { useAddRatingMutation } from '../features/peerRating/peerRatingApi';
@@ -34,22 +34,26 @@ const ratingParameters = [
     name: 'team',
   },
 ];
-const myId = '645bb9c27865c6e61157875f';
+
 function PeerRatings() {
   const [cohort, setCohort] = useState('student-nov-2022');
   const [students, setStudents] = useState([]);
   const [student, setStudent] = useState('');
   const [rate, setRate] = useState({});
+  const [id, setId] = useState('');
   const { data: cohortStudents, isSuccess: isStudentFetchSuccess } =
     useGetAllCohortStudentsQuery(cohort);
   const [
     addRating,
     { isSuccess: isRatingSuccess, isError: isRatingError, error: ratingError },
   ] = useAddRatingMutation();
-  const { user } = useSelector((state) => state.auth.user);
+  const { user } = useSelector((state) => state.auth);
+  useEffect(() => {
+    setId(user?._id);
+  }, [user]);
   useEffect(() => {
     if (isStudentFetchSuccess) {
-      setStudents(cohortStudents.students);
+      setStudents(cohortStudents?.students);
     }
   }, [isStudentFetchSuccess]);
 
@@ -76,18 +80,17 @@ function PeerRatings() {
   const submitRating = () => {
     const avgRate = Object.values(rate).reduce((acc, curr) => acc + curr, 0);
     const finalRate = avgRate / Object.values(rate).length;
-    id = user?._id;
+
     const data = {
-      id: '645bb9c27865c6e61157875f',
+      id,
       givenTo: student,
       rate: finalRate,
-      description: 'test',
+      description: '',
     };
     addRating(data);
     console.log(data);
   };
   console.log(ratingError);
-  console.log(rate);
 
   return (
     <Layout>
@@ -102,11 +105,13 @@ function PeerRatings() {
               onChange={handleStudentChange}
             >
               {isStudentFetchSuccess &&
-                students.map((student, index) => (
-                  <MenuItem key={index} value={student?._id}>
-                    {student?.name}
-                  </MenuItem>
-                ))}
+                students
+                  .filter((student) => student?._id !== id)
+                  .map((student, index) => (
+                    <MenuItem key={index} value={student?._id}>
+                      {student?.name}
+                    </MenuItem>
+                  ))}
             </Select>
           </FormControl>
 

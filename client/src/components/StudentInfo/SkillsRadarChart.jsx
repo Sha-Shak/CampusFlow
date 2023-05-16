@@ -7,7 +7,7 @@ import {
   PolarRadiusAxis,
   ResponsiveContainer,
 } from 'recharts';
-import { useGetStudentWeekInfoQuery } from '../features/student/studentApi';
+import { useGetStudentWeekInfoQuery } from '../../features/student/studentApi';
 
 const dummyData = [
   { skill: 'Communication', value: 10 },

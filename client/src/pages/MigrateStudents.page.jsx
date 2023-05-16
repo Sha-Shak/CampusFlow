@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
-import Layout from '../components/Layout';
-import MigrateByCohort from '../components/MigrateByCohort.component';
-import MigrateByStudent from '../components/MigrateByStudent.component';
+import Layout from '../components/common/Layout';
+import MigrateByCohort from '../components/MigrateStudents/MigrateByCohort.component';
+import MigrateByStudent from '../components/MigrateStudents/MigrateByStudent.component';
 
 function MigrateStudents() {
   const cohortRef = useRef(null);

@@ -2,7 +2,7 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import { IoLogOutOutline } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
-import { userLoggedOut } from '../features/auth/authSlice';
+import { userLoggedOut } from '../../features/auth/authSlice';
 function NavBar() {
   const dispatch = useDispatch();
   const { name, profileImg } = useSelector((state) => state?.auth?.user) || {};

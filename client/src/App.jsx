@@ -8,33 +8,40 @@ import {
 import LoginPage from './pages/Login.page';
 import RedirectOAuth from './pages/RedirectOAuth.page';
 import CandidateList from './pages/CandidateList';
-import CreateStudent from './components/CreateStudentModal';
-import MarkStudent from './components/MarkStudent';
+import CreateStudent from './components/CandidateList/CreateStudentModal';
+import MarkStudent from './components/MarkStudents/MarkStudent';
 import RepoAccess from './pages/RepoAccess.page';
 import Dashboard from './pages/Dashboard.page';
 import CurriculumComponent from './pages/Curriculum.page';
-import CohortStudents from './components/CohortStudents';
+import CohortStudents from './components/Cohorts/CohortStudents';
 import Cohorts from './pages/Cohorts.page';
-import SkillsRadarChart from './components/SkillsRadarChart';
+import SkillsRadarChart from './components/StudentInfo/SkillsRadarChart';
 import StudentInfo from './pages/StudentInfo';
 import MarkStudents from './pages/MarkStudents.page';
 import AddSkill from './pages/AddSkills.page';
 import MigrateStudents from './pages/MigrateStudents.page';
 import PeerRatings from './pages/PeerRatings.page';
 
-import AlumniInfoCard from './components/alumniComponents/AlumniInfoCard';
-import AlumniSidebar from './components/alumniComponents/AlumniSidebar';
-import ProjectCard from './components/alumniComponents/ProjectCard';
-import SiteChip from './components/alumniComponents/SiteChip';
-import Experience from './components/alumniComponents/Experience';
-import ProjectSection from './components/alumniComponents/ProjectSection';
-import SelectIndustry from './components/alumniComponents/SelectIndustry';
-import LanguageStats from './components/alumniComponents/LanguageStats';
+import AlumniInfoCard from './components/AlumniComponents/AlumniInfoCard';
+import AlumniSidebar from './components/AlumniComponents/AlumniSidebar';
+import ProjectCard from './components/AlumniComponents/ProjectCard';
+import SiteChip from './components/AlumniComponents/SiteChip';
+import Experience from './components/AlumniComponents/Experience';
+import ProjectSection from './components/AlumniComponents/ProjectSection';
+import SelectIndustry from './components/AlumniComponents/SelectIndustry';
+import LanguageStats from './components/AlumniComponents/LanguageStats';
 import AlumniProfile from './pages/AlumniProfile.jsx';
-import Portfolio from './components/alumniComponents/Portfolio';
-import GithubGraph from './components/alumniComponents/GithubGraph';
+import Portfolio from './components/AlumniComponents/Portfolio';
+import GithubGraph from './components/AlumniComponents/GithubGraph';
+import useZoom from './hooks/useZoom';
+import useAuthCheck from './hooks/useAuthCheck';
 function App() {
-  return (
+  const zoomLevel = useZoom();
+  const authChecked = useAuthCheck();
+  return !authChecked ? (
+    // <Spinner size={'xl'}></Spinner>
+    <div />
+  ) : (
     <div>
       <Router>
         <Routes>

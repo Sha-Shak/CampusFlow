@@ -13,13 +13,13 @@ import toast, { Toaster } from 'react-hot-toast';
 
 import CreateCohortModal from './CreateCohortModal';
 import Modal from '@mui/material/Modal';
-import { useGetCandidateByIdQuery } from '../features/candidate/candidateApi';
-import { useAddStudentToGithubCohortMutation } from '../features/github/githubApi';
+import { useGetCandidateByIdQuery } from '../../features/candidate/candidateApi';
+import { useAddStudentToGithubCohortMutation } from '../../features/github/githubApi';
 import {
   useAddStudentToCohortMutation,
   useGetAllCohortQuery,
-} from '../features/cohort/cohortApi';
-import { useCreateStudentMutation } from '../features/student/studentApi';
+} from '../../features/cohort/cohortApi';
+import { useCreateStudentMutation } from '../../features/student/studentApi';
 
 const Form = styled('form')({
   display: 'flex',

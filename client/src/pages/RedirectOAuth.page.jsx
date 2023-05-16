@@ -35,7 +35,7 @@ function RedirectOAuth() {
           user: user,
           role: role,
         }),
-        { expires: 30 } // 1 day
+        { expires: 1 } // 1 day
       );
       dispatch(
         userLoggedIn({

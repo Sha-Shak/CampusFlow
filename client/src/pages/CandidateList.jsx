@@ -11,8 +11,8 @@ import TablePagination from '@mui/material/TablePagination';
 import { useNavigate } from 'react-router-dom';
 import { useGetAllCandidatesQuery } from '../features/candidate/candidateApi';
 import TextField from '@mui/material/TextField';
-import CreateStudentModal from '../components/CreateStudentModal';
-import Layout from '../components/Layout';
+import CreateStudentModal from '../components/CandidateList/CreateStudentModal';
+import Layout from '../components/common/Layout';
 import { FaWhatsapp } from 'react-icons/fa';
 function CandidateList() {
   const {
