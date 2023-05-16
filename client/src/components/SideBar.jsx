@@ -12,6 +12,7 @@ function SideBar() {
     ['Add Skills']: ['/addskills'],
     ['Migrate Students']: ['/migratestudents'],
     ['Repo Access']: ['/repoaccess'],
+    ['Peer Ratings']: ['/peerratings'],
   };
 
   return (

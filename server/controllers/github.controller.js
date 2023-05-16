@@ -4,6 +4,8 @@ const gh_client_id = process.env.GITHUB_CLIENT_ID;
 const gh_client_secret = process.env.GITHUB_CLIENT_SECRET;
 const gh_personal_token = process.env.GITHUB_PERSONAL_TOKEN;
 const orgName = 'student-tool';
+const User = require('../models/user/user.model');
+const Student = require('../models/student/student.model');
 
 const getGithubAccessToken = async (req, res) => {
   const { code, role } = req.body;
@@ -21,7 +23,7 @@ const getGithubAccessToken = async (req, res) => {
     const instructorsList = await getOrgInstructors(githubAccessToken);
     const members = await getOrgMembers(githubAccessToken);
     let role = '';
-
+    let user = {};
     let isInstructor = false;
     let isMember = false;
     instructorsList.forEach((instructor) => {
@@ -39,6 +41,7 @@ const getGithubAccessToken = async (req, res) => {
       if (isMember) {
         // console.log(isMember, 'student');
         // console.log(isInstructor, 'instructor');
+        user = await Student.findOne({ githubUsername: currentUserName });
         role = 'student';
       } else {
         res.status(401).send('Unauthorized Member');
@@ -46,9 +49,10 @@ const getGithubAccessToken = async (req, res) => {
       //   res.status(401).send('You are not an instructor');
     } else {
       //   console.log(members);
+      user = await User.findOne({ githubUsername: currentUserName });
       role = 'instructor';
     }
-    res.status(200).send({ accessToken: githubAccessToken, role });
+    res.status(200).send({ accessToken: githubAccessToken, role, user });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error' });

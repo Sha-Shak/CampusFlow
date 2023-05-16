@@ -13,6 +13,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  githubUsername: {
+    type: String,
+    required: true,
+  },
 
   // user, student, alumni, admin, hr are separate entities
   // student: {

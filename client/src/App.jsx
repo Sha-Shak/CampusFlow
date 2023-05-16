@@ -20,6 +20,7 @@ import StudentInfo from './pages/StudentInfo';
 import MarkStudents from './pages/MarkStudents.page';
 import AddSkill from './pages/AddSkills.page';
 import MigrateStudents from './pages/MigrateStudents.page';
+import PeerRatings from './pages/PeerRatings.page';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <Route path="/createStudent/:id" element={<CreateStudent />} />
           <Route path="/markStudent/:id/:week" element={<MarkStudent />} />
           <Route path="/markstudents" element={<MarkStudents />} />
+          <Route path="peerratings" element={<PeerRatings />} />
           <Route path="/cohorts" element={<Cohorts />}></Route>
           <Route
             path="/cohorts/:cohort/students/"

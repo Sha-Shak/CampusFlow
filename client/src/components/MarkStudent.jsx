@@ -91,10 +91,6 @@ const MarkStudent = ({ studentId, week, handleNext }) => {
     });
     setModifiedTechSkills(generate);
   }, [studentWeekInfo, techSkills]);
-  const sliderMarks = Array.from({ length: 10 }, (_, i) => ({
-    value: i + 1,
-    label: i + 1,
-  }));
 
   const handleAssessmentMarkChange = (event) => {
     const assesmark = +event.target.value;
@@ -188,7 +184,7 @@ const MarkStudent = ({ studentId, week, handleNext }) => {
         <Toaster />
         {/* Assessment Mark Slider */}
         <form onSubmit={handleSubmit}>
-          <div className="divider font-600 uppercase">Weekly Assessment</div>
+          <div className="uppercase divider font-600">Weekly Assessment</div>
 
           <DaisyMark
             title={'Assesment Marks'}
@@ -198,7 +194,7 @@ const MarkStudent = ({ studentId, week, handleNext }) => {
           />
           {/* Assessment Mark Slider Finished */}
           {/* Soft Skill Sliders */}
-          <div className="divider font-600 uppercase">Soft Skills </div>
+          <div className="uppercase divider font-600">Soft Skills </div>
 
           {modifiedSoftSkills?.map((skill, index) => (
             <div key={index}>
@@ -212,7 +208,7 @@ const MarkStudent = ({ studentId, week, handleNext }) => {
           ))}
 
           {/* Tech Skill Sliders */}
-          <div className="divider font-600 uppercase">Tech Skills</div>
+          <div className="uppercase divider font-600">Tech Skills</div>
 
           {modifiedTechSkills?.map((skill, index) => (
             <div key={index}>
@@ -226,9 +222,9 @@ const MarkStudent = ({ studentId, week, handleNext }) => {
           ))}
 
           <div className="">
-            <div className="divider font-600 uppercase">Unit Marks</div>
+            <div className="uppercase divider font-600">Unit Marks</div>
             {studentUnitMarks?.map((unit, index) => (
-              <div className=" p-2 pt-1 rounded-lg" key={index}>
+              <div className="p-2 pt-1 rounded-lg " key={index}>
                 <DaisyMark
                   title={unit?.unitName}
                   onChange={handleUnitMarkChange}

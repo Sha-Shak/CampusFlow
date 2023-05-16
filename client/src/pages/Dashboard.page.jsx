@@ -8,9 +8,12 @@ import NavBar from '../components/NavBar';
 import RecentStudents from '../components/RecentStudents';
 
 function Dashboard() {
+  const user = JSON.parse(localStorage.getItem('user'));
+  const firstName = user?.name.split(' ')[0];
+
   return (
     <Layout>
-      <div className="text-3xl mb-8 ml-4">Wellcome, Zahid</div>
+      <div className="text-3xl mb-8 ml-4">Wellcome, {firstName}</div>
       <div className="m-4">
         <RecentStudents />
       </div>
