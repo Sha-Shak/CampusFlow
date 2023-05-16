@@ -58,7 +58,7 @@ function App() {
           <Route path="/alumni/experience" element={<Experience />} />
           <Route path="/alumni/portfolio" element={<ProjectSection />} />
           <Route path="/search" element={<SelectIndustry />} />
-          <Route path="/langualStats" element={<LanguageStats />} />
+          <Route path="/languageStats" element={<LanguageStats />} />
           <Route path="*" element={<div>404</div>} />
         </Routes>
       </Router>

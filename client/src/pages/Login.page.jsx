@@ -2,6 +2,7 @@ import React from 'react';
 import CodeCard from '../components/Login/CodeCard';
 import { FaGithub } from 'react-icons/fa';
 import logo from '../../public/projectcode.png';
+
 function LoginPage() {
   return (
     <div className="bg-indigo-900 h-[100vh]">
