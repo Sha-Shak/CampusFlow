@@ -24,6 +24,30 @@ const ExperienceForm = ({ handleClose }) => {
 
     // TODO: Perform form submission logic here
 
+    // {
+    //   "info" : {
+    //     "jobTitle": "Software Engineer",
+    //     "companyName": "Google",
+    //     "fromDate": "2021-06-01T00:00:00Z",
+    //     "toDate": "2023-05-14T00:00:00Z",
+    //     "description": "Designing, developing, and testing software applications.",
+    //     "skills": ["JavaScript", "Python", "Java"],
+    //     "status": true
+    //     }
+    // }
+    const experienceData = {
+      info: {
+        jobTitle: jobTitle,
+        companyName: companyName,
+        fromDate: fromDate,
+        toDate: toDate,
+        description: description,
+        skills: skills,
+        status: status,
+      },
+    };
+    console.log(experienceData);
+
     // Reset form fields after submission
     setJobTitle('');
     setCompanyName('');

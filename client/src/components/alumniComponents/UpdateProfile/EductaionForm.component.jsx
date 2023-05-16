@@ -18,8 +18,54 @@ const EducationForm = ({ handleClose }) => {
   const [status, setStatus] = useState(true);
   const [gpa, setGpa] = useState('');
 
+  const handleKeyDown = (event) => {
+    event.preventDefault();
+    if (event.key === 'Enter') {
+      handleSubmit();
+    }
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
+    // if (name.trim() === '' || url.trim() === '') {
+    //   alert('Please fill in all required fields.');
+    //   return;
+    // }
+    if (
+      instituteName.trim() === '' ||
+      program.trim() === '' ||
+      fromDate.trim() === '' ||
+      toDate.trim() === '' ||
+      description.trim() === '' ||
+      gpa.trim() === ''
+    ) {
+      alert('Please fill in all required fields.');
+      return;
+    }
+
+    //     {
+    //       "info":{
+    //             "instituteName": "DMC",
+    //             "program": "Master of Science in Computer Science",
+    //             "fromDate": "2019-09-01",
+    //             "toDate": "2021-06-01",
+    //             "description": "A rigorous and comprehensive program that prepares students for careers in computer science.",
+    //             "status": true,
+    //             "gpa": 3.9
+    //       }
+    // }
+    const educationData = {
+      info: {
+        instituteName: instituteName,
+        program: program,
+        fromDate: fromDate,
+        toDate: toDate,
+        description: description,
+        status: status,
+        gpa: gpa,
+      },
+    };
+    console.log(educationData);
 
     // TODO: Perform form submission logic here
 
