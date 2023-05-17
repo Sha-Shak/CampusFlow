@@ -1,8 +1,17 @@
 import React from 'react';
 import GitHubCalendar from 'react-github-calendar';
 
-const GithubGraph = () => {
-  let userName = 'khrrsn';
+const GithubGraph = ({ alumniInfo }) => {
+  const userNameTemp = alumniInfo?.githubUsername;
+  // const userNameTemp = 'pollock-nag';
+  let userName = '';
+
+  if (userNameTemp !== undefined) {
+    userName = userNameTemp;
+  } else {
+    userName = 'pollock-nag';
+  }
+
   return (
     <div>
       <div className="bg-white h-52 pl-8 pr-8 w-fit rounded-2xl pt-2 pb-2 shadow-md">
