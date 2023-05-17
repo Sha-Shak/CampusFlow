@@ -31,11 +31,12 @@ import ProjectSection from './components/AlumniComponents/ProjectSection';
 import SelectIndustry from './components/AlumniComponents/SelectIndustry';
 import LanguageStats from './components/AlumniComponents/LanguageStats';
 import AlumniProfile from './pages/AlumniProfile.jsx';
-import Portfolio from './components/AlumniComponents/Portfolio';
-import GithubGraph from './components/AlumniComponents/GithubGraph';
+import Portfolio from './components/alumniComponents/Portfolio';
+import GithubGraph from './components/alumniComponents/GithubGraph';
 import useZoom from './hooks/useZoom';
 import useAuthCheck from './hooks/useAuthCheck';
 import AlumniUpdateProfile from './pages/AlumniUpdateProfile.page';
+import AlumniProjectcode from './pages/AlumniProjectcode';
 function App() {
   // const zoomLevel = useZoom();
   const authChecked = useAuthCheck();
@@ -78,9 +79,13 @@ function App() {
             path="/alumni/update-profile"
             element={<AlumniUpdateProfile />}
           />
+
+          <Route path="/alumni/projectcode" element={<AlumniProjectcode />} />
+
           <Route path="/search" element={<SelectIndustry />} />
           <Route path="/languageStats" element={<LanguageStats />} />
           <Route path="/graph" element={<GithubGraph />} />
+
           <Route path="*" element={<div>404</div>} />
         </Routes>
       </Router>

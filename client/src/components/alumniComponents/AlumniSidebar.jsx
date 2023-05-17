@@ -6,13 +6,18 @@ import { BsBriefcase } from 'react-icons/bs';
 import { GrCertificate, GrConnect } from 'react-icons/gr';
 import { IoCalendarClearOutline } from 'react-icons/io5';
 import SmallNameCard from './SmallNameCard';
+import { useNavigate } from 'react-router-dom';
 
 const AlumniSidebar = () => {
+  const navigate = useNavigate();
+
   const handleDashboard = () => {
     console.log('Dashboard');
+    navigate('/alumni/profile');
   };
   const handleProjectCode = () => {
     console.log('Project Code');
+    navigate('/alumni/projectcode');
   };
   const handleTechSkill = () => {
     console.log('Tech Skill');
