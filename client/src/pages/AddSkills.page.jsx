@@ -101,6 +101,9 @@ const AddSkill = () => {
       description: newSkillDescription,
     };
     createSkill(newSkill);
+    setNewSkillName('');
+    event.target.value = null;
+    console.log(event.target);
   };
 
   return (
@@ -112,17 +115,14 @@ const AddSkill = () => {
             skillsName={skillsName}
             type={'Soft Skills'}
             refetchSkills={refetchSkills}
+            filter={'softskill'}
           />
 
           <SkillsChips
             skillsName={skillsName}
             type={'Tech Skills'}
             refetchSkills={refetchSkills}
-          />
-          <SkillsChips
-            skillsName={skillsName}
-            type={'Alumni Skills'}
-            refetchSkills={refetchSkills}
+            filter={'techskill'}
           />
         </div>
 
@@ -308,6 +308,7 @@ const AddSkill = () => {
                   required
                   id="skillName"
                   name="skillName"
+                  value={newSkillName}
                   label="Skill Name"
                   fullWidth
                   size="small"

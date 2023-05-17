@@ -95,10 +95,11 @@ const CreateStudentModal = ({ createStudentOpen, onStudentClose, id }) => {
       cohortName: cohort,
     });
   };
-
-  if (isCohortAddSuccess) {
-    toast.success('Student Creation Successfull');
-  }
+  useEffect(() => {
+    if (isCohortAddSuccess && isAddStudentToGithubSuccess) {
+      toast.success('Student Creation Successfull');
+    }
+  }, [isCohortAddSuccess]);
 
   const clearForm = () => {
     setName('');

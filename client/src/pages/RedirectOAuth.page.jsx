@@ -27,6 +27,7 @@ function RedirectOAuth() {
       const role = token?.role;
 
       localStorage.setItem('role', role);
+      localStorage.setItem('github-access-token', accessToken);
 
       Cookies.set(
         'auth',
