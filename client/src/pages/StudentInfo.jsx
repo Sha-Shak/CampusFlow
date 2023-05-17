@@ -8,11 +8,10 @@ import { useState } from 'react';
 import { useGetStudentWeekInfoQuery } from '../features/student/studentApi';
 
 function StudentInfo() {
-  const [selectedWeek, setSelectedWeek] = useState('Week 1');
-  const [weekSelected, setWeekSelected] = useState(1);
+  const [selectedWeek, setSelectedWeek] = useState(1);
   const { data: studentWeekInfo } = useGetStudentWeekInfoQuery({
     studentId: '64631226db442509e170a1e5',
-    week: weekSelected,
+    week: selectedWeek,
   });
 
   console.log(studentWeekInfo?.softSkills);
@@ -22,10 +21,9 @@ function StudentInfo() {
   const weeks = ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6'];
   const checkpoints = ['Mid Junior', 'End Junior', 'Mid Senior', 'End Senior'];
 
-  const handleSelect = (week, index) => {
+  const handleSelect = (index) => {
     const weekSelected = index + 1;
-    setSelectedWeek(week);
-    setWeekSelected(weekSelected);
+    setSelectedWeek(weekSelected);
   };
   const handleCheckPointSelect = (checkpoint) => {
     setSelectedCheckpoint(checkpoint);
@@ -46,14 +44,14 @@ function StudentInfo() {
               tabIndex={0}
               className="w-32 text-center btn m-1 bg-purple-100 border-0 text-purple-950 hover:bg-purple-200 hover:text-purple-900 shadow-sm border-b-4 border-b-purple-500"
             >
-              {selectedWeek || 'Select Week'}
+              {weeks[selectedWeek - 1]}
             </label>
             <ul
               tabIndex={0}
               className="dropdown-content menu p-2  bg-base-100 rounded-box w-32  text-center  bg-purple-50 shadow-2xl"
             >
               {weeks.map((week, index) => (
-                <li key={week} onClick={() => handleSelect(week, index)}>
+                <li key={week} onClick={() => handleSelect(index)}>
                   <a>{week}</a>
                 </li>
               ))}

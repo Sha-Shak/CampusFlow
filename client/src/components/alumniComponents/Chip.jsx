@@ -1,8 +1,10 @@
 import React from 'react';
 
-const Chip = ({ name }) => {
+const Chip = ({ name, padding, round, customColor, borderColor }) => {
   return (
-    <div className="badge bg-purple-300 text-black p-4  border-none">
+    <div
+      className={`badge bg-${customColor} text-black p-${padding}   rounded-${round} border-2 border-${borderColor}`}
+    >
       {name}
     </div>
   );

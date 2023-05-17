@@ -4,8 +4,6 @@ import { SlEnvolope } from 'react-icons/sl';
 import Chip from './Chip';
 
 function AlumniInfoCard({ alumniInfo }) {
-  // JSX elements
-
   const socialButtonClick = (type) => {
     // alert(type);
     if (type === 'phone') {
@@ -91,13 +89,19 @@ function AlumniInfoCard({ alumniInfo }) {
   );
   return (
     <>
-      <div className="card h-auto bg-base-100 shadow-xl">
+      <div className="card h-auto bg-base-100 shadow-md">
         <div className="card-body p-5">
           {cardHead}
           <p className=" mt-3 text-justify leading-5 text-md text-gray-600">
             {alumniInfo?.about}
           </p>
-          <Chip name="Full Stack Developer" />
+          <Chip
+            name="Full Stack Developer"
+            padding={3}
+            round={'xl'}
+            customColor={'white'}
+            borderColor={'purple-300'}
+          />
           {cardButtons}
         </div>
       </div>
