@@ -146,8 +146,9 @@ const getSkillsByCategory = async (req, res) => {
       return res.status(404).json({ message: 'No skills in this category' });
     }
     const result = skills.map((skill) => {
-      const { _id, skillName, description } = skill;
-      return { _id, skillName, description };
+      const { _id, skillName, description, category, studentType, stack } =
+        skill;
+      return { _id, skillName, description, category, studentType, stack };
     });
 
     return res.status(200).json(result);

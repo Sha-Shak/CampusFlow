@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import Typography from '@mui/material/Typography';
-import Slider from '@mui/material/Slider';
-import FormGroup from '@mui/material/FormGroup';
-import Grid from '@mui/material/Grid';
-import { Button, Divider, Paper } from '@mui/material';
+
+import { Paper } from '@mui/material';
 import { useGetSkillsByCategoryQuery } from '../../features/skill/skillApi';
 import {
   useGetStudentWeekInfoQuery,
@@ -13,7 +10,6 @@ import DaisyMark from './DaisyMark';
 import toast, { Toaster } from 'react-hot-toast';
 
 const MarkStudent = ({ studentId, week, handleNext }) => {
-  console.log(week);
   const { data: softSkills } = useGetSkillsByCategoryQuery('softskill');
 
   const { data: techSkills } = useGetSkillsByCategoryQuery('techskill');
@@ -32,8 +28,7 @@ const MarkStudent = ({ studentId, week, handleNext }) => {
   const initialAssessmentMark = {
     assessmentMark: 0,
   };
-  console.log(studentId);
-  const [assessmentMark, setAssessmentMark] = useState(initialAssessmentMark);
+  const [assessmentMark, setAssessmentMark] = useState(0);
   const [softSkillMarks, setSoftSkillMarks] = useState();
   const [techSkillMarks, setTechSkillMarks] = useState();
   const [modifiedSoftSkills, setModifiedSoftSkills] = useState([]);
@@ -46,19 +41,27 @@ const MarkStudent = ({ studentId, week, handleNext }) => {
   let initialMarks = {};
   useEffect(() => {
     if (!studentWeekInfo?.softSkills[0]?.skill) {
-      const initialMarks = softSkills?.reduce((acc, skill) => {
-        acc[skill._id] = 0;
-        return acc;
-      }, {});
+      const initialMarks = softSkills
+        ?.filter((skill) => {
+          return skill?.studentType?.includes('junior');
+        })
+        .reduce((acc, skill) => {
+          acc[skill._id] = 0;
+          return acc;
+        }, {});
       setInitialSoftSkillMarks(initialMarks);
       setSoftSkillMarks(initialSoftSkillMarks);
     }
 
     if (!studentWeekInfo?.techSkills[0]?.skill) {
-      initialMarks = techSkills?.reduce((acc, skill) => {
-        acc[skill._id] = 0;
-        return acc;
-      }, {});
+      initialMarks = techSkills
+        ?.filter((skill) => {
+          return skill?.studentType?.includes('junior');
+        })
+        .reduce((acc, skill) => {
+          acc[skill._id] = 0;
+          return acc;
+        }, {});
       setInitialTechSkillMarks(initialMarks);
       setTechSkillMarks(initialTechSkillMarks);
     }
@@ -67,37 +70,76 @@ const MarkStudent = ({ studentId, week, handleNext }) => {
   // slider default value and marks
 
   useEffect(() => {
-    const generate = softSkills?.map((skill) => {
-      const studentSkill = studentWeekInfo?.softSkills?.find(
-        (studentSkill) => studentSkill.skill?._id === skill?._id
-      );
-      return {
-        ...skill,
-        marks: studentSkill?.marks || 0,
-      };
-    });
+    const generate = softSkills
+      ?.filter((skill) => {
+        return skill?.studentType?.includes('junior');
+      })
+      .map((skill) => {
+        const studentSkill = studentWeekInfo?.softSkills?.find(
+          (studentSkill) => studentSkill.skill?._id === skill?._id
+        );
+        return {
+          ...skill,
+          marks: studentSkill?.marks || 0,
+        };
+      });
+
     setModifiedSoftSkills(generate);
-  }, [studentWeekInfo, softSkills]);
+  }, [studentWeekInfo, softSkills, studentId, week]);
 
   useEffect(() => {
-    const generate = techSkills?.map((skill) => {
-      const studentSkill = studentWeekInfo?.techSkills?.find(
-        (studentSkill) => studentSkill.skill?._id === skill?._id
-      );
-      return {
-        ...skill,
-        marks: studentSkill?.marks || 0,
-      };
-    });
+    const generate = techSkills
+      ?.filter((skill) => {
+        return skill?.studentType?.includes('junior');
+      })
+      .map((skill) => {
+        const studentSkill = studentWeekInfo?.techSkills?.find(
+          (studentSkill) => studentSkill.skill?._id === skill?._id
+        );
+        return {
+          ...skill,
+          marks: studentSkill?.marks || 0,
+        };
+      });
     setModifiedTechSkills(generate);
   }, [studentWeekInfo, techSkills]);
 
+  useEffect(() => {
+    const generate = studentUnitMarks?.reduce((acc, unit) => {
+      acc[unit?.unitName] = unit?.marks;
+      return acc;
+    }, {});
+    setUnitMarks(generate);
+  }, [studentUnitMarks]);
+
+  useEffect(() => {
+    const generate = studentWeekInfo?.assessmentMark || 0;
+
+    setAssessmentMark(generate);
+  }, [studentWeekInfo]);
+  console.log(assessmentMark);
+  useEffect(() => {
+    const generate = studentWeekInfo?.softSkills?.reduce((acc, skill) => {
+      acc[skill?.skill?._id] = skill?.marks;
+      return acc;
+    }, {});
+    setSoftSkillMarks(generate);
+  }, [studentWeekInfo]);
+  useEffect(() => {
+    const generate = studentWeekInfo?.techSkills?.reduce((acc, skill) => {
+      acc[skill?.skill?._id] = skill?.marks;
+      return acc;
+    }, {});
+    setTechSkillMarks(generate);
+  }, [studentWeekInfo]);
+
+  const handleSubmitMark = () => {
+    refetchStudentInfo();
+  };
+
   const handleAssessmentMarkChange = (event) => {
     const assesmark = +event.target.value;
-    setAssessmentMark((prev) => ({
-      ...prev,
-      [event.target.name]: assesmark,
-    }));
+    setAssessmentMark(assesmark);
   };
   const handleUnitMarkChange = (event) => {
     setUnitMarks((prev) => ({
@@ -122,31 +164,37 @@ const MarkStudent = ({ studentId, week, handleNext }) => {
     }));
   };
 
-  console.log(softSkillMarks);
   const handleSubmit = (event) => {
     event.preventDefault();
-    const allSoftSkillMarks = Object.entries(softSkillMarks).map(
+    const allSoftSkillMarksDraft = Object.entries(softSkillMarks).map(
       ([skill, mark]) => ({
         skill: skill,
         marks: mark,
       })
     );
-    const allTechSkillMarks = Object.entries(techSkillMarks).map(
+    const allSoftSkillMarks = allSoftSkillMarksDraft.filter(
+      (skill) => skill.skill && skill.marks
+    );
+
+    const allTechSkillMarksDraft = Object.entries(techSkillMarks).map(
       ([skill, mark]) => ({
         skill: skill,
         marks: mark,
       })
     );
+    const allTechSkillMarks = allTechSkillMarksDraft.filter(
+      (skill) => skill.skill && skill.marks
+    );
+
     const allUnitMarks = Object.entries(unitMarks).map(([unit, mark]) => ({
       unitName: unit,
       marks: mark,
     }));
 
-    console.log(assessmentMark.assessmentMark);
     const data = {
       studentId,
       week,
-      assessmentMarks: assessmentMark.assessmentMark,
+      assessmentMarks: assessmentMark,
       softSkills: allSoftSkillMarks,
       techSkills: allTechSkillMarks,
       unitMarks: allUnitMarks,
@@ -157,9 +205,9 @@ const MarkStudent = ({ studentId, week, handleNext }) => {
     // handleMarkSubmission(data);
 
     setWeekInfo(data);
-    setAssessmentMark(initialAssessmentMark);
-    handleNext();
+    setAssessmentMark(0);
     refetchStudentInfo();
+    handleNext();
     setUnitMarks({});
     // toast.success('Marking Successful');
   };
@@ -234,7 +282,7 @@ const MarkStudent = ({ studentId, week, handleNext }) => {
               </div>
             ))}
           </div>
-          <button className="btn" type="submit">
+          <button className="btn" type="submit" onClick={handleSubmitMark}>
             Submit Marks
           </button>
         </form>
