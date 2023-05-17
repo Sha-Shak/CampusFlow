@@ -36,9 +36,13 @@ const AddSkill = () => {
   const [selectedSkills, setSelectedSkills] = useState([]);
   const [newSkillName, setNewSkillName] = useState('');
   const [newSkillDescription, setNewSkillDescription] = useState('');
-  const [category, setCategory] = useState([]);
-  const [studentType, setStudentType] = useState([]);
-  const [stack, setStack] = useState([]);
+  const [category, setCategory] = useState(false);
+  const [studentType, setStudentType] = useState();
+  const [stack, setStack] = useState();
+
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedStack, setSelectedStack] = useState([]);
+  const [selectedStudentTypes, setSelectedStudentTypes] = useState([]);
 
   useEffect(() => {
     if (isAddSkillsSuccess) {
@@ -59,36 +63,26 @@ const AddSkill = () => {
     }
   }, [isCreateSkillSuccess, isCreateSkillError]);
 
-  const handleCategoryChange = (event) => {
-    if (!category.includes(event.target.value)) {
-      setCategory([...category, event.target.value]);
-    }
-  };
-  const handleStudentTypeChange = (event) => {
-    if (!studentType.includes(event.target.value)) {
-      setStudentType([...studentType, event.target.value]);
-    }
-  };
-  const handleStackChange = (event) => {
-    if (!stack.includes(event.target.value)) {
-      setStack([...stack, event.target.value]);
-    }
+  const handleCheckboxChange = (event, selectedValues, setSelectedValues) => {
+    const value = event.target.value;
+    const isChecked = event.target.checked;
+    const updatedValues = isChecked
+      ? [...selectedValues, value]
+      : selectedValues.filter((item) => item !== value);
+    setSelectedValues(updatedValues);
   };
 
   const handleAddSkill = (event) => {
     event.preventDefault();
     const ids = selectedSkills.map((skill) => skill._id);
-    const categoryList = category;
     const data = {
       ids,
-      categoryList,
-      studentTypes: studentType,
-      stackList: stack,
+      categoryList: selectedCategories,
+      studentTypes: selectedStudentTypes,
+      stackList: selectedStack,
     };
     console.log(data);
-    addSkillsType(data);
-
-    // addCategoriesToSkills(data);
+    // addSkillsType(data);
   };
 
   const handleSelecteSkillsChange = (event, value) => {
@@ -171,10 +165,15 @@ const AddSkill = () => {
               <FormControlLabel
                 control={
                   <Checkbox
-                    // checked={junior}
-                    onChange={handleStudentTypeChange}
+                    onChange={(event) =>
+                      handleCheckboxChange(
+                        event,
+                        selectedStudentTypes,
+                        setSelectedStudentTypes
+                      )
+                    }
                     color="primary"
-                    value={'junior'}
+                    value="junior"
                   />
                 }
                 label="Junior"
@@ -182,10 +181,15 @@ const AddSkill = () => {
               <FormControlLabel
                 control={
                   <Checkbox
-                    // checked={senior}
-                    onChange={handleStudentTypeChange}
+                    onChange={(event) =>
+                      handleCheckboxChange(
+                        event,
+                        selectedStudentTypes,
+                        setSelectedStudentTypes
+                      )
+                    }
                     color="primary"
-                    value={'senior'}
+                    value="senior"
                   />
                 }
                 label="Senior"
@@ -193,10 +197,15 @@ const AddSkill = () => {
               <FormControlLabel
                 control={
                   <Checkbox
-                    // checked={alumni}
-                    onChange={handleStudentTypeChange}
+                    onChange={(event) =>
+                      handleCheckboxChange(
+                        event,
+                        selectedStudentTypes,
+                        setSelectedStudentTypes
+                      )
+                    }
                     color="primary"
-                    value={'alumni'}
+                    value="alumni"
                   />
                 }
                 label="Alumni"
@@ -216,10 +225,15 @@ const AddSkill = () => {
               <FormControlLabel
                 control={
                   <Checkbox
-                    // checked={junior}
-                    onChange={handleStackChange}
+                    onChange={(event) =>
+                      handleCheckboxChange(
+                        event,
+                        selectedStack,
+                        setSelectedStack
+                      )
+                    }
                     color="primary"
-                    value={'frontend'}
+                    value="frontend"
                   />
                 }
                 label="Frontend"
@@ -227,10 +241,15 @@ const AddSkill = () => {
               <FormControlLabel
                 control={
                   <Checkbox
-                    // checked={senior}
-                    onChange={handleStackChange}
+                    onChange={(event) =>
+                      handleCheckboxChange(
+                        event,
+                        selectedStack,
+                        setSelectedStack
+                      )
+                    }
                     color="primary"
-                    value={'backend'}
+                    value="backend"
                   />
                 }
                 label="Backend"
@@ -238,10 +257,15 @@ const AddSkill = () => {
               <FormControlLabel
                 control={
                   <Checkbox
-                    // checked={senior}
-                    onChange={handleStackChange}
+                    onChange={(event) =>
+                      handleCheckboxChange(
+                        event,
+                        selectedStack,
+                        setSelectedStack
+                      )
+                    }
                     color="primary"
-                    value={'testing'}
+                    value="testing"
                   />
                 }
                 label="Testing"
@@ -261,10 +285,15 @@ const AddSkill = () => {
               <FormControlLabel
                 control={
                   <Checkbox
-                    // checked={junior}
-                    onChange={handleCategoryChange}
+                    onChange={(event) =>
+                      handleCheckboxChange(
+                        event,
+                        selectedCategories,
+                        setSelectedCategories
+                      )
+                    }
                     color="primary"
-                    value={'softskill'}
+                    value="softskill"
                   />
                 }
                 label="Soft Skill"
@@ -272,10 +301,15 @@ const AddSkill = () => {
               <FormControlLabel
                 control={
                   <Checkbox
-                    // checked={senior}
-                    onChange={handleCategoryChange}
+                    onChange={(event) =>
+                      handleCheckboxChange(
+                        event,
+                        selectedCategories,
+                        setSelectedCategories
+                      )
+                    }
                     color="primary"
-                    value={'techskill'}
+                    value="techskill"
                   />
                 }
                 label="Techskill"

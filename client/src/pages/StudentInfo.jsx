@@ -6,14 +6,20 @@ import StudentSidebar from '../components/StudentInfo/StudentSidebar';
 import UnitMarksChart from '../components/StudentInfo/UnitMarks';
 import { useState } from 'react';
 import { useGetStudentWeekInfoQuery } from '../features/student/studentApi';
+import { useParams } from 'react-router-dom';
 
 function StudentInfo() {
   const [selectedWeek, setSelectedWeek] = useState('Week 1');
   const [weekSelected, setWeekSelected] = useState(1);
+
+  const { id } = useParams();
+
   const { data: studentWeekInfo } = useGetStudentWeekInfoQuery({
-    studentId: '64631226db442509e170a1e5',
+    studentId: id,
     week: weekSelected,
   });
+
+  // get id via params
 
   console.log(studentWeekInfo?.softSkills);
 
