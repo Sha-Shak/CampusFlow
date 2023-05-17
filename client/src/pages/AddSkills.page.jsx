@@ -82,7 +82,7 @@ const AddSkill = () => {
       stackList: selectedStack,
     };
     console.log(data);
-    // addSkillsType(data);
+    addSkillsType(data);
   };
 
   const handleSelecteSkillsChange = (event, value) => {

@@ -28,7 +28,7 @@ const MarkStudent = ({ studentId, week, handleNext }) => {
   const initialAssessmentMark = {
     assessmentMark: 0,
   };
-  const [assessmentMark, setAssessmentMark] = useState(initialAssessmentMark);
+  const [assessmentMark, setAssessmentMark] = useState(0);
   const [softSkillMarks, setSoftSkillMarks] = useState();
   const [techSkillMarks, setTechSkillMarks] = useState();
   const [modifiedSoftSkills, setModifiedSoftSkills] = useState([]);
@@ -106,27 +106,28 @@ const MarkStudent = ({ studentId, week, handleNext }) => {
 
   useEffect(() => {
     const generate = studentUnitMarks?.reduce((acc, unit) => {
-      acc[unit.unitName] = unit.marks;
+      acc[unit?.unitName] = unit?.marks;
       return acc;
     }, {});
     setUnitMarks(generate);
   }, [studentUnitMarks]);
 
   useEffect(() => {
-    const generate = studentWeekInfo?.assessmentMark;
+    const generate = studentWeekInfo?.assessmentMark || 0;
+
     setAssessmentMark(generate);
   }, [studentWeekInfo]);
-
+  console.log(assessmentMark);
   useEffect(() => {
     const generate = studentWeekInfo?.softSkills?.reduce((acc, skill) => {
-      acc[skill.skill._id] = skill.marks;
+      acc[skill?.skill?._id] = skill?.marks;
       return acc;
     }, {});
     setSoftSkillMarks(generate);
   }, [studentWeekInfo]);
   useEffect(() => {
     const generate = studentWeekInfo?.techSkills?.reduce((acc, skill) => {
-      acc[skill.skill._id] = skill.marks;
+      acc[skill?.skill?._id] = skill?.marks;
       return acc;
     }, {});
     setTechSkillMarks(generate);
@@ -138,10 +139,7 @@ const MarkStudent = ({ studentId, week, handleNext }) => {
 
   const handleAssessmentMarkChange = (event) => {
     const assesmark = +event.target.value;
-    setAssessmentMark((prev) => ({
-      ...prev,
-      [event.target.name]: assesmark,
-    }));
+    setAssessmentMark(assesmark);
   };
   const handleUnitMarkChange = (event) => {
     setUnitMarks((prev) => ({
@@ -168,28 +166,35 @@ const MarkStudent = ({ studentId, week, handleNext }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const allSoftSkillMarks = Object.entries(softSkillMarks).map(
+    const allSoftSkillMarksDraft = Object.entries(softSkillMarks).map(
       ([skill, mark]) => ({
         skill: skill,
         marks: mark,
       })
     );
-    const allTechSkillMarks = Object.entries(techSkillMarks).map(
+    const allSoftSkillMarks = allSoftSkillMarksDraft.filter(
+      (skill) => skill.skill && skill.marks
+    );
+
+    const allTechSkillMarksDraft = Object.entries(techSkillMarks).map(
       ([skill, mark]) => ({
         skill: skill,
         marks: mark,
       })
     );
+    const allTechSkillMarks = allTechSkillMarksDraft.filter(
+      (skill) => skill.skill && skill.marks
+    );
+
     const allUnitMarks = Object.entries(unitMarks).map(([unit, mark]) => ({
       unitName: unit,
       marks: mark,
     }));
 
-    console.log(assessmentMark.assessmentMark);
     const data = {
       studentId,
       week,
-      assessmentMarks: assessmentMark.assessmentMark,
+      assessmentMarks: assessmentMark,
       softSkills: allSoftSkillMarks,
       techSkills: allTechSkillMarks,
       unitMarks: allUnitMarks,
@@ -200,7 +205,7 @@ const MarkStudent = ({ studentId, week, handleNext }) => {
     // handleMarkSubmission(data);
 
     setWeekInfo(data);
-    setAssessmentMark(initialAssessmentMark);
+    setAssessmentMark(0);
     refetchStudentInfo();
     handleNext();
     setUnitMarks({});
