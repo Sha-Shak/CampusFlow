@@ -23,7 +23,7 @@ const dummyData = [
 
 const SkillsRadarChart = ({ skills }) => {
   const createFormattedData = (skills) => {
-    return skills.map((skill) => {
+    return skills?.map((skill) => {
       return {
         skill: skill?.skill?.skillName,
         value: skill?.marks,
