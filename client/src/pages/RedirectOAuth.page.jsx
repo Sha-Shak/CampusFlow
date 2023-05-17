@@ -27,6 +27,7 @@ function RedirectOAuth() {
       const role = token?.role;
 
       localStorage.setItem('role', role);
+      localStorage.setItem('github-access-token', accessToken);
 
       Cookies.set(
         'auth',
@@ -35,7 +36,7 @@ function RedirectOAuth() {
           user: user,
           role: role,
         }),
-        { expires: 30 } // 1 day
+        { expires: 1 } // 1 day
       );
       dispatch(
         userLoggedIn({

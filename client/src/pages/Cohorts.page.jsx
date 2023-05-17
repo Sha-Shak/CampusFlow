@@ -1,6 +1,6 @@
 import React from 'react';
-import CohortItem from '../components/CohortItem.component';
-import Layout from '../components/Layout';
+import CohortItem from '../components/Cohorts/CohortItem.component';
+import Layout from '../components/common/Layout';
 import { useGetAllCohortQuery } from '../features/cohort/cohortApi';
 
 function Cohorts() {

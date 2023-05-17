@@ -4,7 +4,10 @@ import { GoLocation } from 'react-icons/go';
 
 import OrganisationCard from './OrganisationCard';
 
-function Experience() {
+function Experience({ alumniInfo }) {
+  const latestExperience =
+    alumniInfo?.experiences[alumniInfo?.experiences.length - 1];
+
   const viewAllClickEvent = () => {
     alert('View All Clicked');
   };
@@ -26,7 +29,7 @@ function Experience() {
           </div>
         </div>
         <div className="mb-2">
-          <OrganisationCard />
+          <OrganisationCard latestExperience={latestExperience} />
           {/* <OrganisationCard /> */}
         </div>
       </div>

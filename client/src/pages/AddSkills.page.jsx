@@ -11,8 +11,8 @@ import {
   useCreateSkillMutation,
   useGetAllSkillsQuery,
 } from '../features/skill/skillApi';
-import Layout from '../components/Layout';
-import SkillsChips from '../components/SkillsChips.component';
+import Layout from '../components/common/Layout';
+import SkillsChips from '../components/AddSkills/SkillsChips.component';
 import toast, { Toaster } from 'react-hot-toast';
 
 const AddSkill = () => {
@@ -101,6 +101,9 @@ const AddSkill = () => {
       description: newSkillDescription,
     };
     createSkill(newSkill);
+    setNewSkillName('');
+    event.target.value = null;
+    console.log(event.target);
   };
 
   return (
@@ -112,17 +115,14 @@ const AddSkill = () => {
             skillsName={skillsName}
             type={'Soft Skills'}
             refetchSkills={refetchSkills}
+            filter={'softskill'}
           />
 
           <SkillsChips
             skillsName={skillsName}
             type={'Tech Skills'}
             refetchSkills={refetchSkills}
-          />
-          <SkillsChips
-            skillsName={skillsName}
-            type={'Alumni Skills'}
-            refetchSkills={refetchSkills}
+            filter={'techskill'}
           />
         </div>
 
@@ -308,6 +308,7 @@ const AddSkill = () => {
                   required
                   id="skillName"
                   name="skillName"
+                  value={newSkillName}
                   label="Skill Name"
                   fullWidth
                   size="small"

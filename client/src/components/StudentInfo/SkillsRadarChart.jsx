@@ -7,7 +7,6 @@ import {
   PolarRadiusAxis,
   ResponsiveContainer,
 } from 'recharts';
-import { useGetStudentWeekInfoQuery } from '../features/student/studentApi';
 
 const dummyData = [
   { skill: 'Communication', value: 10 },
@@ -24,7 +23,7 @@ const dummyData = [
 
 const SkillsRadarChart = ({ skills }) => {
   const createFormattedData = (skills) => {
-    return skills.map((skill) => {
+    return skills?.map((skill) => {
       return {
         skill: skill?.skill?.skillName,
         value: skill?.marks,

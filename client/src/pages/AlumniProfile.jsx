@@ -1,17 +1,31 @@
 import React, { useState } from 'react';
-import AlumniSidebar from '../components/alumniComponents/AlumniSidebar';
 import AlumniInfoCard from '../components/alumniComponents/AlumniInfoCard';
 import Experience from '../components/alumniComponents/Experience';
-import ProjectSection from '../components/alumniComponents/ProjectSection';
 import Portfolio from '../components/alumniComponents/Portfolio';
 import AlumniLayout from '../components/alumniComponents/AlumniLayout';
 import GithubGraph from '../components/alumniComponents/GithubGraph';
 import SiteChip from '../components/alumniComponents/SiteChip';
-import SkillsRadarChart from '../components/SkillsRadarChart';
-import LanguageStats from '../components/alumniComponents/LanguageStats';
+import SkillsRadarChart from '../components/StudentInfo/SkillsRadarChart';
 import SkillsTabs from './SkillsTabs';
+import { useGetAlumniByIdQuery } from '../features/alumni/alumniApi';
 
 const AlumniProfile = () => {
+  const alumniId = '646213253572798cad80c70e';
+  const {
+    data: alumniInfo,
+    isSuccess,
+    error,
+  } = useGetAlumniByIdQuery(alumniId);
+
+  console.log('dbug', alumniInfo);
+  const techStack = [];
+  alumniInfo?.projects.map((project) => {
+    project.techStack.map((tech) => {
+      techStack.push(tech);
+    });
+  });
+  // ***********************************************
+
   const [activeTab1, setActiveTab1] = useState('tab-active');
   const [activeTab2, setActiveTab2] = useState('');
   const [activeTab3, setActiveTab3] = useState('');
@@ -36,8 +50,8 @@ const AlumniProfile = () => {
     <AlumniLayout>
       <div className="flex gap-4 m-4 ">
         <div className="flex-[0.3] flex flex-col gap-5">
-          <AlumniInfoCard />
-          <Experience />
+          <AlumniInfoCard alumniInfo={alumniInfo} />
+          <Experience alumniInfo={alumniInfo} />
 
           {/* <LanguageStats /> */}
 
@@ -91,10 +105,10 @@ const AlumniProfile = () => {
             </div>
           </div>
 
-          <Portfolio />
+          <Portfolio alumniInfo={alumniInfo} techStack={techStack} />
           <div className="flex gap-4">
-            <GithubGraph />
-            <SiteChip />
+            <GithubGraph alumniInfo={alumniInfo} />
+            <SiteChip alumniInfo={alumniInfo} />
           </div>
         </div>
       </div>

@@ -4,26 +4,18 @@ import MenuItem from '@mui/material/MenuItem';
 import { useState, useEffect } from 'react';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import {
-  useGetAllCohortQuery,
-  useGetAllCohortStudentsQuery,
-} from '../features/cohort/cohortApi';
+import toast, { Toaster } from 'react-hot-toast';
+import { useGetAllCohortQuery } from '../../features/cohort/cohortApi';
 import { FaLongArrowAltRight } from 'react-icons/fa';
 import { Button } from '@mui/material';
-import { useChangeStudentsTypeMutation } from '../features/student/studentApi';
-import { useConvertToAlumniMutation } from '../features/alumni/alumniApi';
-import toast, { Toaster } from 'react-hot-toast';
-
-function MigrateByStudent() {
+import { useChangeStudentsTypeMutation } from '../../features/student/studentApi';
+import { useConvertToAlumniMutation } from '../../features/alumni/alumniApi';
+function MigrateByCohort() {
   const [cohort, setCohort] = useState('');
   const [migration, setMigration] = useState('');
-  const [students, setStudents] = useState([]);
-
-  const [student, setStudent] = useState('');
 
   const { data: cohorts, isSuccess: isCohortsSuccess } = useGetAllCohortQuery();
-  const { data: cohortStudents, isSuccess: isStudentFetchSuccess } =
-    useGetAllCohortStudentsQuery(cohort);
+
   const [
     changeStudentType,
     { isSuccess: isStudentTypeChangeSuccess, error: changeStudentTypeError },
@@ -33,35 +25,26 @@ function MigrateByStudent() {
     { isSuccess: isConvertToAlumniSuccess, error: convertToAlumniError },
   ] = useConvertToAlumniMutation();
 
-  useEffect(() => {
-    if (isStudentFetchSuccess) {
-      setStudents(cohortStudents.students);
-    }
-  }, [isStudentFetchSuccess]);
   const handleCohortChange = (event) => {
     setCohort(event.target.value);
-  };
-  const handleStudentChange = (event) => {
-    setStudent(event.target.value);
   };
   const handleMigrationChange = (event) => {
     setMigration(event.target.value);
   };
+
   const handleMigrate = () => {
     if (migration === 'alumni') {
-      const data = { ids: [student] };
+      const data = { ids: cohort?.students };
       convertToAlumni(data);
     } else {
-      const data = { ids: [student], type: migration };
+      const data = { ids: cohort?.students, type: migration };
       changeStudentType(data);
     }
   };
 
   useEffect(() => {
     if (isConvertToAlumniSuccess) {
-      toast.success('Student converted to alumni successfully');
-      setStudent('');
-      setMigration('');
+      toast.success('Students converted to alumni successfully');
     }
     if (convertToAlumniError) {
       toast.error(convertToAlumniError.data.message);
@@ -70,9 +53,7 @@ function MigrateByStudent() {
 
   useEffect(() => {
     if (isStudentTypeChangeSuccess) {
-      toast.success('Student type changed successfully');
-      setStudent('');
-      setMigration('');
+      toast.success('Students type changed successfully');
     }
     if (changeStudentTypeError) {
       toast.error(changeStudentTypeError.data.message);
@@ -81,8 +62,8 @@ function MigrateByStudent() {
 
   return (
     <>
-      <Toaster />
       <div className="flex flex-column items-center justify-center gap-5 mt-10">
+        <Toaster />
         <div>
           <FormControl sx={{ m: 1, minWidth: 220 }}>
             <InputLabel>Select Cohort</InputLabel>
@@ -96,24 +77,8 @@ function MigrateByStudent() {
               </MenuItem>
               {isCohortsSuccess &&
                 cohorts.map((cohort, index) => (
-                  <MenuItem key={index} value={cohort.cohortName}>
+                  <MenuItem key={index} value={cohort}>
                     {cohort.cohortName}
-                  </MenuItem>
-                ))}
-            </Select>
-          </FormControl>
-
-          <FormControl sx={{ m: 1, minWidth: 220 }}>
-            <InputLabel>Select Student</InputLabel>
-            <Select
-              value={student}
-              label="Select Cohort"
-              onChange={handleStudentChange}
-            >
-              {isStudentFetchSuccess &&
-                students.map((student, index) => (
-                  <MenuItem key={index} value={student?._id}>
-                    {student?.name}
                   </MenuItem>
                 ))}
             </Select>
@@ -139,9 +104,9 @@ function MigrateByStudent() {
       </div>
       <div className="flex flex-row items-center justify-center mt-5">
         <Button
+          onClick={handleMigrate}
           variant="contained"
           sx={{ width: '200px', height: '40px' }}
-          onClick={handleMigrate}
         >
           Migrate
         </Button>
@@ -150,4 +115,4 @@ function MigrateByStudent() {
   );
 }
 
-export default MigrateByStudent;
+export default MigrateByCohort;

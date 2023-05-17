@@ -14,6 +14,7 @@ const addProject = async (req, res) => {
       projectLink,
       techStack,
       thirdPartyApi,
+      youtubeLink,
     } = req.body;
 
     const newProject = new Project({
@@ -24,6 +25,7 @@ const addProject = async (req, res) => {
       projectLink,
       techStack,
       thirdPartyApi,
+      youtubeLink,
       doneBy: id,
     });
 

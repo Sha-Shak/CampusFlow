@@ -41,7 +41,16 @@ const getGithubAccessToken = async (req, res) => {
       if (isMember) {
         // console.log(isMember, 'student');
         // console.log(isInstructor, 'instructor');
-        user = await Student.findOne({ githubUsername: currentUserName });
+        const userModel = await Student.findOne({
+          githubUsername: currentUserName,
+        });
+        user = {
+          _id: userModel._id,
+          githubUsername: userModel.githubUsername,
+          name: userModel.name,
+          profileImg: userModel.profileImg,
+          type: userModel.type,
+        };
         role = 'student';
       } else {
         res.status(401).send('Unauthorized Member');

@@ -2,12 +2,12 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import { IoLogOutOutline } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
-import { userLoggedOut } from '../features/auth/authSlice';
+import { userLoggedOut } from '../../features/auth/authSlice';
 function NavBar() {
   const dispatch = useDispatch();
-  const { name, profileImg } = useSelector((state) => state?.auth?.user) || {};
+  const { name, profileImg, githubUsername } =
+    useSelector((state) => state?.auth?.user) || {};
   const role = useSelector((state) => state?.auth?.role);
-  console.log('role', role);
   const logout = () => {
     dispatch(userLoggedOut());
     localStorage.removeItem('role');
@@ -33,7 +33,9 @@ function NavBar() {
           <div className="dropdown dropdown-end flex">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
               <div className="w-10 rounded-full">
-                <img src={profileImg} />
+                <img
+                  src={`https://avatars.githubusercontent.com/${githubUsername}`}
+                />
               </div>
             </label>
           </div>

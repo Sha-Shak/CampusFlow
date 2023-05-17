@@ -1,23 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import Layout from '../components/Layout';
-import MiniCalender from '../components/MiniCalender';
-import MiniLectures from '../components/MiniLectures';
-import MiniNewsTile from '../components/MiniNewsTile';
-import MiniTodoList from '../components/MiniTodoList';
-import RecentStudents from '../components/RecentStudents';
+import { useSelector } from 'react-redux';
+import Layout from '../components/common/Layout';
+import MiniCalender from '../components/Dashboard/MiniCalender';
+import MiniLectures from '../components/Dashboard/MiniLectures';
+import MiniNewsTile from '../components/Dashboard/MiniNewsTile';
+import MiniTodoList from '../components/Dashboard/MiniTodoList';
+import RecentStudents from '../components/Dashboard/RecentStudents';
+import useAuthCheck from '../hooks/useAuthCheck';
 
 function Dashboard() {
-  const [user, setUser] = useState({});
-  // const user = JSON.parse(localStorage.getItem('user'));
-  const firstName = user?.name?.split(' ')[0];
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    setUser(user);
-  }, []);
+  // const [user, setUser] = useState({});
+  const { name } = useSelector((state) => state?.auth?.user) || {};
+  const firstName = name?.split(' ')[0];
 
   return (
     <Layout>
-      <div className="text-3xl mb-8 ml-4">Wellcome, {firstName}</div>
+      <div className="text-3xl mb-8 ml-4">Welcome, {firstName}</div>
       <div className="m-4">
         <RecentStudents />
       </div>

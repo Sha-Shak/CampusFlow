@@ -4,9 +4,9 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
-import { useCreateCohortMutation } from '../features/cohort/cohortApi';
+import { useCreateCohortMutation } from '../../features/cohort/cohortApi';
 import toast, { Toaster } from 'react-hot-toast';
-import { useAddGithubCohortMutation } from '../features/github/githubApi';
+import { useAddGithubCohortMutation } from '../../features/github/githubApi';
 const CreateCohortModal = ({ open, onClose, refetchCohort }) => {
   const [createCohort, { isSuccess, isError, error }] =
     useCreateCohortMutation();

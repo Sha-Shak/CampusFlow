@@ -11,4 +11,5 @@ router.post('/addSkills/:id', alumniController.addSkills);
 // router.post('/addExperience/:id', alumniController.addExperience);
 // router.delete('/deleteEducation/:id', alumniController.deleteEducation);
 router.delete('/deleteInfo/:id', alumniController.deleteInfo);
+router.get('/getAlumniById/:id', alumniController.getAlumniById);
 module.exports = router;

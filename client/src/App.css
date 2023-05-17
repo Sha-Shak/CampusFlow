@@ -106,14 +106,18 @@ body {
   }
 }
 
-.recharts-text {
-  font-size: 12px !important;
-  /* font-weight: bold; */
-  color: rgba(196, 146, 245, 0.529) !important;
-  text-overflow: clip !important;
-  font-style: italic !important;
+.recharts-text{
+	font-size: 12px!important;
+	/* font-weight: bold; */
+	color:rgba(196, 146, 245, 0.529)!important;
+	text-overflow: clip!important;
+	font-style: italic!important;
 }
 .react-calendar__tile--now {
+	background: rgb(146, 43, 250)!important;
+	color: rgba(236, 233, 239, 0.91)!important;
+	border-radius: 100px!important;
+	font-weight: bold!important;
   background: rgb(146, 43, 250) !important;
   color: rgba(236, 233, 239, 0.91) !important;
   border-radius: 100px !important;
@@ -123,9 +127,13 @@ body {
   border: 0px !important;
   padding: 10px !important;
 }
+.react-calendar{
+	border: 0px!important;
+	padding: 10px!important;
+	}
 .react-calendar__tile {
-  border-radius: 100px !important;
-  line-height: 20px !important;
+	border-radius: 100px!important;
+	line-height: 20px!important;
 }
 
 .react-calendar__tile--weekend {
@@ -142,10 +150,10 @@ body {
 }
 
 .steps-vertical {
-  grid-auto-rows: 0.2fr;
+	grid-auto-rows: 0.2fr;
 }
 .badge-outline {
-  background-color: transparent;
-  border: 1px solid #c7c6c6;
-  color: #5b5562;
+	background-color: transparent;
+	border: 1px solid #c7c6c6;
+	color: #5b5562;
 }

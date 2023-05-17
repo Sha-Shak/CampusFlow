@@ -209,6 +209,17 @@ const addSkills = async (req, res) => {
 //     res.status(500).send('Internal Server Error');
 //   }
 // };
+const getAlumniById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const alumni = await Alumni.findById(id).populate('projects');
+    if (!alumni) return res.status(404).send({ message: 'Alumni not found' });
+    res.status(200).send(alumni);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send('Internal Server Error');
+  }
+};
 
 module.exports = {
   test,
@@ -216,6 +227,7 @@ module.exports = {
   postInfo,
   deleteInfo,
   addSkills,
+  getAlumniById,
   //   addEducation,
   //   deleteEducation,
   //   addExperience,

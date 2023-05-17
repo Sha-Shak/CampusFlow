@@ -9,7 +9,10 @@ export const alumniApi = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    getAlumniById: builder.query({
+      query: (id) => `/alumni/getAlumniById/${id}`,
+    }),
   }),
 });
 
-export const { useConvertToAlumniMutation } = alumniApi;
+export const { useConvertToAlumniMutation, useGetAlumniByIdQuery } = alumniApi;

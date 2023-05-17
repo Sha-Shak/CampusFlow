@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
-import { useDeleteSkillMutation } from '../features/skill/skillApi';
+import { useDeleteSkillMutation } from '../../features/skill/skillApi';
 import toast, { Toaster } from 'react-hot-toast';
 
-function SkillsChips({ skillsName, type, refetchSkills }) {
+function SkillsChips({ skillsName, type, refetchSkills, filter }) {
+  // const [skillset, setSkillset]
   const [deleteSkill, { isSuccess, isError }] = useDeleteSkillMutation();
   const handleDeleteSkill = (skillId) => {
     if (window.confirm('Are you sure you want to delete this skill?')) {
@@ -18,6 +19,10 @@ function SkillsChips({ skillsName, type, refetchSkills }) {
       toast.error('Something went wrong');
     }
   }, [isSuccess, isError]);
+  const skills = skillsName?.filter((skill) => {
+    return skill?.category?.includes(filter);
+  });
+
   return (
     <div className="border-1 rounded-xl border-gray-300 shadow-md mb-10">
       <div className="bg-purple-500 text-white text-center text-xl p-1 rounded-t-xl">
@@ -26,7 +31,7 @@ function SkillsChips({ skillsName, type, refetchSkills }) {
 
       <div className="p-2">
         {/* Soft Skills Chips */}
-        {skillsName?.map((skill) => (
+        {skills?.map((skill) => (
           <div
             className="badge  badge-lg badge-outline m-1"
             key={skill.skillName}

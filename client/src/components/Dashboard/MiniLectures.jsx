@@ -1,5 +1,5 @@
 import React from 'react';
-import DayCollapseComponent from './DayCollapse.component';
+import DayCollapseComponent from '../Curriculum/DayCollapse.component';
 const week = {
   week: 'Week 1',
   days: [
