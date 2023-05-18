@@ -80,6 +80,7 @@ const postInfo = async (req, res) => {
   const { id } = req.params;
   const type = req.query.type;
   const { info } = req.body;
+
   if (type === 'about') {
     try {
       const alumni = await Student.findById(id).populate('alumniId');
@@ -127,6 +128,7 @@ const postInfo = async (req, res) => {
 const deleteInfo = async (req, res) => {
   const { id } = req.params; // alumni id
   const type = req.query.type;
+
   const { info } = req.body;
   try {
     const alumni = await Alumni.findById(id);

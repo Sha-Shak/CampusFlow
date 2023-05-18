@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   TextField,
   Button,
@@ -9,7 +9,8 @@ import {
   Divider,
   Typography,
 } from '@mui/material';
-
+import { useAddAlumniInfoMutation } from '../../../features/alumni/alumniApi';
+import toast from 'react-hot-toast';
 const ExperienceForm = ({ handleClose }) => {
   const [jobTitle, setJobTitle] = useState('');
   const [companyName, setCompanyName] = useState('');
@@ -17,7 +18,20 @@ const ExperienceForm = ({ handleClose }) => {
   const [toDate, setToDate] = useState('');
   const [description, setDescription] = useState('');
   const [skills, setSkills] = useState([]);
-  const [status, setStatus] = useState(true);
+  const [status, setStatus] = useState(false);
+
+  const [AddPost, { data, isSuccess, error }] = useAddAlumniInfoMutation();
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success('Experience added successfully');
+      handleClose();
+    }
+    if (error) {
+      console.log(error);
+      toast.error('Something went wrong');
+    }
+  }, [isSuccess, error]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -37,6 +51,8 @@ const ExperienceForm = ({ handleClose }) => {
     // }
 
     const experienceData = {
+      id: '645bbb5a7865c6e61157889f',
+      type: 'experiences',
       info: {
         jobTitle: jobTitle,
         companyName: companyName,
@@ -47,6 +63,8 @@ const ExperienceForm = ({ handleClose }) => {
         status: status,
       },
     };
+
+    AddPost(experienceData);
     console.log(experienceData);
 
     // Reset form fields after submission
@@ -56,7 +74,7 @@ const ExperienceForm = ({ handleClose }) => {
     setToDate('');
     setDescription('');
     setSkills([]);
-    setStatus(true);
+    setStatus(false);
   };
 
   return (

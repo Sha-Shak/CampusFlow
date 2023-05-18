@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   TextField,
   Button,
@@ -8,6 +8,8 @@ import {
   Divider,
   Typography,
 } from '@mui/material';
+import toast from 'react-hot-toast';
+import { useAddAlumniInfoMutation } from '../../../features/alumni/alumniApi';
 
 const EducationForm = ({ handleClose }) => {
   const [instituteName, setInstituteName] = useState('');
@@ -18,6 +20,7 @@ const EducationForm = ({ handleClose }) => {
   const [status, setStatus] = useState(true);
   const [gpa, setGpa] = useState('');
 
+  const [addInfo, { data, isSuccess, error }] = useAddAlumniInfoMutation();
   const handleKeyDown = (event) => {
     event.preventDefault();
     if (event.key === 'Enter') {
@@ -25,20 +28,24 @@ const EducationForm = ({ handleClose }) => {
     }
   };
 
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success('Education added successfully');
+      handleClose();
+    }
+    if (error) {
+      console.log(error);
+      toast.error('Something went wrong');
+    }
+  }, [isSuccess, error]);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     // if (name.trim() === '' || url.trim() === '') {
     //   alert('Please fill in all required fields.');
     //   return;
     // }
-    if (
-      instituteName.trim() === '' ||
-      program.trim() === '' ||
-      fromDate.trim() === '' ||
-      toDate.trim() === '' ||
-      description.trim() === '' ||
-      gpa.trim() === ''
-    ) {
+    if (instituteName.trim() === '' || program.trim() === '') {
       alert('Please fill in all required fields.');
       return;
     }
@@ -55,6 +62,8 @@ const EducationForm = ({ handleClose }) => {
     //       }
     // }
     const educationData = {
+      id: '645bbb5a7865c6e61157889f',
+      type: 'education',
       info: {
         instituteName: instituteName,
         program: program,
@@ -65,18 +74,21 @@ const EducationForm = ({ handleClose }) => {
         gpa: gpa,
       },
     };
+
+    addInfo(educationData);
+
     console.log(educationData);
 
     // TODO: Perform form submission logic here
 
     // Reset form fields after submission
-    setInstituteName('');
-    setProgram('');
-    setFromDate('');
-    setToDate('');
-    setDescription('');
-    setStatus(true);
-    setGpa('');
+    // setInstituteName('');
+    // setProgram('');
+    // setFromDate('');
+    // setToDate('');
+    // setDescription('');
+    // setStatus(true);
+    // setGpa('');
   };
 
   return (
