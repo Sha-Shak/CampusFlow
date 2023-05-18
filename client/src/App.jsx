@@ -37,6 +37,7 @@ import useZoom from './hooks/useZoom';
 import useAuthCheck from './hooks/useAuthCheck';
 import AlumniUpdateProfile from './pages/AlumniUpdateProfile.page';
 import AlumniProjectcode from './pages/AlumniProjectcode';
+import ProjectForm from './components/alumniComponents/UpdateProfile/ProjectForm.component';
 function App() {
   // const zoomLevel = useZoom();
   const authChecked = useAuthCheck();
@@ -79,6 +80,7 @@ function App() {
             path="/alumni/update-profile"
             element={<AlumniUpdateProfile />}
           />
+          <Route path="/alumni/add-project" element={<ProjectForm />} />
 
           <Route path="/alumni/projectcode" element={<AlumniProjectcode />} />
 
