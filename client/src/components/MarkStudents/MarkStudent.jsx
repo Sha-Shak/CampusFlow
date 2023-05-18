@@ -27,9 +27,7 @@ const MarkStudent = ({ studentId, week, handleNext }) => {
   }, [week, studentId]);
   const [setWeekInfo, { data: weekInfo, isSuccess, isError }] =
     useSetStudentWeekInfoMutation();
-  const initialAssessmentMark = {
-    assessmentMark: 0,
-  };
+
   const [assessmentMark, setAssessmentMark] = useState(0);
   const [softSkillMarks, setSoftSkillMarks] = useState();
   const [techSkillMarks, setTechSkillMarks] = useState();
@@ -39,8 +37,7 @@ const MarkStudent = ({ studentId, week, handleNext }) => {
   const [initialTechSkillMarks, setInitialTechSkillMarks] = useState({});
   const [unitMarks, setUnitMarks] = useState({});
   const studentUnitMarks = studentWeekInfo?.unitMarks;
-
-  let initialMarks = {};
+  console.log('debug');
   useEffect(() => {
     if (!studentWeekInfo?.softSkills[0]?.skill) {
       const initialMarks = softSkills
@@ -51,12 +48,12 @@ const MarkStudent = ({ studentId, week, handleNext }) => {
           acc[skill._id] = 0;
           return acc;
         }, {});
-      setInitialSoftSkillMarks(initialMarks);
-      setSoftSkillMarks(initialSoftSkillMarks);
+      // setInitialSoftSkillMarks(initialMarks);
+      setSoftSkillMarks(initialMarks);
     }
 
     if (!studentWeekInfo?.techSkills[0]?.skill) {
-      initialMarks = techSkills
+      const initialMarks = techSkills
         ?.filter((skill) => {
           return skill?.studentType?.includes(studentType?.type);
         })
@@ -64,8 +61,8 @@ const MarkStudent = ({ studentId, week, handleNext }) => {
           acc[skill._id] = 0;
           return acc;
         }, {});
-      setInitialTechSkillMarks(initialMarks);
-      setTechSkillMarks(initialTechSkillMarks);
+      // setInitialTechSkillMarks(initialMarks);
+      setTechSkillMarks(initialMarks);
     }
   }, [studentWeekInfo, techSkills, softSkills, studentId, week]);
 
@@ -115,11 +112,12 @@ const MarkStudent = ({ studentId, week, handleNext }) => {
   }, [studentUnitMarks]);
 
   useEffect(() => {
-    const generate = studentWeekInfo?.assessmentMark || 0;
+    const generate = studentWeekInfo?.assessmentMarks;
 
     setAssessmentMark(generate);
   }, [studentWeekInfo]);
   useEffect(() => {
+    if (!studentWeekInfo?.softSkills[0]?.skill) return;
     const generate = studentWeekInfo?.softSkills?.reduce((acc, skill) => {
       acc[skill?.skill?._id] = skill?.marks;
       return acc;
@@ -127,6 +125,7 @@ const MarkStudent = ({ studentId, week, handleNext }) => {
     setSoftSkillMarks(generate);
   }, [studentWeekInfo]);
   useEffect(() => {
+    if (!studentWeekInfo?.techSkills[0]?.skill) return;
     const generate = studentWeekInfo?.techSkills?.reduce((acc, skill) => {
       acc[skill?.skill?._id] = skill?.marks;
       return acc;
