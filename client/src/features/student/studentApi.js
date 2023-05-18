@@ -67,9 +67,17 @@ export const studentApi = apiSlice.injectEndpoints({
       }),
     }),
 
-    saveAndgetMidEndJuniorCheckpoint: builder.mutation({
+    saveMidEndJuniorCheckpoint: builder.mutation({
       query: (data) => ({
         url: `/student/saveMidEndJuniorData/${data.studentId}`,
+        method: 'POST',
+        body: data,
+      }),
+    }),
+
+    saveMidEndSeniorCheckpoint: builder.mutation({
+      query: (data) => ({
+        url: `/student/saveMidEndSeniorData/${data.studentId}`,
         method: 'POST',
         body: data,
       }),
@@ -88,6 +96,13 @@ export const studentApi = apiSlice.injectEndpoints({
         method: 'GET',
       }),
     }),
+
+    getMidEndDataByStudentID: builder.query({
+      query: (data) => ({
+        url: `/student/getMidEndDataByStudentID/${data.studentId}`,
+        method: 'GET',
+      }),
+    }),
   }),
 });
 
@@ -100,7 +115,9 @@ export const {
   useSetStudentWeekInfoMutation,
   useChangeStudentsTypeMutation,
   useGetStudentTypeQuery,
-  useSaveAndgetMidEndJuniorCheckpointMutation,
+  useSaveMidEndJuniorCheckpointMutation,
   useGetAssessmentMarksByStudentIDQuery,
   useGetUnitMarksByStudentIDQuery,
+  useSaveMidEndSeniorCheckpointMutation,
+  useGetMidEndDataByStudentIDQuery,
 } = studentApi;

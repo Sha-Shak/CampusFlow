@@ -7,7 +7,9 @@ import UnitMarksChart from '../components/StudentInfo/UnitMarks';
 import { useState } from 'react';
 import { useGetStudentByIdQuery } from '../features/student/studentApi';
 import { useGetStudentWeekInfoQuery } from '../features/student/studentApi';
-import { useSaveAndgetMidEndJuniorCheckpointMutation } from '../features/student/studentApi';
+import { useSaveMidEndJuniorCheckpointMutation } from '../features/student/studentApi';
+import { useSaveMidEndSeniorCheckpointMutation } from '../features/student/studentApi';
+import { useGetMidEndDataByStudentIDQuery } from '../features/student/studentApi';
 import { useGetAssessmentMarksByStudentIDQuery } from '../features/student/studentApi';
 import { useGetUnitMarksByStudentIDQuery } from '../features/student/studentApi';
 import { useParams } from 'react-router-dom';
@@ -29,8 +31,24 @@ function StudentInfo() {
     week: selectedWeek,
   });
 
-  const [saveAndGet, { data: checkpointsData, isSuccess, isError, error }] =
-    useSaveAndgetMidEndJuniorCheckpointMutation();
+  const { data: midEndData } = useGetMidEndDataByStudentIDQuery({
+    studentId: id,
+  });
+
+  const [
+    saveMidEndJunior,
+    { data: checkpointsDataJunior, isSuccess, isError, error },
+  ] = useSaveMidEndJuniorCheckpointMutation();
+
+  const [
+    saveMidEndSenior,
+    {
+      data: checkpointsDataSenior,
+      isSuccessSenior,
+      isErrorSenior,
+      errorSenior,
+    },
+  ] = useSaveMidEndSeniorCheckpointMutation();
 
   const { data: assessmentMarks } = useGetAssessmentMarksByStudentIDQuery({
     studentId: id,
@@ -48,6 +66,7 @@ function StudentInfo() {
       setChartData(studentWeekInfo);
     }
   }, [studentWeekInfo]);
+
   const handleSelect = (index) => {
     const weekSelected = index + 1;
     setSelectedWeek(weekSelected);
@@ -56,17 +75,24 @@ function StudentInfo() {
   const handleCheckPointSelect = (index) => {
     const checkpoint = index + 1;
     setSelectedCheckpoint(checkpoint);
+
+    // saveMidEndJunior(checkpointInfo);
+    // saveMidEndSenior(checkpointInfo);
+  };
+
+  useEffect(() => {
     let checkpointInfo = {
       studentId: id,
     };
-    saveAndGet(checkpointInfo);
-    setCheckpointChart(true);
-  };
+    saveMidEndJunior(checkpointInfo);
+    saveMidEndSenior(checkpointInfo);
+  }, []);
+
   useEffect(() => {
-    if (checkpointsData) {
-      setChartData(checkpointsData[selectedCheckpoint - 1]);
+    if (midEndData) {
+      setChartData(midEndData[selectedCheckpoint - 1]);
     }
-  }, [checkpointsData, selectedCheckpoint]);
+  }, [midEndData, selectedCheckpoint]);
   return (
     <Layout>
       <div className="flex">

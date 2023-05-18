@@ -328,6 +328,93 @@ const saveMidEndJuniorData = async (req, res) => {
   }
 };
 
+const saveMidEndSeniorData = async (req, res) => {
+  const { id } = req.params;
+  console.log(id);
+  try {
+    const student = await Student.findById(id)
+      .populate({
+        path: 'senior',
+        populate: {
+          path: 'softSkills.skill',
+          model: 'Skill',
+        },
+      })
+      .populate({
+        path: 'senior',
+        populate: {
+          path: 'techSkills.skill',
+          model: 'Skill',
+        },
+      });
+    if (!student) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+
+    const midSeniorAllinfo = _.cloneDeep(student.senior).slice(0, 3);
+    const endSeniorAllinfo = _.cloneDeep(student.senior).slice(3, 6);
+
+    const checkpoints1 = createCheckPoints(midSeniorAllinfo, 'mid Senior');
+    const checkpoints2 = createCheckPoints(endSeniorAllinfo, 'end Senior');
+
+    // inserting checkpoint to Student model inside checkpoint array
+    const populatedStudent = await Student.findById(id)
+      .populate({
+        path: 'checkpoints.softSkills.skill',
+        model: 'Skill',
+      })
+      .populate({
+        path: 'checkpoints.techSkills.skill',
+        model: 'Skill',
+      });
+
+    if (student.checkpoints.length > 2) {
+      console.log('here to update');
+      student.checkpoints.map((checkpoint) => {
+        if (checkpoint.weekName === 'mid Senior') {
+          checkpoint = checkpoints1;
+        }
+        if (checkpoint.weekName === 'end Senior') {
+          checkpoint = checkpoints2;
+        }
+      });
+    } else {
+      console.log('here to insert');
+      student.checkpoints.push(checkpoints1);
+      student.checkpoints.push(checkpoints2);
+    }
+    await student.save();
+    res.status(200).json(populatedStudent.checkpoints);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+const getMidEndDataByStudentID = async (req, res) => {
+  const { id } = req.params;
+  const { type } = req.query;
+  try {
+    const student = await Student.findById(id)
+      .populate({
+        path: 'checkpoints.softSkills.skill',
+        model: 'Skill',
+      })
+      .populate({
+        path: 'checkpoints.techSkills.skill',
+        model: 'Skill',
+      });
+    if (!student) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+    const allCheckpoints = student.checkpoints;
+    res.status(200).json(allCheckpoints);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
 // get student by cohortName
 const getStudentByCohortName = async (req, res) => {
   let { cohortName } = req.params;
@@ -456,9 +543,11 @@ module.exports = {
   addSoftTechSkillsByStudentID,
   changeStudentsType,
   saveMidEndJuniorData,
+  saveMidEndSeniorData,
   getStudentByCohortName,
   getUnitMarksByStudentID,
   postUnitMarksByStudentID,
   JuniorUnitMarks,
   getAssessmentMarksByStudentID,
+  getMidEndDataByStudentID,
 };

@@ -3,7 +3,6 @@ import { FaGithub } from 'react-icons/fa';
 import { Link, useLocation } from 'react-router-dom';
 
 function StudentSidebar({ student }) {
-  console.log(student);
   const location = useLocation();
 
   return (

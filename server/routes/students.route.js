@@ -28,6 +28,17 @@ router.post(
   '/saveMidEndJuniorData/:id',
   studentsControllers.saveMidEndJuniorData
 );
+
+router.post(
+  '/saveMidEndSeniorData/:id',
+  studentsControllers.saveMidEndSeniorData
+);
+
+router.get(
+  '/getMidEndDataByStudentID/:id',
+  studentsControllers.getMidEndDataByStudentID
+);
+
 router.get(
   '/getStudentByCohortName/:cohortName',
   studentsControllers.getStudentByCohortName
