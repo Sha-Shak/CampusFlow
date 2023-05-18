@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 
 import {
   TextField,
@@ -10,8 +9,11 @@ import {
   Typography,
   Box,
 } from '@mui/material';
+
 import AlumniLayout from '../AlumniLayout';
 import CompanyNameAutocomplete from './AutoCompleteCompany';
+import { useAddProjectMutation } from '../../../features/project/projectApi';
+import toast from 'react-hot-toast';
 
 const ProjectForm = () => {
   const [projectName, setProjectName] = useState('');
@@ -23,15 +25,23 @@ const ProjectForm = () => {
   const [thirdPartyApis, setThirdPartyApis] = useState([]);
   const [youtubeLink, setYoutubeLink] = useState('');
   const [youtubePreview, setYoutubePreview] = useState('');
-  const [companyOptions, setCompanyOptions] = useState([]);
+  const [alumniId, setAlumniId] = useState('646213253572798cad80c70e');
+
+  const [addProject, { data, isSuccess, error }] = useAddProjectMutation();
 
   const handleTechStackChange = (event, values) => {
     setTechStack(values);
   };
 
-  const handleThirdPartyApiChange = (event, values) => {
-    setThirdPartyApis(values);
-  };
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success('Project added successfully');
+    }
+    if (error) {
+      console.log(error);
+      toast.error('Something went wrong');
+    }
+  }, [isSuccess, error]);
 
   const handleYoutubeLinkChange = (event) => {
     const url = event.target.value;
@@ -72,16 +82,19 @@ const ProjectForm = () => {
     event.preventDefault();
     console.log('submit');
     const data = {
+      id: alumniId,
       projectName,
-      projectType,
-      description,
-      githubRepoLink,
-      projectLiveLink,
-      techStack,
-      thirdPartyApis,
-      youtubeLink,
+      type: projectType,
+      description: description,
+      githubLink: githubRepoLink,
+      projectLink: projectLiveLink,
+      techStack: techStack,
+      thirdPartyApi: thirdPartyApis,
+      youtubeLink: youtubeLink,
+      doneBy: alumniId,
     };
     console.log(data);
+    addProject(data);
     handleReset();
   };
   // console.log();
