@@ -407,7 +407,7 @@ const JuniorUnitMarks = async (req, res) => {
   res.send(unitMarks);
 };
 
-const getAssessmentMarksByStudentID = async (req, res) => {
+getStudentType = async (req, res) => {
   const { id } = req.params;
   try {
     const student = await Student.findById(id);
@@ -415,31 +415,15 @@ const getAssessmentMarksByStudentID = async (req, res) => {
       return res.status(404).json({ message: 'Student not found' });
     }
     const { type } = student;
-
-    if (type === 'junior') {
-      const juniorAssessmentMarks = student[type].map((week) => {
-        return {
-          weekName: week.weekName,
-          assessmentMarks: week.assessmentMarks,
-        };
-      });
-      return res.status(200).json(juniorAssessmentMarks);
-    } else if (type === 'senior') {
-      const seniorAssessmentMarks = student[type].map((week) => {
-        return {
-          weekName: week.weekName,
-          assessmentMarks: week.assessmentMarks,
-        };
-      });
-      return res.status(200).json(seniorAssessmentMarks);
-    }
+    res.status(200).json({ type });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json({ message: 'Server error' });
   }
 };
 
 module.exports = {
+  getStudentType,
   getAllStudents,
   createStudent,
   getStudentByID,

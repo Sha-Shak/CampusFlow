@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Paper } from '@mui/material';
 import { useGetSkillsByCategoryQuery } from '../../features/skill/skillApi';
 import {
+  useGetStudentTypeQuery,
   useGetStudentWeekInfoQuery,
   useSetStudentWeekInfoMutation,
 } from '../../features/student/studentApi';
@@ -19,15 +20,14 @@ const MarkStudent = ({ studentId, week, handleNext }) => {
       studentId,
       week,
     });
-
+  const { data: studentType, refetch: refetchStudentType } =
+    useGetStudentTypeQuery(studentId);
   useEffect(() => {
     refetchStudentInfo();
   }, [week, studentId]);
   const [setWeekInfo, { data: weekInfo, isSuccess, isError }] =
     useSetStudentWeekInfoMutation();
-  const initialAssessmentMark = {
-    assessmentMark: 0,
-  };
+
   const [assessmentMark, setAssessmentMark] = useState(0);
   const [softSkillMarks, setSoftSkillMarks] = useState();
   const [techSkillMarks, setTechSkillMarks] = useState();
@@ -37,33 +37,32 @@ const MarkStudent = ({ studentId, week, handleNext }) => {
   const [initialTechSkillMarks, setInitialTechSkillMarks] = useState({});
   const [unitMarks, setUnitMarks] = useState({});
   const studentUnitMarks = studentWeekInfo?.unitMarks;
-
-  let initialMarks = {};
+  console.log('debug');
   useEffect(() => {
     if (!studentWeekInfo?.softSkills[0]?.skill) {
       const initialMarks = softSkills
         ?.filter((skill) => {
-          return skill?.studentType?.includes('junior');
+          return skill?.studentType?.includes(studentType?.type);
         })
         .reduce((acc, skill) => {
           acc[skill._id] = 0;
           return acc;
         }, {});
-      setInitialSoftSkillMarks(initialMarks);
-      setSoftSkillMarks(initialSoftSkillMarks);
+      // setInitialSoftSkillMarks(initialMarks);
+      setSoftSkillMarks(initialMarks);
     }
 
     if (!studentWeekInfo?.techSkills[0]?.skill) {
-      initialMarks = techSkills
+      const initialMarks = techSkills
         ?.filter((skill) => {
-          return skill?.studentType?.includes('junior');
+          return skill?.studentType?.includes(studentType?.type);
         })
         .reduce((acc, skill) => {
           acc[skill._id] = 0;
           return acc;
         }, {});
-      setInitialTechSkillMarks(initialMarks);
-      setTechSkillMarks(initialTechSkillMarks);
+      // setInitialTechSkillMarks(initialMarks);
+      setTechSkillMarks(initialMarks);
     }
   }, [studentWeekInfo, techSkills, softSkills, studentId, week]);
 
@@ -72,7 +71,7 @@ const MarkStudent = ({ studentId, week, handleNext }) => {
   useEffect(() => {
     const generate = softSkills
       ?.filter((skill) => {
-        return skill?.studentType?.includes('junior');
+        return skill?.studentType?.includes(studentType?.type);
       })
       .map((skill) => {
         const studentSkill = studentWeekInfo?.softSkills?.find(
@@ -90,7 +89,7 @@ const MarkStudent = ({ studentId, week, handleNext }) => {
   useEffect(() => {
     const generate = techSkills
       ?.filter((skill) => {
-        return skill?.studentType?.includes('junior');
+        return skill?.studentType?.includes(studentType?.type);
       })
       .map((skill) => {
         const studentSkill = studentWeekInfo?.techSkills?.find(
@@ -113,12 +112,12 @@ const MarkStudent = ({ studentId, week, handleNext }) => {
   }, [studentUnitMarks]);
 
   useEffect(() => {
-    const generate = studentWeekInfo?.assessmentMark || 0;
+    const generate = studentWeekInfo?.assessmentMarks;
 
     setAssessmentMark(generate);
   }, [studentWeekInfo]);
-  console.log(assessmentMark);
   useEffect(() => {
+    if (!studentWeekInfo?.softSkills[0]?.skill) return;
     const generate = studentWeekInfo?.softSkills?.reduce((acc, skill) => {
       acc[skill?.skill?._id] = skill?.marks;
       return acc;
@@ -126,6 +125,7 @@ const MarkStudent = ({ studentId, week, handleNext }) => {
     setSoftSkillMarks(generate);
   }, [studentWeekInfo]);
   useEffect(() => {
+    if (!studentWeekInfo?.techSkills[0]?.skill) return;
     const generate = studentWeekInfo?.techSkills?.reduce((acc, skill) => {
       acc[skill?.skill?._id] = skill?.marks;
       return acc;

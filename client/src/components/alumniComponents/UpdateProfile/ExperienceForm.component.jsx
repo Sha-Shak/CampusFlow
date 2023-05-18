@@ -35,6 +35,7 @@ const ExperienceForm = ({ handleClose }) => {
     //     "status": true
     //     }
     // }
+
     const experienceData = {
       info: {
         jobTitle: jobTitle,

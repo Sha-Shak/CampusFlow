@@ -53,6 +53,12 @@ export const studentApi = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    getStudentType: builder.query({
+      query: (id) => ({
+        url: `/student/getStudentType/${id}`,
+        method: 'GET',
+      }),
+    }),
 
     saveAndgetMidEndJuniorCheckpoint: builder.mutation({
       query: (data) => ({
@@ -85,6 +91,7 @@ export const {
   useGetStudentWeekInfoQuery,
   useSetStudentWeekInfoMutation,
   useChangeStudentsTypeMutation,
+  useGetStudentTypeQuery,
   useSaveAndgetMidEndJuniorCheckpointMutation,
   useGetAssessmentMarksByStudentIDQuery,
   useGetUnitMarksByStudentIDQuery,
