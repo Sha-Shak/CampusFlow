@@ -347,16 +347,23 @@ const getStudentByCohortName = async (req, res) => {
 
 const getUnitMarksByStudentID = async (req, res) => {
   const { id } = req.params;
-  const { weekNumber } = req.body;
   try {
     const student = await Student.findById(id);
     if (!student) {
       return res.status(404).json({ message: 'Student not found' });
     }
     const { type } = student;
-    const weekInfo = student[type][weekNumber - 1].unitMarks;
-    // console.log(weekInfo.unitMarks);
-    res.status(200).json(weekInfo);
+
+    // get unit marks from junior
+    const allUnitMarks = student[type].map((week) => {
+      return week.unitMarks.map((unit) => {
+        return {
+          unitName: unit.unitName,
+          unitMarks: unit.marks,
+        };
+      });
+    });
+    res.status(200).json(allUnitMarks);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error' });
@@ -407,7 +414,7 @@ const JuniorUnitMarks = async (req, res) => {
   res.send(unitMarks);
 };
 
-getStudentType = async (req, res) => {
+const getAssessmentMarksByStudentID = async (req, res) => {
   const { id } = req.params;
   try {
     const student = await Student.findById(id);
@@ -415,15 +422,31 @@ getStudentType = async (req, res) => {
       return res.status(404).json({ message: 'Student not found' });
     }
     const { type } = student;
-    res.status(200).json({ type });
+
+    if (type === 'junior') {
+      const juniorAssessmentMarks = student[type].map((week) => {
+        return {
+          weekName: week.weekName,
+          assessmentMarks: week.assessmentMarks,
+        };
+      });
+      return res.status(200).json(juniorAssessmentMarks);
+    } else if (type === 'senior') {
+      const seniorAssessmentMarks = student[type].map((week) => {
+        return {
+          weekName: week.weekName,
+          assessmentMarks: week.assessmentMarks,
+        };
+      });
+      return res.status(200).json(seniorAssessmentMarks);
+    }
   } catch (error) {
-    console.error(error);
+    console.log(error);
     res.status(500).json({ message: 'Server error' });
   }
 };
 
 module.exports = {
-  getStudentType,
   getAllStudents,
   createStudent,
   getStudentByID,

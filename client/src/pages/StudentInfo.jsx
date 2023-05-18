@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { useGetStudentWeekInfoQuery } from '../features/student/studentApi';
 import { useSaveAndgetMidEndJuniorCheckpointMutation } from '../features/student/studentApi';
 import { useGetAssessmentMarksByStudentIDQuery } from '../features/student/studentApi';
+import { useGetUnitMarksByStudentIDQuery } from '../features/student/studentApi';
 import { useParams } from 'react-router-dom';
 
 function StudentInfo() {
@@ -27,6 +28,10 @@ function StudentInfo() {
     useSaveAndgetMidEndJuniorCheckpointMutation();
 
   const { data: assessmentMarks } = useGetAssessmentMarksByStudentIDQuery({
+    studentId: id,
+  });
+
+  const { data: unitMarks } = useGetUnitMarksByStudentIDQuery({
     studentId: id,
   });
 
@@ -129,7 +134,7 @@ function StudentInfo() {
               <AssessmentMarksChart assessmentMarks={assessmentMarks} />
             </div>
             <div className="flex-[0.65] bg-white rounded-3xl p-5  shadow-md h-80">
-              <UnitMarksChart />
+              <UnitMarksChart unitMarks={unitMarks} />
             </div>
           </div>
           {/* <div className="w-[300px]"> */}
