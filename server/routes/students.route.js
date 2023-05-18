@@ -10,7 +10,7 @@ router.get(
   studentsControllers.getJuniorSoftSkillsFirstWeek
 );
 router.get(
-  '/getStudentWeekInfo/:id/:week',
+  '/getStudentWeekInfo/:id/:week/:type',
   studentsControllers.getStudentWeekInfo
 );
 router.put(
@@ -28,6 +28,17 @@ router.post(
   '/saveMidEndJuniorData/:id',
   studentsControllers.saveMidEndJuniorData
 );
+
+router.post(
+  '/saveMidEndSeniorData/:id',
+  studentsControllers.saveMidEndSeniorData
+);
+
+router.get(
+  '/getMidEndDataByStudentID/:id',
+  studentsControllers.getMidEndDataByStudentID
+);
+
 router.get(
   '/getStudentByCohortName/:cohortName',
   studentsControllers.getStudentByCohortName
@@ -43,6 +54,9 @@ router.get(
   studentsControllers.JuniorUnitMarks
 );
 
-router.get('/getStudentType/:id', studentsControllers.getStudentType);
+router.get(
+  '/getAssessmentMarksByStudentID/:id',
+  studentsControllers.getAssessmentMarksByStudentID
+);
 
 module.exports = router;

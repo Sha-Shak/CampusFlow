@@ -8,24 +8,12 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
+  LabelList,
 } from 'recharts';
 
-const data = [
-  { unitName: 'Unit Testing', marks: 9 },
-  { unitName: 'Advanced Javascript', marks: 6 },
-  { unitName: 'Data Structures', marks: 2 },
-  { unitName: 'Algorithms', marks: 10 },
-  { unitName: 'Networking', marks: 4 },
-  { unitName: 'Backend Frameworks', marks: 3 },
-  { unitName: 'Databases', marks: 8 },
-  { unitName: 'Advanced HTML & CSS', marks: 1 },
-  { unitName: 'TypeScript', marks: 7 },
-  { unitName: 'Angular', marks: 5 },
-  { unitName: 'GraphQL', marks: 10 },
-  { unitName: 'React', marks: 2 },
-];
-
-const UnitMarksChart = () => {
+const UnitMarksChart = ({ unitMarks }) => {
+  if (!unitMarks) return null;
+  const data = unitMarks.flat();
   return (
     <ResponsiveContainer>
       <ComposedChart
@@ -42,10 +30,12 @@ const UnitMarksChart = () => {
         <YAxis />
         <Tooltip />
         <Legend />
-        <Bar dataKey="marks" barSize={20} fill="#7e22ceaf" />
+        <Bar dataKey="unitMarks" barSize={20} fill="#7e22ceaf">
+          <LabelList dataKey="unitMarks" position="top" />
+        </Bar>
         <Line
           type="monotone"
-          dataKey="marks"
+          dataKey="unitMarks"
           stroke="#ff7300"
           strokeWidth={2}
           dot={false}

@@ -47,7 +47,13 @@ const getJuniorSoftSkillsFirstWeek = async (req, res) => {
 };
 
 const getStudentWeekInfo = async (req, res) => {
-  const { id, week } = req.params;
+  const { id, week, type } = req.params;
+  let studentType;
+  if (type === '1') {
+    studentType = 'junior';
+  } else if (type === '2') {
+    studentType = 'senior';
+  }
   try {
     const student = await Student.findById(id)
       .populate({
@@ -85,8 +91,7 @@ const getStudentWeekInfo = async (req, res) => {
       return res.status(404).json({ message: 'Student not found' });
     }
 
-    const { type } = student;
-    const weekInfo = student[type][week - 1];
+    const weekInfo = student[studentType][week - 1];
 
     // console.log(weekInfo.softSkills[0].skill.category);
 
@@ -299,14 +304,114 @@ const saveMidEndJuniorData = async (req, res) => {
     // console.log('mid junior', checkpoints1);
     // console.log('end junior', checkpoints2);
     // inserting checkpoint to Student model inside checkpoint array
-    student.checkpoints.push(checkpoints1);
-    student.checkpoints.push(checkpoints2);
-
-    console.log(student.checkpoints);
+    if (student.checkpoints.length > 0) {
+      student.checkpoints.map((checkpoint) => {
+        if (checkpoint.weekName === 'mid Junior') {
+          checkpoint = checkpoints1;
+        } else if (checkpoint.weekName === 'end Junior') {
+          checkpoint = checkpoints2;
+        }
+      });
+    } else {
+      student.checkpoints.push(checkpoints1);
+      student.checkpoints.push(checkpoints2);
+    }
     await student.save();
-    res.status(200).json(student);
+    const populatedStudent = await Student.findById(id)
+      .populate({
+        path: 'checkpoints.softSkills.skill',
+        model: 'Skill',
+      })
+      .populate({
+        path: 'checkpoints.techSkills.skill',
+        model: 'Skill',
+      });
+    res.status(200).json(populatedStudent.checkpoints);
   } catch (error) {
     console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+const saveMidEndSeniorData = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const student = await Student.findById(id)
+      .populate({
+        path: 'senior',
+        populate: {
+          path: 'softSkills.skill',
+          model: 'Skill',
+        },
+      })
+      .populate({
+        path: 'senior',
+        populate: {
+          path: 'techSkills.skill',
+          model: 'Skill',
+        },
+      });
+    if (!student) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+
+    const midSeniorAllinfo = _.cloneDeep(student.senior).slice(0, 3);
+    const endSeniorAllinfo = _.cloneDeep(student.senior).slice(3, 6);
+
+    const checkpoints1 = createCheckPoints(midSeniorAllinfo, 'mid Senior');
+    const checkpoints2 = createCheckPoints(endSeniorAllinfo, 'end Senior');
+
+    // inserting checkpoint to Student model inside checkpoint array
+    const populatedStudent = await Student.findById(id)
+      .populate({
+        path: 'checkpoints.softSkills.skill',
+        model: 'Skill',
+      })
+      .populate({
+        path: 'checkpoints.techSkills.skill',
+        model: 'Skill',
+      });
+
+    if (student.checkpoints.length > 2) {
+      student.checkpoints.map((checkpoint) => {
+        if (checkpoint.weekName === 'mid Senior') {
+          checkpoint = checkpoints1;
+        }
+        if (checkpoint.weekName === 'end Senior') {
+          checkpoint = checkpoints2;
+        }
+      });
+    } else {
+      student.checkpoints.push(checkpoints1);
+      student.checkpoints.push(checkpoints2);
+    }
+    await student.save();
+    res.status(200).json(populatedStudent.checkpoints);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+const getMidEndDataByStudentID = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const student = await Student.findById(id)
+      .populate({
+        path: 'checkpoints.softSkills.skill',
+        model: 'Skill',
+      })
+      .populate({
+        path: 'checkpoints.techSkills.skill',
+        model: 'Skill',
+      });
+    if (!student) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+    const allCheckpoints = student.checkpoints;
+    res.status(200).json(allCheckpoints);
+  } catch (error) {
+    console.log(error);
     res.status(500).json({ message: 'Server error' });
   }
 };
@@ -330,16 +435,23 @@ const getStudentByCohortName = async (req, res) => {
 
 const getUnitMarksByStudentID = async (req, res) => {
   const { id } = req.params;
-  const { weekNumber } = req.body;
   try {
     const student = await Student.findById(id);
     if (!student) {
       return res.status(404).json({ message: 'Student not found' });
     }
     const { type } = student;
-    const weekInfo = student[type][weekNumber - 1].unitMarks;
-    console.log(weekInfo.unitMarks);
-    res.status(200).json(weekInfo);
+
+    // get unit marks from junior
+    const allUnitMarks = student[type].map((week) => {
+      return week.unitMarks.map((unit) => {
+        return {
+          unitName: unit.unitName,
+          unitMarks: unit.marks,
+        };
+      });
+    });
+    res.status(200).json(allUnitMarks);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error' });
@@ -390,7 +502,7 @@ const JuniorUnitMarks = async (req, res) => {
   res.send(unitMarks);
 };
 
-getStudentType = async (req, res) => {
+const getAssessmentMarksByStudentID = async (req, res) => {
   const { id } = req.params;
   try {
     const student = await Student.findById(id);
@@ -398,15 +510,31 @@ getStudentType = async (req, res) => {
       return res.status(404).json({ message: 'Student not found' });
     }
     const { type } = student;
-    res.status(200).json({ type });
+
+    if (type === 'junior') {
+      const juniorAssessmentMarks = student[type].map((week) => {
+        return {
+          weekName: week.weekName,
+          assessmentMarks: week.assessmentMarks,
+        };
+      });
+      return res.status(200).json(juniorAssessmentMarks);
+    } else if (type === 'senior') {
+      const seniorAssessmentMarks = student[type].map((week) => {
+        return {
+          weekName: week.weekName,
+          assessmentMarks: week.assessmentMarks,
+        };
+      });
+      return res.status(200).json(seniorAssessmentMarks);
+    }
   } catch (error) {
-    console.error(error);
+    console.log(error);
     res.status(500).json({ message: 'Server error' });
   }
 };
 
 module.exports = {
-  getStudentType,
   getAllStudents,
   createStudent,
   getStudentByID,
@@ -416,8 +544,11 @@ module.exports = {
   addSoftTechSkillsByStudentID,
   changeStudentsType,
   saveMidEndJuniorData,
+  saveMidEndSeniorData,
   getStudentByCohortName,
   getUnitMarksByStudentID,
   postUnitMarksByStudentID,
   JuniorUnitMarks,
+  getAssessmentMarksByStudentID,
+  getMidEndDataByStudentID,
 };

@@ -7,9 +7,11 @@ export const studentApi = apiSlice.injectEndpoints({
         url: `/student/getAllStudents`,
       }),
     }),
+
     getStudentById: builder.query({
-      query: (id) => ({
-        url: `/student/${id}`,
+      query: (data) => ({
+        url: `/student/${data.studentId}`,
+        method: 'GET',
       }),
     }),
 
@@ -38,7 +40,7 @@ export const studentApi = apiSlice.injectEndpoints({
     //donebysaimon
     getStudentWeekInfo: builder.query({
       query: (data) => ({
-        url: `/student/getStudentWeekInfo/${data.studentId}/${data.week}`,
+        url: `/student/getStudentWeekInfo/${data.studentId}/${data.week}/${data.type}`,
         method: 'GET',
       }),
     }),
@@ -64,15 +66,58 @@ export const studentApi = apiSlice.injectEndpoints({
         method: 'GET',
       }),
     }),
+
+    saveMidEndJuniorCheckpoint: builder.mutation({
+      query: (data) => ({
+        url: `/student/saveMidEndJuniorData/${data.studentId}`,
+        method: 'POST',
+        body: data,
+      }),
+    }),
+
+    saveMidEndSeniorCheckpoint: builder.mutation({
+      query: (data) => ({
+        url: `/student/saveMidEndSeniorData/${data.studentId}`,
+        method: 'POST',
+        body: data,
+      }),
+    }),
+
+    getAssessmentMarksByStudentID: builder.query({
+      query: (data) => ({
+        url: `/student/getAssessmentMarksByStudentID/${data.studentId}`,
+        method: 'GET',
+      }),
+    }),
+
+    getUnitMarksByStudentID: builder.query({
+      query: (data) => ({
+        url: `/student/getUnitMarksByStudentID/${data.studentId}`,
+        method: 'GET',
+      }),
+    }),
+
+    getMidEndDataByStudentID: builder.query({
+      query: (data) => ({
+        url: `/student/getMidEndDataByStudentID/${data.studentId}`,
+        method: 'GET',
+      }),
+    }),
   }),
 });
 
 export const {
   useCreateStudentMutation,
   useAddSoftTechSkillsByStudentIDMutation,
+  useGetStudentByIdQuery,
   useGetStudentByCohortNameQuery,
   useGetStudentWeekInfoQuery,
   useSetStudentWeekInfoMutation,
   useChangeStudentsTypeMutation,
   useGetStudentTypeQuery,
+  useSaveMidEndJuniorCheckpointMutation,
+  useGetAssessmentMarksByStudentIDQuery,
+  useGetUnitMarksByStudentIDQuery,
+  useSaveMidEndSeniorCheckpointMutation,
+  useGetMidEndDataByStudentIDQuery,
 } = studentApi;
