@@ -58,6 +58,12 @@ export const studentApi = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+    getStudentType: builder.query({
+      query: (id) => ({
+        url: `/student/getStudentType/${id}`,
+        method: 'GET',
+      }),
+    }),
   }),
 });
 
@@ -68,4 +74,5 @@ export const {
   useGetStudentWeekInfoQuery,
   useSetStudentWeekInfoMutation,
   useChangeStudentsTypeMutation,
+  useGetStudentTypeQuery,
 } = studentApi;

@@ -390,7 +390,23 @@ const JuniorUnitMarks = async (req, res) => {
   res.send(unitMarks);
 };
 
+getStudentType = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const student = await Student.findById(id);
+    if (!student) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+    const { type } = student;
+    res.status(200).json({ type });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
 module.exports = {
+  getStudentType,
   getAllStudents,
   createStudent,
   getStudentByID,

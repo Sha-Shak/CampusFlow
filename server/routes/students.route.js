@@ -43,4 +43,6 @@ router.get(
   studentsControllers.JuniorUnitMarks
 );
 
+router.get('/getStudentType/:id', studentsControllers.getStudentType);
+
 module.exports = router;

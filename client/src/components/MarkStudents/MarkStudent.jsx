@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Paper } from '@mui/material';
 import { useGetSkillsByCategoryQuery } from '../../features/skill/skillApi';
 import {
+  useGetStudentTypeQuery,
   useGetStudentWeekInfoQuery,
   useSetStudentWeekInfoMutation,
 } from '../../features/student/studentApi';
@@ -19,7 +20,8 @@ const MarkStudent = ({ studentId, week, handleNext }) => {
       studentId,
       week,
     });
-
+  const { data: studentType, refetch: refetchStudentType } =
+    useGetStudentTypeQuery(studentId);
   useEffect(() => {
     refetchStudentInfo();
   }, [week, studentId]);
@@ -43,7 +45,7 @@ const MarkStudent = ({ studentId, week, handleNext }) => {
     if (!studentWeekInfo?.softSkills[0]?.skill) {
       const initialMarks = softSkills
         ?.filter((skill) => {
-          return skill?.studentType?.includes('junior');
+          return skill?.studentType?.includes(studentType?.type);
         })
         .reduce((acc, skill) => {
           acc[skill._id] = 0;
@@ -56,7 +58,7 @@ const MarkStudent = ({ studentId, week, handleNext }) => {
     if (!studentWeekInfo?.techSkills[0]?.skill) {
       initialMarks = techSkills
         ?.filter((skill) => {
-          return skill?.studentType?.includes('junior');
+          return skill?.studentType?.includes(studentType?.type);
         })
         .reduce((acc, skill) => {
           acc[skill._id] = 0;
@@ -72,7 +74,7 @@ const MarkStudent = ({ studentId, week, handleNext }) => {
   useEffect(() => {
     const generate = softSkills
       ?.filter((skill) => {
-        return skill?.studentType?.includes('junior');
+        return skill?.studentType?.includes(studentType?.type);
       })
       .map((skill) => {
         const studentSkill = studentWeekInfo?.softSkills?.find(
@@ -90,7 +92,7 @@ const MarkStudent = ({ studentId, week, handleNext }) => {
   useEffect(() => {
     const generate = techSkills
       ?.filter((skill) => {
-        return skill?.studentType?.includes('junior');
+        return skill?.studentType?.includes(studentType?.type);
       })
       .map((skill) => {
         const studentSkill = studentWeekInfo?.techSkills?.find(
@@ -117,7 +119,6 @@ const MarkStudent = ({ studentId, week, handleNext }) => {
 
     setAssessmentMark(generate);
   }, [studentWeekInfo]);
-  console.log(assessmentMark);
   useEffect(() => {
     const generate = studentWeekInfo?.softSkills?.reduce((acc, skill) => {
       acc[skill?.skill?._id] = skill?.marks;
