@@ -299,12 +299,29 @@ const saveMidEndJuniorData = async (req, res) => {
     // console.log('mid junior', checkpoints1);
     // console.log('end junior', checkpoints2);
     // inserting checkpoint to Student model inside checkpoint array
-    student.checkpoints.push(checkpoints1);
-    student.checkpoints.push(checkpoints2);
-
-    console.log(student.checkpoints);
+    if (student.checkpoints.length > 0) {
+      student.checkpoints.map((checkpoint) => {
+        if (checkpoint.weekName === 'mid Junior') {
+          checkpoint = checkpoints1;
+        } else if (checkpoint.weekName === 'end Junior') {
+          checkpoint = checkpoints2;
+        }
+      });
+    } else {
+      student.checkpoints.push(checkpoints1);
+      student.checkpoints.push(checkpoints2);
+    }
     await student.save();
-    res.status(200).json(student);
+    const populatedStudent = await Student.findById(id)
+      .populate({
+        path: 'checkpoints.softSkills.skill',
+        model: 'Skill',
+      })
+      .populate({
+        path: 'checkpoints.techSkills.skill',
+        model: 'Skill',
+      });
+    res.status(200).json(populatedStudent.checkpoints);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error' });
@@ -338,7 +355,7 @@ const getUnitMarksByStudentID = async (req, res) => {
     }
     const { type } = student;
     const weekInfo = student[type][weekNumber - 1].unitMarks;
-    console.log(weekInfo.unitMarks);
+    // console.log(weekInfo.unitMarks);
     res.status(200).json(weekInfo);
   } catch (error) {
     console.error(error);
@@ -390,6 +407,38 @@ const JuniorUnitMarks = async (req, res) => {
   res.send(unitMarks);
 };
 
+const getAssessmentMarksByStudentID = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const student = await Student.findById(id);
+    if (!student) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+    const { type } = student;
+
+    if (type === 'junior') {
+      const juniorAssessmentMarks = student[type].map((week) => {
+        return {
+          weekName: week.weekName,
+          assessmentMarks: week.assessmentMarks,
+        };
+      });
+      return res.status(200).json(juniorAssessmentMarks);
+    } else if (type === 'senior') {
+      const seniorAssessmentMarks = student[type].map((week) => {
+        return {
+          weekName: week.weekName,
+          assessmentMarks: week.assessmentMarks,
+        };
+      });
+      return res.status(200).json(seniorAssessmentMarks);
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
 module.exports = {
   getAllStudents,
   createStudent,
@@ -404,4 +453,5 @@ module.exports = {
   getUnitMarksByStudentID,
   postUnitMarksByStudentID,
   JuniorUnitMarks,
+  getAssessmentMarksByStudentID,
 };

@@ -43,4 +43,9 @@ router.get(
   studentsControllers.JuniorUnitMarks
 );
 
+router.get(
+  '/getAssessmentMarksByStudentID/:id',
+  studentsControllers.getAssessmentMarksByStudentID
+);
+
 module.exports = router;

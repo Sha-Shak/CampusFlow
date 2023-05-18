@@ -8,19 +8,6 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-const dummyData = [
-  { skill: 'Communication', value: 10 },
-  { skill: 'Problem-solving', value: 4 },
-  { skill: 'Leadership', value: 8 },
-  { skill: 'Time management', value: 10 },
-  { skill: 'Creativity', value: 10 },
-  { skill: 'Adaptability', value: 10 },
-  { skill: 'Strategic thinking', value: 4 },
-  { skill: 'Critical thinking', value: 10 },
-  { skill: 'Intelligence', value: 2 },
-  { skill: 'Negotiation', value: 10 },
-];
-
 const SkillsRadarChart = ({ skills }) => {
   const createFormattedData = (skills) => {
     return skills?.map((skill) => {
@@ -32,7 +19,6 @@ const SkillsRadarChart = ({ skills }) => {
   };
 
   const data = createFormattedData(skills);
-  console.log('data', data);
 
   return (
     <ResponsiveContainer height={'100%'} width={'100%'}>

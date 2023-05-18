@@ -10,34 +10,8 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-const data = [
-  {
-    weekName: 'week-1',
-    assessmentMarks: 8,
-  },
-  {
-    weekName: 'week-2',
-    assessmentMarks: 7,
-  },
-  {
-    weekName: 'week-3',
-    assessmentMarks: 9,
-  },
-  {
-    weekName: 'week-4',
-    assessmentMarks: 8,
-  },
-  {
-    weekName: 'week-5',
-    assessmentMarks: 6,
-  },
-  {
-    weekName: 'week-6',
-    assessmentMarks: 8,
-  },
-];
-
-const AssessmentMarksChart = () => {
+const AssessmentMarksChart = ({ assessmentMarks }) => {
+  const data = assessmentMarks;
   return (
     <ResponsiveContainer>
       <ComposedChart

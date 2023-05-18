@@ -39,8 +39,11 @@ const CohortStudents = () => {
           </thead>
           <tbody>
             {/* row 1 */}
-            {students?.students?.map((student) => (
-              <tr className="hover:bg-indigo-100 rounded-xl cursor-pointer hover:shadow-lg">
+            {students?.students?.map((student, index) => (
+              <tr
+                key={index}
+                className="hover:bg-indigo-100 rounded-xl cursor-pointer hover:shadow-lg"
+              >
                 <td>
                   <div className="flex items-center space-x-3">
                     <div className="avatar">

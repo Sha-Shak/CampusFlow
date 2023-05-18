@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import AssessmentMarksChart from '../components/StudentInfo/AssessmentMarksChart';
 import Layout from '../components/common/Layout';
 import SkillsRadarChart from '../components/StudentInfo/SkillsRadarChart';
@@ -6,35 +6,59 @@ import StudentSidebar from '../components/StudentInfo/StudentSidebar';
 import UnitMarksChart from '../components/StudentInfo/UnitMarks';
 import { useState } from 'react';
 import { useGetStudentWeekInfoQuery } from '../features/student/studentApi';
+import { useSaveAndgetMidEndJuniorCheckpointMutation } from '../features/student/studentApi';
+import { useGetAssessmentMarksByStudentIDQuery } from '../features/student/studentApi';
 import { useParams } from 'react-router-dom';
 
 function StudentInfo() {
-  const [selectedWeek, setSelectedWeek] = useState('Week 1');
-  const [weekSelected, setWeekSelected] = useState(1);
-
+  const [selectedWeek, setSelectedWeek] = useState(1);
+  const [selectedCheckpoint, setSelectedCheckpoint] = useState(1);
+  const [chartData, setChartData] = useState([]);
+  // get id via params
   const { id } = useParams();
 
+  // API call to get student info
   const { data: studentWeekInfo } = useGetStudentWeekInfoQuery({
     studentId: id,
-    week: weekSelected,
+    week: selectedWeek,
   });
 
-  // get id via params
+  const [saveAndGet, { data: checkpointsData, isSuccess, isError, error }] =
+    useSaveAndgetMidEndJuniorCheckpointMutation();
 
-  console.log(studentWeekInfo?.softSkills);
-
-  const [selectedCheckpoint, setSelectedCheckpoint] = useState(null);
+  const { data: assessmentMarks } = useGetAssessmentMarksByStudentIDQuery({
+    studentId: id,
+  });
 
   const weeks = ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6'];
   const checkpoints = ['Mid Junior', 'End Junior', 'Mid Senior', 'End Senior'];
 
+  useEffect(() => {
+    if (studentWeekInfo) {
+      setChartData(studentWeekInfo);
+    }
+  }, [studentWeekInfo]);
   const handleSelect = (index) => {
     const weekSelected = index + 1;
     setSelectedWeek(weekSelected);
+    setChartData(studentWeekInfo);
   };
-  const handleCheckPointSelect = (checkpoint) => {
+  const handleCheckPointSelect = (index) => {
+    const checkpoint = index + 1;
     setSelectedCheckpoint(checkpoint);
+    let checkpointInfo = {
+      studentId: id,
+    };
+    saveAndGet(checkpointInfo);
+    setCheckpointChart(true);
   };
+  useEffect(() => {
+    if (checkpointsData) {
+      setChartData(checkpointsData[selectedCheckpoint - 1]);
+    }
+  }, [checkpointsData, selectedCheckpoint]);
+
+  console.log('assessmentMarks', assessmentMarks);
 
   return (
     <Layout>
@@ -70,16 +94,16 @@ function StudentInfo() {
               tabIndex={0}
               className="w-32 text-center btn m-1 bg-green-100 border-0 text-green-950 hover:bg-green-200 hover:text-green-900 shadow-sm border-b-4 border-b-green-600"
             >
-              {selectedCheckpoint || 'Checkpoint'}
+              {checkpoints[selectedCheckpoint - 1]}
             </label>
             <ul
               tabIndex={0}
               className="dropdown-content menu p-2  bg-base-100 rounded-box w-32  text-center  bg-green-50 shadow-2xl"
             >
-              {checkpoints.map((checkpoint) => (
+              {checkpoints.map((checkpoint, index) => (
                 <li
                   key={checkpoint}
-                  onClick={() => handleCheckPointSelect(checkpoint)}
+                  onClick={() => handleCheckPointSelect(index)}
                 >
                   <a>{checkpoint}</a>
                 </li>
@@ -91,18 +115,18 @@ function StudentInfo() {
               <span className="text-white bg-purple-500 p-3 rounded-full">
                 Soft Skills
               </span>
-              <SkillsRadarChart skills={studentWeekInfo?.softSkills || []} />
+              <SkillsRadarChart skills={chartData?.softSkills} />
             </div>
             <div className="flex-[0.5] h-80 bg-white rounded-3xl p-5 shadow-md pb-10">
               <span className="text-white bg-purple-500 p-3 rounded-full">
                 Tech Skills
               </span>
-              <SkillsRadarChart skills={studentWeekInfo?.techSkills || []} />
+              <SkillsRadarChart skills={chartData?.techSkills} />
             </div>
           </div>
           <div className="flex justify-between mt-5">
             <div className="flex-[0.35] h-80 bg-white rounded-3xl p-5 mr-4 shadow-md ">
-              <AssessmentMarksChart />
+              <AssessmentMarksChart assessmentMarks={assessmentMarks} />
             </div>
             <div className="flex-[0.65] bg-white rounded-3xl p-5  shadow-md h-80">
               <UnitMarksChart />
