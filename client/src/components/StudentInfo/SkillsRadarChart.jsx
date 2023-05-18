@@ -32,7 +32,7 @@ const SkillsRadarChart = ({ skills }) => {
   };
 
   const data = createFormattedData(skills);
-  console.log('data', data);
+  // console.log('data', data);
 
   return (
     <ResponsiveContainer height={'100%'} width={'100%'}>

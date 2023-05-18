@@ -1,5 +1,5 @@
 import React from 'react';
-import AlumniSidebar from './AlumniSidebar';
+import AlumniSidebar from '../AlumniComponents/AlumniSidebar';
 
 function AlumniLayout({ children }) {
   return (

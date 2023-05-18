@@ -211,6 +211,7 @@ const addSkills = async (req, res) => {
 //     res.status(500).send('Internal Server Error');
 //   }
 // };
+
 const getAlumniById = async (req, res) => {
   const { id } = req.params;
   try {

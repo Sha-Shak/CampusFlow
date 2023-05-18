@@ -6,6 +6,7 @@ router.get('/test', alumniController.test);
 router.post('/convertToAlumni/', alumniController.convertToAlumni);
 router.post('/postInfo/:id', alumniController.postInfo);
 router.post('/addSkills/:id', alumniController.addSkills);
+router.get('/getAlumniById/:id', alumniController.getAlumniById);
 // router.post('/postAbout/:id', alumniController.postAbout);
 // router.post('/addEducation/:id', alumniController.addEducation);
 // router.post('/addExperience/:id', alumniController.addExperience);

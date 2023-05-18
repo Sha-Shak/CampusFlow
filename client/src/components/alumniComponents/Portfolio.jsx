@@ -1,5 +1,5 @@
 import React from 'react';
-import ProjectSection from './ProjectSection';
+import ProjectSection from '../AlumniComponents/ProjectSection';
 import Chip from './Chip';
 import { BsArrowRight } from 'react-icons/bs';
 

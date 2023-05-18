@@ -6,13 +6,18 @@ import { BsBriefcase } from 'react-icons/bs';
 import { GrCertificate, GrConnect } from 'react-icons/gr';
 import { IoCalendarClearOutline } from 'react-icons/io5';
 import SmallNameCard from './SmallNameCard';
+import { useNavigate } from 'react-router-dom';
 
 const AlumniSidebar = () => {
+  const navigate = useNavigate();
+
   const handleDashboard = () => {
     console.log('Dashboard');
+    navigate('/alumni/profile');
   };
   const handleProjectCode = () => {
     console.log('Project Code');
+    navigate('/alumni/projectcode');
   };
   const handleTechSkill = () => {
     console.log('Tech Skill');
@@ -56,18 +61,6 @@ const AlumniSidebar = () => {
             </a>
           </li>
           <li>
-            <a onClick={handleTechSkill}>
-              <RiUserSettingsLine color="gray" />
-              Tech Skills
-            </a>
-          </li>
-          <li>
-            <a onClick={handleSoftSkill}>
-              <FaBrain color="gray" />
-              Soft Skills
-            </a>
-          </li>
-          <li>
             <a onClick={handleExperience}>
               <BsBriefcase color="gray" />
               Experience
@@ -80,7 +73,7 @@ const AlumniSidebar = () => {
             </a>
           </li>
         </div>
-        <div className="m-auto">
+        <div className=" mt-[62vh]">
           <SmallNameCard />
         </div>
       </ul>
