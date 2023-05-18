@@ -369,7 +369,6 @@ const saveMidEndSeniorData = async (req, res) => {
       });
 
     if (student.checkpoints.length > 2) {
-      console.log('here to update');
       student.checkpoints.map((checkpoint) => {
         if (checkpoint.weekName === 'mid Senior') {
           checkpoint = checkpoints1;
@@ -379,7 +378,6 @@ const saveMidEndSeniorData = async (req, res) => {
         }
       });
     } else {
-      console.log('here to insert');
       student.checkpoints.push(checkpoints1);
       student.checkpoints.push(checkpoints2);
     }
