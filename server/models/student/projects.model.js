@@ -29,7 +29,7 @@ const projectSchema = new mongoose.Schema({
   },
   // TODO: Replace ref with Alumni model
   doneBy: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: [mongoose.Schema.Types.ObjectId],
     ref: 'Student',
     required: true,
   },
