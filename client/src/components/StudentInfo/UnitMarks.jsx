@@ -8,12 +8,12 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
+  LabelList,
 } from 'recharts';
 
 const UnitMarksChart = ({ unitMarks }) => {
   if (!unitMarks) return null;
   const data = unitMarks.flat();
-  console.log(data);
   return (
     <ResponsiveContainer>
       <ComposedChart
@@ -30,7 +30,9 @@ const UnitMarksChart = ({ unitMarks }) => {
         <YAxis />
         <Tooltip />
         <Legend />
-        <Bar dataKey="unitMarks" barSize={20} fill="#7e22ceaf" />
+        <Bar dataKey="unitMarks" barSize={20} fill="#7e22ceaf">
+          <LabelList dataKey="unitMarks" position="top" />
+        </Bar>
         <Line
           type="monotone"
           dataKey="unitMarks"

@@ -8,10 +8,12 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
+  LabelList,
 } from 'recharts';
 
 const AssessmentMarksChart = ({ assessmentMarks }) => {
   const data = assessmentMarks;
+
   return (
     <ResponsiveContainer>
       <ComposedChart
@@ -28,7 +30,9 @@ const AssessmentMarksChart = ({ assessmentMarks }) => {
         <YAxis />
         <Tooltip />
         <Legend />
-        <Bar dataKey="assessmentMarks" barSize={15} fill="#7e22ceaf" />
+        <Bar dataKey="assessmentMarks" barSize={15} fill="#7e22ceaf">
+          <LabelList dataKey="assessmentMarks" position="top" />
+        </Bar>
         <Line
           type="monotone"
           dataKey="assessmentMarks"

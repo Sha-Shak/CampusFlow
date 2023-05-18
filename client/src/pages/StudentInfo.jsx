@@ -17,6 +17,7 @@ import { useParams } from 'react-router-dom';
 function StudentInfo() {
   const [selectedWeek, setSelectedWeek] = useState(1);
   const [selectedCheckpoint, setSelectedCheckpoint] = useState(1);
+  const [selectedType, setSelectedType] = useState(1);
   const [chartData, setChartData] = useState([]);
   // get id via params
   const { id } = useParams();
@@ -29,26 +30,16 @@ function StudentInfo() {
   const { data: studentWeekInfo } = useGetStudentWeekInfoQuery({
     studentId: id,
     week: selectedWeek,
+    type: selectedType,
   });
 
   const { data: midEndData } = useGetMidEndDataByStudentIDQuery({
     studentId: id,
   });
 
-  const [
-    saveMidEndJunior,
-    { data: checkpointsDataJunior, isSuccess, isError, error },
-  ] = useSaveMidEndJuniorCheckpointMutation();
+  const [saveMidEndJunior] = useSaveMidEndJuniorCheckpointMutation();
 
-  const [
-    saveMidEndSenior,
-    {
-      data: checkpointsDataSenior,
-      isSuccessSenior,
-      isErrorSenior,
-      errorSenior,
-    },
-  ] = useSaveMidEndSeniorCheckpointMutation();
+  const [saveMidEndSenior] = useSaveMidEndSeniorCheckpointMutation();
 
   const { data: assessmentMarks } = useGetAssessmentMarksByStudentIDQuery({
     studentId: id,
@@ -60,6 +51,8 @@ function StudentInfo() {
 
   const weeks = ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6'];
   const checkpoints = ['Mid Junior', 'End Junior', 'Mid Senior', 'End Senior'];
+
+  const types = ['junior', 'senior'];
 
   useEffect(() => {
     if (studentWeekInfo) {
@@ -75,9 +68,11 @@ function StudentInfo() {
   const handleCheckPointSelect = (index) => {
     const checkpoint = index + 1;
     setSelectedCheckpoint(checkpoint);
+  };
 
-    // saveMidEndJunior(checkpointInfo);
-    // saveMidEndSenior(checkpointInfo);
+  const handleType = (index) => {
+    const type = index + 1;
+    setSelectedType(type);
   };
 
   useEffect(() => {
@@ -102,6 +97,25 @@ function StudentInfo() {
           Week Dropdown
           
           */}
+
+          <span className=" dropdown dropdown-hover text-right ml-auto mb-3 ">
+            <label
+              tabIndex={0}
+              className="w-32 text-center btn m-1 bg-orange-100 border-0 text-orange-950 hover:bg-orange-200 hover:text-orange-900 shadow-sm border-b-4 border-b-orange-600"
+            >
+              {types[selectedType - 1]}
+            </label>
+            <ul
+              tabIndex={0}
+              className="dropdown-content menu p-2  bg-base-100 rounded-box w-32  text-center  bg-orange-50 shadow-2xl"
+            >
+              {types.map((type, index) => (
+                <li key={index} onClick={() => handleType(index)}>
+                  <a className="capitalize">{type}</a>
+                </li>
+              ))}
+            </ul>
+          </span>
 
           <span className=" dropdown dropdown-hover text-right ml-auto mb-3 ">
             <label
@@ -143,6 +157,7 @@ function StudentInfo() {
               ))}
             </ul>
           </span>
+
           <div className="flex justify-between">
             <div className="flex-[0.5] bg-white rounded-3xl h-80 p-5 mr-4 shadow-md pb-10">
               <span className="text-white bg-purple-500 p-3 rounded-full">

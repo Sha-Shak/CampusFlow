@@ -10,7 +10,7 @@ router.get(
   studentsControllers.getJuniorSoftSkillsFirstWeek
 );
 router.get(
-  '/getStudentWeekInfo/:id/:week',
+  '/getStudentWeekInfo/:id/:week/:type',
   studentsControllers.getStudentWeekInfo
 );
 router.put(

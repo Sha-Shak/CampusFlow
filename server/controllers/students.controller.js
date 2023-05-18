@@ -47,7 +47,13 @@ const getJuniorSoftSkillsFirstWeek = async (req, res) => {
 };
 
 const getStudentWeekInfo = async (req, res) => {
-  const { id, week } = req.params;
+  const { id, week, type } = req.params;
+  let studentType;
+  if (type === '1') {
+    studentType = 'junior';
+  } else if (type === '2') {
+    studentType = 'senior';
+  }
   try {
     const student = await Student.findById(id)
       .populate({
@@ -85,8 +91,7 @@ const getStudentWeekInfo = async (req, res) => {
       return res.status(404).json({ message: 'Student not found' });
     }
 
-    const { type } = student;
-    const weekInfo = student[type][week - 1];
+    const weekInfo = student[studentType][week - 1];
 
     // console.log(weekInfo.softSkills[0].skill.category);
 
@@ -330,7 +335,6 @@ const saveMidEndJuniorData = async (req, res) => {
 
 const saveMidEndSeniorData = async (req, res) => {
   const { id } = req.params;
-  console.log(id);
   try {
     const student = await Student.findById(id)
       .populate({
@@ -391,7 +395,6 @@ const saveMidEndSeniorData = async (req, res) => {
 
 const getMidEndDataByStudentID = async (req, res) => {
   const { id } = req.params;
-  const { type } = req.query;
   try {
     const student = await Student.findById(id)
       .populate({
