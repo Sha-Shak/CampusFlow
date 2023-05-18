@@ -37,6 +37,7 @@ import useZoom from './hooks/useZoom';
 import useAuthCheck from './hooks/useAuthCheck';
 import AlumniUpdateProfile from './pages/AlumniUpdateProfile.page';
 import AlumniProjectcode from './pages/AlumniProjectcode';
+import AlumniPortfolio from './pages/AlumniPortfolio';
 function App() {
   // const zoomLevel = useZoom();
   const authChecked = useAuthCheck();
@@ -68,6 +69,7 @@ function App() {
           <Route path="/migratestudents" element={<MigrateStudents />} />
           <Route path="/repoAccess" element={<RepoAccess />} />
           <Route path="test" element={<SkillsRadarChart />} />
+
           <Route path="/alumni/info" element={<AlumniInfoCard />} />
           <Route path="/alumni/sidebar" element={<AlumniSidebar />} />
           <Route path="/alumni/profileChip" element={<ProjectCard />} />
@@ -76,10 +78,13 @@ function App() {
           <Route path="/alumni/portfolio" element={<Portfolio />} />
           <Route path="/alumni/profile" element={<AlumniProfile />} />
           <Route
+            path="/alumni/profile/portfolio"
+            element={<AlumniPortfolio />}
+          />
+          <Route
             path="/alumni/update-profile"
             element={<AlumniUpdateProfile />}
           />
-
           <Route path="/alumni/projectcode" element={<AlumniProjectcode />} />
 
           <Route path="/search" element={<SelectIndustry />} />

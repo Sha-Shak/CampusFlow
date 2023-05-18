@@ -25,16 +25,23 @@ function Experience({ alumniInfo }) {
         onClose={onClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        className="flex justify-center items-center"
       >
-        <div className="flex flex-wrap justify-center gap-5 p-10 mt-5 outline-none ">
-          {allExperiences?.map((experience, index) => {
-            // console.log(experience);
-            return (
-              <div className="pt-5 px-5 w-[29vw] h-48 bg-white rounded-xl">
-                <OrganisationCard latestExperience={experience} />
-              </div>
-            );
-          })}
+        <div className=" flex justify-center w-[45vw] outline-none ">
+          {/* <div className="flex flex-col justify-center gap-5 p-10 mt-5 outline-none w-[50vw] overflow-y-scroll max-h-[80vh] "> */}
+          <div className=" overflow-y-scroll max-h-[80vh] p-5 flex flex-col gap-5  ">
+            {allExperiences?.map((experience, index) => {
+              // console.log(experience);
+              return (
+                <div
+                  className="pt-5 px-5 w-[35vw] min-h-[10vw] bg-white rounded-xl "
+                  key={index}
+                >
+                  <OrganisationCard latestExperience={experience} />
+                </div>
+              );
+            })}
+          </div>
         </div>
       </Modal>
 

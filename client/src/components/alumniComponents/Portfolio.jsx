@@ -27,9 +27,13 @@ const Portfolio = ({ alumniInfo, techStack }) => {
         <div className="flex flex-col m-2 items-left">
           <h2 className="text-2xl font-bold m-1">Skills</h2>
           <div className="m-2 flex gap-2 flex-wrap">
-            {techStack.slice(0, 8)?.map((tech) => (
-              <Chip key={tech} name={tech} />
-            ))}
+            {techStack.slice(0, 8)?.map((tech, index) => {
+              return (
+                <div key={index}>
+                  <Chip key={tech} name={tech} />
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
