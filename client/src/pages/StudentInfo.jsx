@@ -5,6 +5,7 @@ import SkillsRadarChart from '../components/StudentInfo/SkillsRadarChart';
 import StudentSidebar from '../components/StudentInfo/StudentSidebar';
 import UnitMarksChart from '../components/StudentInfo/UnitMarks';
 import { useState } from 'react';
+import { useGetStudentByIdQuery } from '../features/student/studentApi';
 import { useGetStudentWeekInfoQuery } from '../features/student/studentApi';
 import { useSaveAndgetMidEndJuniorCheckpointMutation } from '../features/student/studentApi';
 import { useGetAssessmentMarksByStudentIDQuery } from '../features/student/studentApi';
@@ -19,6 +20,10 @@ function StudentInfo() {
   const { id } = useParams();
 
   // API call to get student info
+  const { data: studentInfo } = useGetStudentByIdQuery({
+    studentId: id,
+  });
+
   const { data: studentWeekInfo } = useGetStudentWeekInfoQuery({
     studentId: id,
     week: selectedWeek,
@@ -62,9 +67,6 @@ function StudentInfo() {
       setChartData(checkpointsData[selectedCheckpoint - 1]);
     }
   }, [checkpointsData, selectedCheckpoint]);
-
-  console.log('assessmentMarks', assessmentMarks);
-
   return (
     <Layout>
       <div className="flex">
@@ -142,7 +144,7 @@ function StudentInfo() {
           {/* </div> */}
         </div>
         <div className="flex-[0.1] ml-2 ">
-          <StudentSidebar />
+          <StudentSidebar student={studentInfo} />
         </div>
       </div>
     </Layout>

@@ -8,6 +8,13 @@ export const studentApi = apiSlice.injectEndpoints({
       }),
     }),
 
+    getStudentById: builder.query({
+      query: (data) => ({
+        url: `/student/${data.studentId}`,
+        method: 'GET',
+      }),
+    }),
+
     createStudent: builder.mutation({
       query: (data) => ({
         url: `/student/createStudent/`,
@@ -87,6 +94,7 @@ export const studentApi = apiSlice.injectEndpoints({
 export const {
   useCreateStudentMutation,
   useAddSoftTechSkillsByStudentIDMutation,
+  useGetStudentByIdQuery,
   useGetStudentByCohortNameQuery,
   useGetStudentWeekInfoQuery,
   useSetStudentWeekInfoMutation,
