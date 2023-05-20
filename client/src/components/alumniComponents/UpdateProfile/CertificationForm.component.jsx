@@ -1,10 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TextField, Button, Box, Typography, Divider } from '@mui/material';
-
+import { useAddAlumniInfoMutation } from '../../../features/alumni/alumniApi';
+import toast from 'react-hot-toast';
 const CertificationForm = ({ handleClose }) => {
   const [name, setName] = useState('');
   const [url, setUrl] = useState('');
+  const [addInfo, { data, isSuccess, error }] = useAddAlumniInfoMutation();
 
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success('Certification added successfully');
+      handleClose();
+    }
+    if (error) {
+      console.log(error);
+      toast.error('Something went wrong');
+    }
+  }, [isSuccess, error]);
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
       handleSubmit();
@@ -18,12 +30,14 @@ const CertificationForm = ({ handleClose }) => {
     }
 
     const data = {
+      id: '645bbb5a7865c6e61157889f',
+      type: 'certifications',
       info: {
         name: name,
         url: url,
       },
     };
-    console.log(data);
+    addInfo(data);
     setName('');
     setUrl('');
   };

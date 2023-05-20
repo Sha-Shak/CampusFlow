@@ -27,12 +27,12 @@ const projectSchema = new mongoose.Schema({
   thirdPartyApi: {
     type: [String],
   },
-  // TODO: Replace ref with Alumni model
   doneBy: {
     type: [mongoose.Schema.Types.ObjectId],
     ref: 'Student',
     required: true,
   },
+
   ratings: {
     type: [
       {

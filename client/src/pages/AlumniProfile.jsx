@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import AlumniInfoCard from '../components/AlumniComponents/AlumniInfoCard';
 import Experience from '../components/AlumniComponents/Experience';
@@ -9,16 +9,22 @@ import SiteChip from '../components/AlumniComponents/SiteChip';
 import SkillsRadarChart from '../components/StudentInfo/SkillsRadarChart';
 import SkillsTabs from './SkillsTabs';
 import { useGetAlumniByIdQuery } from '../features/alumni/alumniApi';
+import { useGetStudentByIdQuery } from '../features/student/studentApi';
 
 const AlumniProfile = () => {
-  const alumniId = '646213253572798cad80c70e';
-  const {
-    data: alumniInfo,
-    isSuccess,
-    error,
-  } = useGetAlumniByIdQuery(alumniId);
+  const studentId = '6464d4525ed2a4cee3d1ce44';
+  let alumniId = '';
 
-  console.log('dbug', alumniInfo);
+  const { data: studentInfo, isSuccess } = useGetStudentByIdQuery({
+    studentId,
+  });
+  if (isSuccess) {
+    alumniId = studentInfo?.alumniId;
+  }
+  const { data: alumniInfo, error } = useGetAlumniByIdQuery(alumniId);
+
+  console.log('dbug1', studentInfo);
+  // console.log('dbug2', alumniInfo);
   const techStack = [];
   alumniInfo?.projects.map((project) => {
     project.techStack.map((tech) => {
@@ -30,6 +36,8 @@ const AlumniProfile = () => {
   const [activeTab1, setActiveTab1] = useState('tab-active');
   const [activeTab2, setActiveTab2] = useState('');
   const [activeTab3, setActiveTab3] = useState('');
+  const [chartData, setChartData] = useState({});
+
   const activate = (tab) => {
     if (tab === 1) {
       setActiveTab1('tab-active');
@@ -47,11 +55,19 @@ const AlumniProfile = () => {
       setActiveTab3('tab-active');
     }
   };
+
+  useEffect(() => {
+    setChartData(studentInfo?.checkpoints[3]);
+  }, [studentInfo]);
+
   return (
     <AlumniLayout>
       <div className="flex gap-4 m-4 ">
         <div className="flex-[0.3] flex flex-col gap-5">
-          <AlumniInfoCard alumniInfo={alumniInfo} />
+          <AlumniInfoCard
+            alumniInfo={alumniInfo}
+            githubUsername={studentInfo?.githubUsername}
+          />
           <Experience alumniInfo={alumniInfo} />
 
           {/* <LanguageStats /> */}
@@ -95,13 +111,13 @@ const AlumniProfile = () => {
                 <span className="text-white bg-purple-500 p-3 rounded-full">
                   Soft Skills
                 </span>
-                <SkillsRadarChart />
+                <SkillsRadarChart skills={chartData?.softSkills} />
               </div>
               <div className="flex-[0.5] h-64 w-64 bg-white rounded-3xl p-5 shadow-md pb-10">
                 <span className="text-white bg-purple-500 p-3 rounded-full">
                   Tech Skills
                 </span>
-                <SkillsRadarChart />
+                <SkillsRadarChart skills={chartData?.techSkills} />
               </div>
             </div>
           </div>

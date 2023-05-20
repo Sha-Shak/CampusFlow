@@ -13,6 +13,7 @@ import ExperienceForm from '../components/alumniComponents/UpdateProfile/Experie
 import EducationForm from '../components/alumniComponents/UpdateProfile/EductaionForm.component';
 import ProjectForm from '../components/alumniComponents/UpdateProfile/ProjectForm.component';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
+import CompanyNameAutocomplete from '../components/alumniComponents/UpdateProfile/AutoCompleteCompany';
 
 function AlumniUpdateProfile() {
   const [openCertificate, setOpenCertificate] = useState(false);
@@ -110,6 +111,8 @@ function AlumniUpdateProfile() {
           </Box>
         </Modal>
       </div>
+
+      <CompanyNameAutocomplete />
     </Layout>
   );
 }

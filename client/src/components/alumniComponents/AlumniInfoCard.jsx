@@ -3,9 +3,7 @@ import { FiPhoneCall, FiLinkedin, FiGlobe } from 'react-icons/fi';
 import { SlEnvolope } from 'react-icons/sl';
 import Chip from './Chip';
 
-function AlumniInfoCard({ alumniInfo }) {
-  // JSX elements
-
+function AlumniInfoCard({ alumniInfo, githubUsername }) {
   const socialButtonClick = (type) => {
     // alert(type);
     if (type === 'phone') {
@@ -47,7 +45,7 @@ function AlumniInfoCard({ alumniInfo }) {
     <div className="flex gap-3 items-center">
       <div className="w-16 rounded-xl bg-[#C39AF7]">
         <img
-          src={`https://avatars.githubusercontent.com/${alumniInfo?.githubUsername}`}
+          src={`https://avatars.githubusercontent.com/${githubUsername}`}
           className="rounded-2xl p-1 shadow-xl"
         />
       </div>
@@ -91,7 +89,7 @@ function AlumniInfoCard({ alumniInfo }) {
   );
   return (
     <>
-      <div className="card h-auto bg-base-100 shadow-xl">
+      <div className="card h-auto bg-base-100 shadow-md">
         <div className="card-body p-5">
           {cardHead}
           <p className=" mt-3 text-justify leading-5 text-md text-gray-600">

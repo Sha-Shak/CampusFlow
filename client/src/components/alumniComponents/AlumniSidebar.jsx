@@ -31,7 +31,7 @@ const AlumniSidebar = () => {
 
   return (
     <>
-      <ul className="menu p-4 w-64 bg-#FFFBFB bg-white shadow-xl h-screen flex-col flex-wrap">
+      <ul className=" menu p-4 w-64 bg-#FFFBFB bg-white shadow-xl h-screen flex-col flex-wrap">
         <div className="flex">
           <a className="btn btn-ghost normal-case text-xl text-purple-700">
             CampusFlow

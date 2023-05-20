@@ -1,35 +1,30 @@
 import React from 'react';
 
-function ProjectcodeSkillTable({ type }) {
+function ProjectcodeSkillTable({ type, skills }) {
   return (
-    <div>
-      <div className="overflow-x-auto ">
-        <table className="table w-full">
+    <>
+      <div className="overflow-x-auto max-h-[67vh] ">
+        <table className="table w-full table-zebra table-auto overflow-auto">
           {/* head */}
           <thead>
             <tr>
-              <th></th>
-              <th>Skill Name ➡ {type}</th>
+              <th>No.</th>
+              <th>{type}</th>
               <th>Marks</th>
             </tr>
           </thead>
           <tbody>
-            {/* row 1 */}
-            <tr>
-              <th>1</th>
-              <td>Cy Ganderton</td>
-              <td>Quality Control Specialist</td>
-            </tr>
-            {/* row 2 */}
-            <tr>
-              <th>2</th>
-              <td>Hart Hagerty</td>
-              <td>Desktop Support Technician</td>
-            </tr>
+            {skills?.map((skill, index) => (
+              <tr key={index}>
+                <td>{index + 1}</td>
+                <td>{skill?.skill?.skillName}</td>
+                <td>{skill?.marks}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
-    </div>
+    </>
   );
 }
 

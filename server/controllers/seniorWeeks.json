@@ -10,11 +10,15 @@
     "assessmentMarks": 0,
     "unitMarks": [
       {
-        "unitName": "Authentication",
+        "unitName": "Frontend",
         "marks": 0
       },
       {
-        "unitName": "State Management",
+        "unitName": "Backend",
+        "marks": 0
+      },
+      {
+        "unitName": "UI/UX",
         "marks": 0
       }
     ]
@@ -30,7 +34,23 @@
       "assessmentMarks": 0,
       "unitMarks": [
         {
-          "unitName": "Solo Project",
+          "unitName": "Frontend",
+          "marks": 0
+        },
+        {
+          "unitName": "Backend",
+          "marks": 0
+        },
+        {
+          "unitName": "UI/UX",
+          "marks": 0
+        }, 
+        {
+          "unitName": "Testing",
+          "marks": 0
+        },
+        {
+          "unitName": "Code Readability",
           "marks": 0
         }
       ]
@@ -46,7 +66,15 @@
       "assessmentMarks": 0,
       "unitMarks": [
         {
-          "unitName": "Legacy Project",
+          "unitName": "Frontend",
+          "marks": 0
+        },
+        {
+          "unitName": "Backend",
+          "marks": 0
+        },
+        {
+          "unitName": "UI/UX",
           "marks": 0
         }
 
@@ -63,7 +91,15 @@
       "assessmentMarks": 0,
       "unitMarks": [
         {
-          "unitName": "Mid Thesis",
+          "unitName": "Frontend",
+          "marks": 0
+        },
+        {
+          "unitName": "Backend",
+          "marks": 0
+        },
+        {
+          "unitName": "UI/UX",
           "marks": 0
         }
       ]
@@ -79,14 +115,22 @@
       "assessmentMarks": 0,
       "unitMarks": [
         {
-          "unitName": "Final Thesis",
+          "unitName": "Frontend",
+          "marks": 0
+        },
+        {
+          "unitName": "Backend",
+          "marks": 0
+        },
+        {
+          "unitName": "UI/UX",
           "marks": 0
         }
       ]
     }
     ,
     {
-      "weekName": "Week 5",
+      "weekName": "Week 6",
       "softSkills": {
         "type": []
       },
@@ -96,9 +140,22 @@
       "assessmentMarks": 0,
       "unitMarks": [
         {
-          "unitName": "Final Thoughts",
+          "unitName": "Frontend",
+          "marks": 0
+        },
+        {
+          "unitName": "Backend",
+          "marks": 0
+        },
+        {
+          "unitName": "UI/UX",
+          "marks": 0
+        },
+        {
+          "unitName": "Testing",
           "marks": 0
         }
+
       ]
     }
   ]
