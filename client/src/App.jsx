@@ -39,6 +39,8 @@ import AlumniUpdateProfile from './pages/AlumniUpdateProfile.page';
 import AlumniProjectcode from './pages/AlumniProjectcode';
 import ProjectForm from './components/alumniComponents/UpdateProfile/ProjectForm.component';
 import { Toaster } from 'react-hot-toast';
+import AlumniPortfolio from './pages/AlumniPortfolio';
+import AlumniEducation from './pages/AlumniEducation';
 function App() {
   // const zoomLevel = useZoom();
   const authChecked = useAuthCheck();
@@ -71,6 +73,7 @@ function App() {
           <Route path="/migratestudents" element={<MigrateStudents />} />
           <Route path="/repoAccess" element={<RepoAccess />} />
           <Route path="test" element={<SkillsRadarChart />} />
+
           <Route path="/alumni/info" element={<AlumniInfoCard />} />
           <Route path="/alumni/sidebar" element={<AlumniSidebar />} />
           <Route path="/alumni/profileChip" element={<ProjectCard />} />
@@ -78,6 +81,12 @@ function App() {
           <Route path="/alumni/experience" element={<Experience />} />
           <Route path="/alumni/portfolio" element={<Portfolio />} />
           <Route path="/alumni/profile" element={<AlumniProfile />} />
+          <Route
+            path="/alumni/profile/portfolio"
+            element={<AlumniPortfolio />}
+          />
+          <Route path="/alumni/education" element={<AlumniEducation />} />
+
           <Route
             path="/alumni/update-profile"
             element={<AlumniUpdateProfile />}
