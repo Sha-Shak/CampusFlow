@@ -92,7 +92,7 @@ function AlumniProjectcode() {
     setSoftSkillTab('tab-active font-bold');
     setTechSkillTab('');
   };
-  const selectTechSkill = (softSkill) => {
+  const selectTechSkill = (techSkill) => {
     setSoftSkillTab('');
     setTechSkillTab('tab-active font-bold');
   };
@@ -205,7 +205,7 @@ function AlumniProjectcode() {
                   Tech Skill
                 </div>
               </div>
-              {techSkillTab === 'tab-active' ? (
+              {techSkillTab === 'tab-active font-bold' ? (
                 <div>
                   <ProjectcodeSkillTable
                     type="techskills"

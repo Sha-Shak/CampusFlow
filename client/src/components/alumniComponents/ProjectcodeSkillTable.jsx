@@ -1,14 +1,15 @@
 import React from 'react';
 
 function ProjectcodeSkillTable({ type, skills }) {
+  console.log(skills);
   return (
-    <div>
+    <>
       <div className="overflow-x-auto ">
         <table className="table w-full table-zebra">
           {/* head */}
           <thead>
             <tr>
-              <th></th>
+              <th>No.</th>
               <th>{type}</th>
               <th>Marks</th>
             </tr>
@@ -24,7 +25,7 @@ function ProjectcodeSkillTable({ type, skills }) {
           </tbody>
         </table>
       </div>
-    </div>
+    </>
   );
 }
 
