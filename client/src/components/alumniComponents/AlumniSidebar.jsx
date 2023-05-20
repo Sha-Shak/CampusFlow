@@ -19,22 +19,13 @@ const AlumniSidebar = () => {
     console.log('Project Code');
     navigate('/alumni/projectcode');
   };
-  const handleTechSkill = () => {
-    console.log('Tech Skill');
-  };
-  const handleSoftSkill = () => {
-    console.log('Soft Skill');
-  };
-  const handleJunior = () => {
-    console.log('Junior');
-  };
-  const handleSenior = () => {
-    console.log('Senior');
-  };
-  const handleExperience = () => {
+
+  const handlePortfolio = () => {
     console.log('Experience');
+    navigate('/alumni/profile/portfolio');
   };
   const handleCertification = () => {
+    alert('coming soon');
     console.log('Certification');
   };
 
@@ -61,9 +52,9 @@ const AlumniSidebar = () => {
             </a>
           </li>
           <li>
-            <a onClick={handleExperience}>
+            <a onClick={handlePortfolio}>
               <BsBriefcase color="gray" />
-              Experience
+              Portfolio
             </a>
           </li>
           <li>
