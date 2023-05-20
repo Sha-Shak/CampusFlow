@@ -22,6 +22,29 @@ export const githubApi = apiSlice.injectEndpoints({
         method: 'GET',
       }),
     }),
+
+    getGithubOrgRepos: builder.query({
+      query: () => ({
+        url: `/github/getGithubOrgRepos`,
+        method: 'GET',
+      }),
+    }),
+
+    getAccessToGithubRepo: builder.mutation({
+      query: (data) => ({
+        url: `/github/getAccessToGithubRepo`,
+        method: 'POST',
+        body: data,
+      }),
+    }),
+
+    removeAccessToGithubRepo: builder.mutation({
+      query: (data) => ({
+        url: `/github/removeAccessToGithubRepo`,
+        method: 'POST',
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -29,4 +52,7 @@ export const {
   useAddStudentToGithubCohortMutation,
   useAddGithubCohortMutation,
   useGetAllGithubCohortsQuery,
+  useGetGithubOrgReposQuery,
+  useRemoveAccessToGithubRepoMutation,
+  useGetAccessToGithubRepoMutation,
 } = githubApi;

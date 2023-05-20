@@ -38,6 +38,7 @@ import useAuthCheck from './hooks/useAuthCheck';
 import AlumniUpdateProfile from './pages/AlumniUpdateProfile.page';
 import AlumniProjectcode from './pages/AlumniProjectcode';
 import ProjectForm from './components/alumniComponents/UpdateProfile/ProjectForm.component';
+import { Toaster } from 'react-hot-toast';
 function App() {
   // const zoomLevel = useZoom();
   const authChecked = useAuthCheck();
@@ -46,6 +47,7 @@ function App() {
     <div />
   ) : (
     <div>
+      <Toaster />
       <Router>
         <Routes>
           <Route path="/" element={<Navigate to="/login" />} />

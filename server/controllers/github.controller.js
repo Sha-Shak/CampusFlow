@@ -307,7 +307,6 @@ const getGithubTeams = async (req, res) => {
   }
 };
 
-// NOT WORKING CORRECTLY
 const getGithubOrgRepos = async (req, res) => {
   const url1 = `https://api.github.com/orgs/${orgName}/repos?per_page=100&page=1`;
   const url2 = `https://api.github.com/orgs/${orgName}/repos?per_page=100&page=2`;

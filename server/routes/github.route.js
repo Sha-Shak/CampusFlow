@@ -48,12 +48,12 @@ router.get(
   githubController.getGithubOrgRepos
 );
 
-router.get(
+router.post(
   '/getAccessToGithubRepo',
   authMiddleware,
   githubController.getAccessToGithubRepo
 );
-router.get(
+router.post(
   '/removeAccessToGithubRepo',
   authMiddleware,
   githubController.removeAccessToGithubRepo
