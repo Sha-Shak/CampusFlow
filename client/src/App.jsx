@@ -76,7 +76,7 @@ function App() {
             <Route path="projectcode/:id" element={<AlumniProjectcode />} />
             <Route path="portfolio" element={<Portfolio />} />
             <Route path="profile/portfolio" element={<AlumniPortfolio />} />
-            <Route path="/alumni/education" element={<AlumniEducation />} />
+            <Route path="education" element={<AlumniEducation />} />
 
             <Route path="update-profile" element={<AlumniUpdateProfile />} />
             <Route path="add-project" element={<ProjectForm />} />
