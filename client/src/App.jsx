@@ -38,9 +38,9 @@ import useAuthCheck from './hooks/useAuthCheck';
 import AlumniUpdateProfile from './pages/AlumniUpdateProfile.page';
 import AlumniProjectcode from './pages/AlumniProjectcode';
 import ProjectForm from './components/alumniComponents/UpdateProfile/ProjectForm.component';
-=========
+import { Toaster } from 'react-hot-toast';
 import AlumniPortfolio from './pages/AlumniPortfolio';
->>>>>>>>> Temporary merge branch 2
+import AlumniEducation from './pages/AlumniEducation';
 function App() {
   // const zoomLevel = useZoom();
   const authChecked = useAuthCheck();
@@ -93,8 +93,6 @@ function App() {
           />
           <Route path="/alumni/add-project" element={<ProjectForm />} />
 
-=========
->>>>>>>>> Temporary merge branch 2
           <Route path="/alumni/projectcode" element={<AlumniProjectcode />} />
 
           <Route path="/search" element={<SelectIndustry />} />
