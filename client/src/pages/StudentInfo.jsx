@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import AssessmentMarksChart from '../components/StudentInfo/AssessmentMarksChart';
 import Layout from '../components/common/Layout';
-
 import SkillsRadarChart from '../components/StudentInfo/SkillsRadarChart';
 import StudentSidebar from '../components/StudentInfo/StudentSidebar';
 import UnitMarksChart from '../components/StudentInfo/UnitMarks';
