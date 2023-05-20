@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ProjectCard from './ProjectCard';
 import ProjectCardSmall from './ProjectCardSmall';
-import AlumniPortfolioModalView from './AlumniPortfolioModalView';
+import AlumniPortfolioModalView from '../alumniComponents/AlumniPortfolioModalView';
 import { Modal } from '@mui/material';
 
 const ProjectSection = ({ projects }) => {
