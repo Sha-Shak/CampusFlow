@@ -25,21 +25,35 @@ function AlumniPortfolioCard({ project }) {
       </Modal>
 
       <div
-        className="card card-side bg-base-100 shadow-xl w-[35vw] h-[25vh] hover:border-2 border-purple-400"
+        className="card card-side bg-base-100 shadow-xl w-[39vw] h-[35vh] hover:border-2 border-purple-400"
         onClick={handleCardClick}
       >
         <figure>
           <img
             src="https://img.freepik.com/premium-vector/comic-youtube-thumbnail-background-comic-style_530597-997.jpg?"
             alt="Movie"
-            className="h-[25vh]"
+            className="h-[35vh]"
           />
         </figure>
         <div className="card-body">
-          <h2 className="card-title text-2xl font-semibold text-purple-400 mb-5">
+          <h2 className="card-title text-2xl font-semibold text-purple-400">
             {project?.projectName.toUpperCase()}
           </h2>
-          <div className="text-xl">Techstack</div>
+
+          <div className="text-xl mt-2">Techstack</div>
+          <div className=" flex flex-wrap gap-2 ">
+            {project?.techStack.map((tech) => (
+              <Chip
+                key={tech}
+                name={tech}
+                customColor={'gray-50'}
+                padding={3}
+                borderColor={'purple-200'}
+              />
+              // <div className="badge badge-outline badge-primary">{tech}</div>
+            ))}
+          </div>
+          <div className="text-xl mt-2 ">Type</div>
           <div className=" flex flex-wrap gap-2 ">
             {project?.techStack.map((tech) => (
               <Chip

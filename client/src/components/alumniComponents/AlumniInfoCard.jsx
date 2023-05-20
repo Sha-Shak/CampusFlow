@@ -97,7 +97,12 @@ function AlumniInfoCard({ alumniInfo }) {
           <p className=" mt-3 text-justify leading-5 text-md text-gray-600">
             {alumniInfo?.about}
           </p>
-          <Chip name="Full Stack Developer" />
+          <Chip
+            name="Full Stack Developer"
+            customColor={'gray-200'}
+            borderColor={'purple-200'}
+            padding={'3'}
+          />
           {cardButtons}
         </div>
       </div>
