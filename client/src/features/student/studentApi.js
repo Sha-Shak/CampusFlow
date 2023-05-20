@@ -8,6 +8,12 @@ export const studentApi = apiSlice.injectEndpoints({
       }),
     }),
 
+    getAllActiveStudents: builder.query({
+      query: () => ({
+        url: `/student/getAllActiveStudents`,
+      }),
+    }),
+
     getStudentById: builder.query({
       query: (data) => ({
         url: `/student/${data.studentId}`,
@@ -107,6 +113,8 @@ export const studentApi = apiSlice.injectEndpoints({
 });
 
 export const {
+  useGetAllStudentsQuery,
+  useGetAllActiveStudentsQuery,
   useCreateStudentMutation,
   useAddSoftTechSkillsByStudentIDMutation,
   useGetStudentByIdQuery,

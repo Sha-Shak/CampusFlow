@@ -4,8 +4,23 @@ const seniorWeeks = require('./seniorWeeks.json');
 const _ = require('lodash');
 
 const getAllStudents = async (req, res) => {
-  await res.send('Fetching All Students 200');
+  try {
+    const students = await Student.find();
+    res.status(200).json(students);
+  } catch (err) {
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
 };
+
+const getAllActiveStudents = async (req, res) => {
+  try {
+    const students = await Student.find({ status: true });
+    res.status(200).json(students);
+  } catch (err) {
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+};
+
 const getStudentByID = async (req, res) => {
   const studentId = req.params.id;
   const studentInfo = await Student.findById(studentId)
@@ -554,6 +569,7 @@ const getAssessmentMarksByStudentID = async (req, res) => {
 
 module.exports = {
   getAllStudents,
+  getAllActiveStudents,
   createStudent,
   getStudentByID,
   getJuniorSoftSkillsFirstWeek,
