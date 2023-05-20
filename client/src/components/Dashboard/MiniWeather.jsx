@@ -5,6 +5,13 @@ import {
   WiRain,
   WiSnow,
   WiThunderstorm,
+  WiDayHaze,
+  WiNightClear,
+  WiNightCloudy,
+  WiNightThunderstorm,
+  WiNightRain,
+  WiNightSnow,
+  WiNightHail,
 } from 'react-icons/wi';
 import axios from 'axios';
 
@@ -38,7 +45,16 @@ const WeatherComponent = () => {
       '10d': WiRain,
       '11d': WiThunderstorm,
       '13d': WiSnow,
-      // ... add more mappings for other weather conditions
+      '50d': WiDayHaze,
+      '01n': WiNightClear,
+      '02n': WiNightCloudy,
+      '03n': WiNightCloudy,
+      '04n': WiNightCloudy,
+      '09n': WiNightRain,
+      '10n': WiNightRain,
+      '11n': WiNightThunderstorm,
+      '13n': WiNightSnow,
+      '50n': WiNightHail,
     };
 
     const IconComponent = iconMap[iconCode];
@@ -51,7 +67,10 @@ const WeatherComponent = () => {
       {weather ? (
         <div className="card w-96 glass">
           <div className="card-body">
-            <h2 className="card-title">{weather.name}</h2>
+            <div className="flex justify-between">
+              <h2 className="card-title">{weather.name}</h2>
+              <div>{getWeatherIcon(weather.weather[0].icon)}</div>
+            </div>
             <p>
               Current Temperature:{' '}
               <span className="text-md font-semibold">
