@@ -25,17 +25,18 @@ function Dashboard() {
 
   useEffect(() => {
     if (allStudents) {
+      if (activeStudents.length > 5) {
+        setActiveStudents(allStudents.slice(0, 5));
+      }
       setActiveStudents(allStudents);
     }
   }, [activeStudents]);
-
-  console.log('allStudents', allStudents);
 
   return (
     <Layout>
       <div className="text-3xl mb-8 ml-4">Welcome, {firstName}</div>
       <div className="m-4">
-        <RecentStudents students={allStudents.slice(0, 5)} />
+        <RecentStudents students={allStudents} />
       </div>
       <div className="flex">
         <div className="m-4">
