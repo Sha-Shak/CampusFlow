@@ -1,6 +1,6 @@
 import React from 'react';
 import { RxDashboard } from 'react-icons/rx';
-import { FaCode, FaBrain } from 'react-icons/fa';
+import { FaCode, FaBrain, FaUserGraduate } from 'react-icons/fa';
 import { RiUserSettingsLine } from 'react-icons/ri';
 import { BsBriefcase } from 'react-icons/bs';
 import { GrCertificate, GrConnect } from 'react-icons/gr';
@@ -12,17 +12,17 @@ const AlumniSidebar = () => {
   const navigate = useNavigate();
 
   const handleDashboard = () => {
-    console.log('Dashboard');
     navigate('/alumni/profile');
   };
   const handleProjectCode = () => {
-    console.log('Project Code');
     navigate('/alumni/projectcode');
   };
 
   const handlePortfolio = () => {
-    console.log('Experience');
     navigate('/alumni/profile/portfolio');
+  };
+  const handleEducation = () => {
+    navigate('/alumni/education');
   };
   const handleCertification = () => {
     alert('coming soon');
@@ -58,13 +58,19 @@ const AlumniSidebar = () => {
             </a>
           </li>
           <li>
+            <a onClick={handleEducation}>
+              <FaUserGraduate />
+              Education
+            </a>
+          </li>
+          <li>
             <a onClick={handleCertification}>
               <GrCertificate />
               Certifications
             </a>
           </li>
         </div>
-        <div className=" mt-[62vh]">
+        <div className=" mt-[58vh]">
           <SmallNameCard />
         </div>
       </ul>

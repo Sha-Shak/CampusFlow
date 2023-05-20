@@ -38,6 +38,7 @@ import useAuthCheck from './hooks/useAuthCheck';
 import AlumniUpdateProfile from './pages/AlumniUpdateProfile.page';
 import AlumniProjectcode from './pages/AlumniProjectcode';
 import AlumniPortfolio from './pages/AlumniPortfolio';
+import AlumniEducation from './pages/AlumniEducation';
 function App() {
   // const zoomLevel = useZoom();
   const authChecked = useAuthCheck();
@@ -81,6 +82,8 @@ function App() {
             path="/alumni/profile/portfolio"
             element={<AlumniPortfolio />}
           />
+          <Route path="/alumni/education" element={<AlumniEducation />} />
+
           <Route
             path="/alumni/update-profile"
             element={<AlumniUpdateProfile />}
