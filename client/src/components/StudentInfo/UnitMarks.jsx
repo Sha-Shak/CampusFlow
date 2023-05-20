@@ -30,7 +30,7 @@ const UnitMarksChart = ({ unitMarks }) => {
         <YAxis />
         <Tooltip />
         <Legend />
-        <Bar dataKey="unitMarks" barSize={20} fill="#7e22ceaf">
+        <Bar dataKey="unitMarks" barSize={15} fill="#7e22ceaf">
           <LabelList dataKey="unitMarks" position="top" />
         </Bar>
         <Line
