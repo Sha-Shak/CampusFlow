@@ -4,6 +4,7 @@ import AlumniLayout from '../components/alumniComponents/AlumniLayout';
 import { useGetAlumniByIdQuery } from '../features/alumni/alumniApi';
 function AlumniPortfolio() {
   const alumniId = '646213253572798cad80c70e';
+
   const {
     data: alumniInfo,
     isSuccess,
