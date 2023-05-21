@@ -3,7 +3,7 @@ import { FiPhoneCall, FiLinkedin, FiGlobe } from 'react-icons/fi';
 import { SlEnvolope } from 'react-icons/sl';
 import Chip from './Chip';
 
-function AlumniInfoCard({ alumniInfo }) {
+function AlumniInfoCard({ alumniInfo, githubUsername }) {
   const socialButtonClick = (type) => {
     // alert(type);
     if (type === 'phone') {
@@ -45,7 +45,7 @@ function AlumniInfoCard({ alumniInfo }) {
     <div className="flex gap-3 items-center">
       <div className="w-16 rounded-xl bg-[#C39AF7]">
         <img
-          src={`https://avatars.githubusercontent.com/${alumniInfo?.githubUsername}`}
+          src={`https://avatars.githubusercontent.com/${githubUsername}`}
           className="rounded-2xl p-1 shadow-xl"
         />
       </div>

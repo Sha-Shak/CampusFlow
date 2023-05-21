@@ -73,28 +73,14 @@ function App() {
           <Route path="/migratestudents" element={<MigrateStudents />} />
           <Route path="/repoAccess" element={<RepoAccess />} />
           <Route path="test" element={<SkillsRadarChart />} />
-
-          <Route path="/alumni/info" element={<AlumniInfoCard />} />
-          <Route path="/alumni/sidebar" element={<AlumniSidebar />} />
-          <Route path="/alumni/profileChip" element={<ProjectCard />} />
-          <Route path="/alumni/chip" element={<SiteChip />} />
-          <Route path="/alumni/experience" element={<Experience />} />
-          <Route path="/alumni/portfolio" element={<Portfolio />} />
-          <Route path="/alumni/profile" element={<AlumniProfile />} />
-          <Route
-            path="/alumni/profile/portfolio"
-            element={<AlumniPortfolio />}
-          />
-          <Route path="/alumni/education" element={<AlumniEducation />} />
-
-          <Route
-            path="/alumni/update-profile"
-            element={<AlumniUpdateProfile />}
-          />
-          <Route path="/alumni/add-project" element={<ProjectForm />} />
-
-          <Route path="/alumni/projectcode" element={<AlumniProjectcode />} />
-
+          <Route path="/alumni">
+            <Route path="profile" element={<AlumniProfile />} />
+            <Route path="projectcode/:id" element={<AlumniProjectcode />} />
+            <Route path="portfolio" element={<Portfolio />} />
+            <Route path="profile/portfolio" element={<AlumniPortfolio />} />
+            <Route path="update-profile" element={<AlumniUpdateProfile />} />
+            <Route path="add-project" element={<ProjectForm />} />
+          </Route>
           <Route path="/search" element={<SelectIndustry />} />
           <Route path="/languageStats" element={<LanguageStats />} />
           <Route path="/graph" element={<GithubGraph />} />

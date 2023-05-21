@@ -4,11 +4,40 @@ const seniorWeeks = require('./seniorWeeks.json');
 const _ = require('lodash');
 
 const getAllStudents = async (req, res) => {
-  await res.send('Fetching All Students 200');
+  try {
+    const students = await Student.find();
+    res.status(200).json(students);
+  } catch (err) {
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
 };
+
+const getAllActiveStudents = async (req, res) => {
+  try {
+    const students = await Student.find({ status: true });
+    res.status(200).json(students);
+  } catch (err) {
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+};
+
 const getStudentByID = async (req, res) => {
   const studentId = req.params.id;
-  const studentInfo = await Student.findById(studentId);
+  const studentInfo = await Student.findById(studentId)
+    .populate({
+      path: 'checkpoints',
+      populate: {
+        path: 'softSkills.skill',
+        model: 'Skill',
+      },
+    })
+    .populate({
+      path: 'checkpoints',
+      populate: {
+        path: 'techSkills.skill',
+        model: 'Skill',
+      },
+    });
   res.status(200).send(studentInfo);
 };
 
@@ -85,10 +114,13 @@ const getStudentWeekInfo = async (req, res) => {
         },
       });
     if (!student) {
-      return res.status(404).json({ message: 'Student is not active' });
-    }
-    if (!student.status) {
       return res.status(404).json({ message: 'Student not found' });
+    } else if (!student.status) {
+      const weekInfo = student[studentType][week - 1];
+      return res.status(201).json({
+        message: 'Student is not active',
+        weekInfo,
+      });
     }
 
     const weekInfo = student[studentType][week - 1];
@@ -440,10 +472,10 @@ const getUnitMarksByStudentID = async (req, res) => {
     if (!student) {
       return res.status(404).json({ message: 'Student not found' });
     }
-    const { type } = student;
+    // const { type } = student;
 
     // get unit marks from junior
-    const allUnitMarks = student[type].map((week) => {
+    const allUnitMarks = student['junior'].map((week) => {
       return week.unitMarks.map((unit) => {
         return {
           unitName: unit.unitName,
@@ -511,23 +543,24 @@ const getAssessmentMarksByStudentID = async (req, res) => {
     }
     const { type } = student;
 
-    if (type === 'junior') {
-      const juniorAssessmentMarks = student[type].map((week) => {
+    if (type === 'junior' || type === 'senior' || type === 'alumni') {
+      const juniorAssessmentMarks = student['junior'].map((week) => {
         return {
           weekName: week.weekName,
           assessmentMarks: week.assessmentMarks,
         };
       });
       return res.status(200).json(juniorAssessmentMarks);
-    } else if (type === 'senior') {
-      const seniorAssessmentMarks = student[type].map((week) => {
-        return {
-          weekName: week.weekName,
-          assessmentMarks: week.assessmentMarks,
-        };
-      });
-      return res.status(200).json(seniorAssessmentMarks);
     }
+    // else if (type === 'senior' || type === 'alumni') {
+    //   const seniorAssessmentMarks = student[type].map((week) => {
+    //     return {
+    //       weekName: week.weekName,
+    //       assessmentMarks: week.assessmentMarks,
+    //     };
+    //   });
+    //   return res.status(200).json(seniorAssessmentMarks);
+    // }
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: 'Server error' });
@@ -536,6 +569,7 @@ const getAssessmentMarksByStudentID = async (req, res) => {
 
 module.exports = {
   getAllStudents,
+  getAllActiveStudents,
   createStudent,
   getStudentByID,
   getJuniorSoftSkillsFirstWeek,

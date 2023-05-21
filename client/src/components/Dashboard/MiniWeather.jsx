@@ -11,7 +11,7 @@ import {
   WiNightThunderstorm,
   WiNightRain,
   WiNightSnow,
-  WiNightHail,
+  WiNightPartlyCloudy,
 } from 'react-icons/wi';
 import axios from 'axios';
 
@@ -54,7 +54,7 @@ const WeatherComponent = () => {
       '10n': WiNightRain,
       '11n': WiNightThunderstorm,
       '13n': WiNightSnow,
-      '50n': WiNightHail,
+      '50n': WiNightPartlyCloudy,
     };
 
     const IconComponent = iconMap[iconCode];
@@ -65,7 +65,7 @@ const WeatherComponent = () => {
   return (
     <div>
       {weather ? (
-        <div className="card w-96 glass">
+        <div className="card bg-white mt-2">
           <div className="card-body">
             <div className="flex justify-between">
               <h2 className="card-title">{weather.name}</h2>
