@@ -23,8 +23,6 @@ const AlumniProfile = () => {
   }
   const { data: alumniInfo, error } = useGetAlumniByIdQuery(alumniId);
 
-  console.log('dbug1', studentInfo);
-  // console.log('dbug2', alumniInfo);
   const techStack = [];
   alumniInfo?.projects.map((project) => {
     project.techStack.map((tech) => {
@@ -37,6 +35,10 @@ const AlumniProfile = () => {
   const [activeTab2, setActiveTab2] = useState('');
   const [activeTab3, setActiveTab3] = useState('');
   const [chartData, setChartData] = useState({});
+  const [filteredTechSkills, setFilteredTechSkills] = useState([]);
+  const [frontend, setFrontend] = useState([]);
+  const [backend, setBackend] = useState([]);
+  const [testing, setTesting] = useState([]);
 
   const activate = (tab) => {
     if (tab === 1) {
@@ -58,7 +60,30 @@ const AlumniProfile = () => {
 
   useEffect(() => {
     setChartData(studentInfo?.checkpoints[3]);
+    setFilteredTechSkills(
+      studentInfo?.checkpoints[3]?.techSkills.filter((skill) => {
+        if (skill?.skill?.stack?.length > 0) return skill?.skill;
+      })
+    );
   }, [studentInfo]);
+
+  useEffect(() => {
+    setFrontend(
+      filteredTechSkills?.filter((skill) => {
+        return skill?.skill?.stack?.includes('frontend') && skill?.marks > 5;
+      })
+    );
+    setBackend(
+      filteredTechSkills?.filter((skill) => {
+        return skill?.skill?.stack?.includes('backend') && skill?.marks > 5;
+      })
+    );
+    setTesting(
+      filteredTechSkills?.filter((skill) => {
+        return skill?.skill?.stack?.includes('testing') && skill?.marks > 5;
+      })
+    );
+  }, [filteredTechSkills]);
 
   return (
     <AlumniLayout>
@@ -75,32 +100,32 @@ const AlumniProfile = () => {
           <div className="p-2 bg-white rounded-2xl min-h-[39vh] shadow-md ">
             <div className="tabs">
               <button
-                className={`tab tab-lifted ${activeTab1}`}
+                className={`tab tab-lifted tab-lg ${activeTab1} text-lg `}
                 onClick={() => activate(1)}
               >
                 Frontend
               </button>
               <button
-                className={`tab tab-lifted ${activeTab2}`}
+                className={`tab tab-lifted tab-lg ${activeTab2} text-lg`}
                 onClick={() => activate(2)}
               >
                 Backend
               </button>
               <button
-                className={`tab tab-lifted ${activeTab3}`}
+                className={`tab tab-lifted tab-lg ${activeTab3} text-lg`}
                 onClick={() => activate(3)}
               >
                 Testing
               </button>
             </div>
             {activeTab1 === 'tab-active' ? (
-              <SkillsTabs type={'frontend'} />
+              <SkillsTabs type={'frontend'} skills={frontend} />
             ) : null}
             {activeTab2 === 'tab-active' ? (
-              <SkillsTabs type={'backend'} />
+              <SkillsTabs type={'backend'} skills={backend} />
             ) : null}
             {activeTab3 === 'tab-active' ? (
-              <SkillsTabs type={'testing'} />
+              <SkillsTabs type={'testing'} skills={testing} />
             ) : null}
           </div>
         </div>
