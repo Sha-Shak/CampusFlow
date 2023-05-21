@@ -7,18 +7,33 @@ const check = async (req, res) => {
 // TODO: rename it to createOrgsMembers
 const createUser = async (req, res) => {
   const { name, email, role, githubUsername } = req.body;
+
   try {
-    let user = new User({
-      name,
-      email,
-      role,
-      githubUsername,
-    });
-    await user.save();
-    res.status(201).json({ success: true, data: user });
+    // get user by id
+
+    const existUser = await User.findOne({ email });
+    if (existUser) {
+      console.log('user exists', existUser);
+      res.status(201).json({
+        success: true,
+        data: existUser,
+        message: 'User already exists',
+      });
+    } else {
+      let user = new User({
+        name,
+        email,
+        role,
+        githubUsername,
+      });
+      await user.save();
+      res
+        .status(201)
+        .json({ success: true, data: user, message: 'User created' });
+    }
   } catch (err) {
     console.error(err);
-    res.status(500).json({ success: false, error: 'Server error' });
+    res.status(500).json({ success: false, error: 'Server error here' });
   }
 };
 
