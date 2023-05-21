@@ -16,6 +16,7 @@ const addProject = async (req, res) => {
       thirdPartyApi,
       youtubeLink,
       doneBy,
+      industry,
     } = req.body;
 
     const newProject = new Project({
@@ -28,6 +29,7 @@ const addProject = async (req, res) => {
       thirdPartyApi,
       youtubeLink,
       doneBy,
+      industry,
     });
 
     const savedProject = await newProject.save();

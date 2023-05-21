@@ -4,9 +4,9 @@ import AlumniLayout from '../components/alumniComponents/AlumniLayout';
 import { useGetAlumniByIdQuery } from '../features/alumni/alumniApi';
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 function AlumniPortfolio() {
-  const alumniId = '6468550a3d7ec6aa9065187e';
-
+  const { alumniId } = useSelector((state) => state?.auth?.user) || {};
   const {
     data: alumniInfo,
     isSuccess,

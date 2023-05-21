@@ -8,13 +8,26 @@ import {
   Divider,
   Typography,
   Box,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from '@mui/material';
 
 import AlumniLayout from '../AlumniLayout';
+import SelectIndustry from '../SelectIndustry';
 import CompanyNameAutocomplete from './AutoCompleteCompany';
 import { useAddProjectMutation } from '../../../features/project/projectApi';
 import toast from 'react-hot-toast';
-
+import { useGetAllSkillsQuery } from '../../../features/skill/skillApi';
+import { useSelector } from 'react-redux';
+const projectTypes = [
+  'Solo Project',
+  'Legacy Project',
+  'Thesis Project',
+  'Group Project',
+  'Personal Project',
+];
 const ProjectForm = () => {
   const [projectName, setProjectName] = useState('');
   const [projectType, setProjectType] = useState('');
@@ -25,14 +38,30 @@ const ProjectForm = () => {
   const [thirdPartyApis, setThirdPartyApis] = useState([]);
   const [youtubeLink, setYoutubeLink] = useState('');
   const [youtubePreview, setYoutubePreview] = useState('');
-  const [alumniId, setAlumniId] = useState('646213253572798cad80c70e');
+  const [projectCategory, setProjectCategory] = useState([]);
+
+  const [techSkills, setTechSkills] = useState([]);
+  const [selectedSkills, setSelectedSkills] = useState([]);
+  const { _id: studentId, alumniId } =
+    useSelector((state) => state?.auth?.user) || {};
 
   const [addProject, { data, isSuccess, error }] = useAddProjectMutation();
+  const {
+    data: skillsData,
+    isSuccess: skillsSuccess,
+    error: skillsError,
+  } = useGetAllSkillsQuery();
 
-  const handleTechStackChange = (event, values) => {
-    setTechStack(values);
-  };
+  useEffect(() => {
+    const techSkillsTemp = skillsData?.filter((skill) =>
+      skill?.studentType?.includes('alumni')
+    );
 
+    setTechSkills(techSkillsTemp);
+  }, [skillsSuccess]);
+  useEffect(() => {
+    setTechStack(selectedSkills.map((skill) => skill.skillName));
+  }, [selectedSkills]);
   useEffect(() => {
     if (isSuccess) {
       toast.success('Project added successfully');
@@ -42,7 +71,9 @@ const ProjectForm = () => {
       toast.error('Something went wrong');
     }
   }, [isSuccess, error]);
-
+  const handleProjectTypeChange = (event) => {
+    setProjectType(event.target.value);
+  };
   const handleYoutubeLinkChange = (event) => {
     const url = event.target.value;
     setYoutubeLink(url);
@@ -77,6 +108,7 @@ const ProjectForm = () => {
     setThirdPartyApis([]);
     setYoutubeLink('');
     setYoutubePreview('');
+    setProjectCategory([]);
   };
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -85,6 +117,7 @@ const ProjectForm = () => {
       id: alumniId,
       projectName,
       type: projectType,
+      industry: projectCategory,
       description: description,
       githubLink: githubRepoLink,
       projectLink: projectLiveLink,
@@ -121,14 +154,24 @@ const ProjectForm = () => {
               fullWidth
               margin="normal"
             />
-            <TextField
-              label="Project Type"
-              value={projectType}
-              onChange={(event) => setProjectType(event.target.value)}
-              required
-              fullWidth
-              margin="normal"
-            />
+            <FormControl fullWidth margin="normal">
+              <InputLabel id="project-type-label">Project Type</InputLabel>
+              <Select
+                labelId="project-type-label"
+                label="Project Type"
+                id="project-type-select"
+                value={projectType}
+                onChange={handleProjectTypeChange}
+                required
+              >
+                {projectTypes.map((type) => (
+                  <MenuItem key={type} value={type}>
+                    {type}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <SelectIndustry setProjectCategory={setProjectCategory} />
             <TextField
               label="Description"
               value={description}
@@ -156,29 +199,35 @@ const ProjectForm = () => {
             />
             <Autocomplete
               multiple
-              options={['HTML', 'CSS', 'JavaScript', 'React', 'Node.js']}
-              value={techStack}
-              onChange={handleTechStackChange}
+              options={techSkills || []}
+              getOptionLabel={(skill) => skill?.skillName}
+              value={selectedSkills}
+              onChange={(event, value) => setSelectedSkills(value)}
               renderTags={(value, getTagProps) =>
-                value.map((tech, index) => (
+                value.map((skill, index) => (
                   <Chip
                     key={index}
-                    variant="outlined"
-                    label={tech}
+                    label={skill?.skillName}
                     {...getTagProps({ index })}
+                    onDelete={() =>
+                      setSelectedSkills((prevSkills) =>
+                        prevSkills?.filter((_, i) => i !== index)
+                      )
+                    }
+                    style={{ marginRight: '5px', marginBottom: '5px' }}
                   />
                 ))
               }
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  label="Tech Stack"
-                  placeholder="Select multiple"
+                  label="Skills"
                   fullWidth
                   margin="normal"
                 />
               )}
             />
+
             <CompanyNameAutocomplete setThirdPartyApis={setThirdPartyApis} />
 
             <Box
@@ -226,6 +275,14 @@ const ProjectForm = () => {
                 <tr>
                   <td className="border px-4 py-2">Project Type</td>
                   <td className="border px-4 py-2">{projectType}</td>
+                </tr>
+              )}
+              {projectCategory && (
+                <tr>
+                  <td className="border px-4 py-2">Project Industries</td>
+                  <td className="border px-4 py-2">
+                    {projectCategory.join(', ')}
+                  </td>
                 </tr>
               )}
               {description && (

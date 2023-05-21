@@ -50,6 +50,7 @@ const getGithubAccessToken = async (req, res) => {
           name: userModel.name,
           profileImg: userModel.profileImg,
           type: userModel.type,
+          alumniId: userModel.alumniId ? userModel.alumniId : null,
         };
         role = 'student';
       } else {

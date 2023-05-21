@@ -76,7 +76,7 @@ function App() {
           <Route path="test" element={<SkillsRadarChart />} />
           <Route path="/alumni">
             <Route path="profile" element={<AlumniProfile />} />
-            <Route path="projectcode/:id" element={<AlumniProjectcode />} />
+            <Route path="projectcode/" element={<AlumniProjectcode />} />
             <Route path="portfolio" element={<Portfolio />} />
             <Route path="profile/portfolio" element={<AlumniPortfolio />} />
             <Route path="education" element={<AlumniEducation />} />

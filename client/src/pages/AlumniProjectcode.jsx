@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import AlumniLayout from '../components/alumniComponents/AlumniLayout';
-import { useGetStudentWeekInfoQuery } from '../features/student/studentApi';
+import {
+  useGetStudentWeekInfoByTypeQuery,
+  useGetStudentWeekInfoQuery,
+} from '../features/student/studentApi';
 import { useSaveMidEndJuniorCheckpointMutation } from '../features/student/studentApi';
 import { useSaveMidEndSeniorCheckpointMutation } from '../features/student/studentApi';
 import { useGetMidEndDataByStudentIDQuery } from '../features/student/studentApi';
@@ -11,6 +14,7 @@ import UnitMarksChart from './../components/StudentInfo/UnitMarks';
 import AssessmentMarksChart from './../components/StudentInfo/AssessmentMarksChart';
 import ProjectcodeSkillTable from '../components/alumniComponents/ProjectcodeSkillTable';
 import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 function AlumniProjectcode() {
   const [selectedWeek, setSelectedWeek] = useState(1);
   const [selectedCheckpoint, setSelectedCheckpoint] = useState(1);
@@ -20,16 +24,14 @@ function AlumniProjectcode() {
   const [chartData, setChartData] = useState([]);
   const [tableData, setTableData] = useState([]);
 
-  // get id via params
-  const { id } = useParams();
-  // const id = '6464d4525ed2a4cee3d1ce44';
+  const { _id: id } = useSelector((state) => state?.auth?.user) || {};
 
   // Mutations function defined for saving mid/end checkpoint
   const [saveMidEndJunior] = useSaveMidEndJuniorCheckpointMutation();
   const [saveMidEndSenior] = useSaveMidEndSeniorCheckpointMutation();
 
   // API calls
-  const { data: studentWeekInfo } = useGetStudentWeekInfoQuery({
+  const { data: studentWeekInfo } = useGetStudentWeekInfoByTypeQuery({
     studentId: id,
     week: selectedWeek,
     type: selectedType,

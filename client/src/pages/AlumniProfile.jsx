@@ -10,17 +10,26 @@ import SkillsRadarChart from '../components/StudentInfo/SkillsRadarChart';
 import SkillsTabs from './SkillsTabs';
 import { useGetAlumniByIdQuery } from '../features/alumni/alumniApi';
 import { useGetStudentByIdQuery } from '../features/student/studentApi';
+import { useSelector } from 'react-redux';
 
 const AlumniProfile = () => {
-  const studentId = '6464d4525ed2a4cee3d1ce44';
-  let alumniId = '';
+  const [activeTab1, setActiveTab1] = useState('tab-active');
+  const [activeTab2, setActiveTab2] = useState('');
+  const [activeTab3, setActiveTab3] = useState('');
+  const [chartData, setChartData] = useState({});
+  const [filteredTechSkills, setFilteredTechSkills] = useState([]);
+  const [frontend, setFrontend] = useState([]);
+  const [backend, setBackend] = useState([]);
+  const [testing, setTesting] = useState([]);
 
+  const { _id: studentId, alumniId } =
+    useSelector((state) => state?.auth?.user) || {};
+
+  console.log('studentId', studentId);
   const { data: studentInfo, isSuccess } = useGetStudentByIdQuery({
     studentId,
   });
-  if (isSuccess) {
-    alumniId = studentInfo?.alumniId;
-  }
+
   const { data: alumniInfo, error } = useGetAlumniByIdQuery(alumniId);
 
   const techStack = [];
@@ -30,15 +39,6 @@ const AlumniProfile = () => {
     });
   });
   // ***********************************************
-
-  const [activeTab1, setActiveTab1] = useState('tab-active');
-  const [activeTab2, setActiveTab2] = useState('');
-  const [activeTab3, setActiveTab3] = useState('');
-  const [chartData, setChartData] = useState({});
-  const [filteredTechSkills, setFilteredTechSkills] = useState([]);
-  const [frontend, setFrontend] = useState([]);
-  const [backend, setBackend] = useState([]);
-  const [testing, setTesting] = useState([]);
 
   const activate = (tab) => {
     if (tab === 1) {

@@ -36,23 +36,8 @@ const convertToAlumni = async (req, res) => {
       await student.save();
 
       alumniList.push(alumni);
+      res.status(200).send({ message: 'Student converted to alumni', alumni });
     }
-
-    // create alumni
-    const newAlumni = {
-      name: student.name,
-      image: student.profileImg,
-    };
-    const alumni = await Alumni.create(newAlumni);
-    await alumni.save();
-
-    // update student status
-    student.status = !student.status;
-    student.type = 'alumni';
-    student.alumniId = alumni._id;
-    await student.save();
-
-    res.status(200).send({ message: 'Student converted to alumni', alumni });
   } catch (err) {
     console.log(err);
     return res.status(500).send('Internal Server Error');

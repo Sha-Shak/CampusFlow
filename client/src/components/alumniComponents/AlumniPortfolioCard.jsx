@@ -25,7 +25,7 @@ function AlumniPortfolioCard({ project }) {
       </Modal>
 
       <div
-        className="card card-side bg-base-100 shadow-xl w-[39vw] h-[35vh] hover:border-2 border-purple-400"
+        className="card card-side bg-base-100 shadow-xl w-[39vw] h-[35vh] border-4 border-white hover:border-4 hover:border-purple-400"
         onClick={handleCardClick}
       >
         <figure>
@@ -53,9 +53,9 @@ function AlumniPortfolioCard({ project }) {
               // <div className="badge badge-outline badge-primary">{tech}</div>
             ))}
           </div>
-          <div className="text-xl mt-8 ">Vertical</div>
+          <div className="text-xl mt-2 ">Industries</div>
           <div className=" flex flex-wrap gap-2 ">
-            {project?.techStack.map((tech) => (
+            {project?.industry.map((tech) => (
               <Chip
                 key={tech}
                 name={tech}

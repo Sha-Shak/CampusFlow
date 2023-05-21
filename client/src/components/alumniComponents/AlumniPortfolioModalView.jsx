@@ -7,13 +7,12 @@ function AlumniPortfolioModalView({ project }) {
   const userName = project?.githubLink.split('/')[3];
   const projectName = project?.githubLink.split('/')[4];
   console.log(userName, projectName);
+  console.log(project.industry);
 
   const [youtubevdo, setyoutubevdo] = useState('');
   const [collaborators, setCollaborators] = useState([]);
   useEffect(() => {
-    setyoutubevdo(
-      getYoutubePreview('https://www.youtube.com/watch?v=09839DpTctU')
-    );
+    setyoutubevdo(getYoutubePreview(project?.youtubeLink));
   }, []);
 
   useEffect(() => {
@@ -87,6 +86,22 @@ function AlumniPortfolioModalView({ project }) {
                       {/* {tech} */}
                       <Chip
                         name={tech}
+                        customColor={'gray-100'}
+                        padding={4}
+                        borderColor={'purple-200'}
+                      />
+                    </div>
+                  ))}
+                </td>
+              </tr>
+              <tr>
+                <td className="text-xl font-light">Verticals</td>
+                <td className="text-xl font-light text-gray-400 flex gap-3 py-2">
+                  {project?.industry.map((industry, i) => (
+                    <div className=" " key={i}>
+                      {/* {tech} */}
+                      <Chip
+                        name={industry}
                         customColor={'gray-100'}
                         padding={4}
                         borderColor={'purple-200'}
