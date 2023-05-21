@@ -14,7 +14,7 @@ import { Button } from '@mui/material';
 
 const AlumniSidebar = () => {
   const dispatch = useDispatch();
-  const { name, profileImg, githubUsername } =
+  const { name, githubUsername } =
     useSelector((state) => state?.auth?.user) || {};
   const role = useSelector((state) => state?.auth?.role);
   const logout = () => {
@@ -93,7 +93,11 @@ const AlumniSidebar = () => {
         </div>
         <div>
           <div className=" mt-[30vh]">
-            <SmallNameCard name={name} profileImg={profileImg} role={role} />
+            <SmallNameCard
+              name={name}
+              githubUsername={githubUsername}
+              role={role}
+            />
           </div>
           <div className=" mt-5 ">
             <Button

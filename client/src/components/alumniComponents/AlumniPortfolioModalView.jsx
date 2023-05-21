@@ -5,7 +5,7 @@ import axios from 'axios';
 function AlumniPortfolioModalView({ project }) {
   // console.log('project apps', project);
   const userName = project?.githubLink.split('/')[3];
-  const projectName = project?.projectName;
+  const projectName = project?.githubLink.split('/')[4];
   console.log(userName, projectName);
 
   const [youtubevdo, setyoutubevdo] = useState('');
@@ -124,12 +124,16 @@ function AlumniPortfolioModalView({ project }) {
                         padding={3}
                         borderColor={'purple-200'}
                       /> */}
-
-                      <div className="avatar">
-                        <div className="w-10 rounded-full">
-                          <img src={collaborator?.avatar_url} />
+                      <a
+                        href={`https://github.com/${collaborator?.login}`}
+                        target="_blank"
+                      >
+                        <div className="avatar">
+                          <div className="w-10 rounded-full">
+                            <img src={collaborator?.avatar_url} />
+                          </div>
                         </div>
-                      </div>
+                      </a>
                     </div>
                   ))}
                 </td>

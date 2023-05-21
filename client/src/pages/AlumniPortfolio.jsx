@@ -5,7 +5,7 @@ import { useGetAlumniByIdQuery } from '../features/alumni/alumniApi';
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 function AlumniPortfolio() {
-  const alumniId = '646213253572798cad80c70e';
+  const alumniId = '6468550a3d7ec6aa9065187e';
 
   const {
     data: alumniInfo,
