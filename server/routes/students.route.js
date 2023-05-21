@@ -62,4 +62,9 @@ router.get(
 
 router.get('/getStudentType/:id', studentsControllers.getStudentType);
 
+router.get(
+  '/getStudentWeekInfoByType/:id/:week/:type',
+  studentsControllers.getStudentWeekInfoByType
+);
+
 module.exports = router;

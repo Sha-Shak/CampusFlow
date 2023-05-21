@@ -574,6 +574,55 @@ const getStudentType = async (req, res) => {
   }
 };
 
+const getStudentWeekInfoByType = async (req, res) => {
+  const { id, week, type } = req.params;
+  let studentType;
+  if (type === '1') {
+    studentType = 'junior';
+  } else if (type === '2') {
+    studentType = 'senior';
+  }
+  try {
+    const student = await Student.findById(id)
+      .populate({
+        path: 'junior',
+        populate: {
+          path: 'softSkills.skill',
+          model: 'Skill',
+        },
+      })
+      .populate({
+        path: 'senior',
+        populate: {
+          path: 'softSkills.skill',
+          model: 'Skill',
+        },
+      })
+      .populate({
+        path: 'junior',
+        populate: {
+          path: 'techSkills.skill',
+          model: 'Skill',
+        },
+      })
+      .populate({
+        path: 'senior',
+        populate: {
+          path: 'techSkills.skill',
+          model: 'Skill',
+        },
+      });
+    if (!student) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+    const weekInfo = student[studentType][week - 1];
+    res.status(200).json(weekInfo);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
 module.exports = {
   getAllStudents,
   getAllActiveStudents,
@@ -581,6 +630,7 @@ module.exports = {
   getStudentByID,
   getJuniorSoftSkillsFirstWeek,
   getStudentWeekInfo,
+  getStudentWeekInfoByType,
   setStudentWeekInfo,
   addSoftTechSkillsByStudentID,
   changeStudentsType,

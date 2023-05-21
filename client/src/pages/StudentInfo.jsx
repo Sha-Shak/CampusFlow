@@ -6,7 +6,7 @@ import StudentSidebar from '../components/StudentInfo/StudentSidebar';
 import UnitMarksChart from '../components/StudentInfo/UnitMarks';
 import { useState } from 'react';
 import { useGetStudentByIdQuery } from '../features/student/studentApi';
-import { useGetStudentWeekInfoQuery } from '../features/student/studentApi';
+import { useGetStudentWeekInfoByTypeQuery } from '../features/student/studentApi';
 import { useSaveMidEndJuniorCheckpointMutation } from '../features/student/studentApi';
 import { useSaveMidEndSeniorCheckpointMutation } from '../features/student/studentApi';
 import { useGetMidEndDataByStudentIDQuery } from '../features/student/studentApi';
@@ -34,7 +34,7 @@ function StudentInfo() {
 
   // API calls
   const { data: studentInfo } = useGetStudentByIdQuery({ studentId: id });
-  const { data: studentWeekInfo } = useGetStudentWeekInfoQuery({
+  const { data: studentWeekInfo } = useGetStudentWeekInfoByTypeQuery({
     studentId: id,
     week: selectedWeek,
     type: selectedType,
@@ -64,10 +64,14 @@ function StudentInfo() {
     let checkpointInfo = {
       studentId: id,
     };
-    saveMidEndJunior(checkpointInfo);
-    if (studentInfo?.student?.type === 'senior')
-      saveMidEndSenior(checkpointInfo);
-  }, []);
+    if (studentInfo) {
+      if (studentInfo.type === 'junior') {
+        saveMidEndJunior(checkpointInfo);
+      } else if (studentInfo.type === 'senior') {
+        saveMidEndSenior(checkpointInfo);
+      }
+    }
+  }, [studentInfo]);
 
   useEffect(() => {
     if (midEndData) {
@@ -108,7 +112,6 @@ function StudentInfo() {
     setSoftSkillTab('');
     setTechSkillTab('tab-active font-bold');
   };
-
   return (
     <Layout>
       <div className="flex">

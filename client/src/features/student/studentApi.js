@@ -43,10 +43,16 @@ export const studentApi = apiSlice.injectEndpoints({
       }),
     }),
 
-    //donebysaimon
     getStudentWeekInfo: builder.query({
       query: (data) => ({
         url: `/student/getStudentWeekInfo/${data.studentId}/${data.week}`,
+        method: 'GET',
+      }),
+    }),
+
+    getStudentWeekInfoByType: builder.query({
+      query: (data) => ({
+        url: `/student/getStudentWeekInfoByType/${data.studentId}/${data.week}/${data.type}`,
         method: 'GET',
       }),
     }),
@@ -121,6 +127,7 @@ export const {
   useGetStudentByIdQuery,
   useGetStudentByCohortNameQuery,
   useGetStudentWeekInfoQuery,
+  useGetStudentWeekInfoByTypeQuery,
   useSetStudentWeekInfoMutation,
   useChangeStudentsTypeMutation,
   useGetStudentTypeQuery,
