@@ -216,6 +216,8 @@ const getAlumniById = async (req, res) => {
   const { id } = req.params;
   try {
     const alumni = await Alumni.findById(id).populate('projects');
+    //populate doneby
+
     if (!alumni) return res.status(404).send({ message: 'Alumni not found' });
     res.status(200).send(alumni);
   } catch (err) {

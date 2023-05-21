@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Chip from '../AlumniComponents/Chip';
 import { Modal, Box, Typography } from '@mui/material';
-import AlumniPortfolioModalView from './AlumniPortfolioModalView';
+import AlumniPortfolioModalView from '../alumniComponents/AlumniPortfolioModalView';
 function AlumniPortfolioCard({ project }) {
   const [open, setOpen] = useState(false);
   const onClose = () => setOpen(false);

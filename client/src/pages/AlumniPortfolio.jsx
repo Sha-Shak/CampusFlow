@@ -6,6 +6,7 @@ import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 function AlumniPortfolio() {
   const alumniId = '646213253572798cad80c70e';
+
   const {
     data: alumniInfo,
     isSuccess,

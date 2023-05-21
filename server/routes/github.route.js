@@ -61,4 +61,12 @@ router.post(
 
 router.put('/addInstructor', authMiddleware, githubController.addInstructor);
 
+router.get(
+  '/getCollaborators/:userName/:projectName',
+
+  githubController.getCollaborators
+);
+
+// router.post('/changeCohort', githubController.changeCohort);
+
 module.exports = router;

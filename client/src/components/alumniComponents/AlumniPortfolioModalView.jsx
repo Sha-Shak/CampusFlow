@@ -1,21 +1,47 @@
 import React, { useEffect, useState } from 'react';
 import Chip from '../AlumniComponents/Chip';
+import axios from 'axios';
 
 function AlumniPortfolioModalView({ project }) {
+  // console.log('project apps', project);
+  const userName = project?.githubLink.split('/')[3];
+  const projectName = project?.projectName;
+  console.log(userName, projectName);
+
   const [youtubevdo, setyoutubevdo] = useState('');
+  const [collaborators, setCollaborators] = useState([]);
   useEffect(() => {
     setyoutubevdo(
       getYoutubePreview('https://www.youtube.com/watch?v=09839DpTctU')
     );
   }, []);
+
+  useEffect(() => {
+    const headers = {
+      'github-access-token': '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',
+    };
+    axios
+      .get(
+        `http://localhost:8080/github/getCollaborators/${userName}/${projectName}`,
+        headers
+      )
+      .then((res) => {
+        console.log('collabolarators', res.data);
+        setCollaborators(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   const getYoutubePreview = (url) => {
     const videoId = url.split('v=')[1];
     if (videoId) {
       const embedUrl = `https://www.youtube.com/embed/${videoId}`;
       return (
         <iframe
-          width="100%"
-          height="400px"
+          width="640px"
+          height="360px"
           src={embedUrl}
           title="YouTube Preview"
           className="rounded-2xl"
@@ -26,37 +52,43 @@ function AlumniPortfolioModalView({ project }) {
   };
   return (
     <div className="">
-      <div className="card lg:card-side bg-base-100 shadow-xl w-[70vw] h-[75vh] px-10 pt-5 ">
+      <div className="card lg:card-side bg-base-100 shadow-xl w-[70vw]  px-10 pt-5 ">
         <div className="card-body">
-          <div>{youtubevdo}</div>
+          <div className="flex gap-8">
+            <div>{youtubevdo}</div>
+            <div className="text-xl font-light text-gray-400">
+              <div className="text-3xl mb-4">Description</div>
+              <div className="text-justify">{project?.description}</div>
+            </div>
+          </div>
           <h2 className="card-title text-3xl mt-5 text-purple-600">
             {project?.projectName}
           </h2>
 
           <table>
             <tbody>
-              <tr>
+              {/* <tr>
                 <td className="text-xl font-light">Description</td>
                 <td className="text-xl font-light text-gray-400 ">
                   {project?.description}
                 </td>
-              </tr>
+              </tr> */}
               <tr>
-                <td className="text-xl font-light">Type</td>
+                <td className="text-xl font-light py-2">Type</td>
                 <td className="text-xl font-light text-gray-400 ">
                   {project?.type}
                 </td>
               </tr>
               <tr>
                 <td className="text-xl font-light">Techstack</td>
-                <td className="text-xl font-light text-gray-400 flex gap-3.">
+                <td className="text-xl font-light text-gray-400 flex gap-3 py-2">
                   {project?.techStack.map((tech, i) => (
                     <div className=" " key={i}>
                       {/* {tech} */}
                       <Chip
                         name={tech}
                         customColor={'gray-100'}
-                        padding={3}
+                        padding={4}
                         borderColor={'purple-200'}
                       />
                     </div>
@@ -65,16 +97,16 @@ function AlumniPortfolioModalView({ project }) {
               </tr>
 
               <tr>
-                <td className="text-xl font-light">Github Link</td>
-                <td className="text-xl font-light text-gray-400 ">
+                <td className="text-xl font-light py-3">Github Link</td>
+                <td className="text-xl font-light text-gray-400 py-3">
                   <a href={project?.githubLink} target="_blank">
                     {project?.githubLink}
                   </a>
                 </td>
               </tr>
               <tr>
-                <td className="text-xl font-light">Project Link</td>
-                <td className="text-xl font-light text-gray-400 ">
+                <td className="text-xl font-light py-3">Project Link</td>
+                <td className="text-xl font-light text-gray-400 py-3">
                   <a href={project?.projectLink} target="_blank">
                     {project?.projectLink}
                   </a>
@@ -82,21 +114,25 @@ function AlumniPortfolioModalView({ project }) {
               </tr>
               <tr>
                 {/* doneby */}
-                {/* <td className="text-xl font-light">Done By</td>
-                <td className="text-xl font-light text-gray-400 flex gap-3">
-                
-                  {project?.doneBy.map((doneby, i) => (
+                <td className="text-xl font-light py-3">Done By</td>
+                <td className="text-xl font-light text-gray-400 flex gap-3 py-3">
+                  {collaborators?.map((collaborator, i) => (
                     <div className=" " key={i}>
-          
-                      <Chip
-                        name={doneby}
+                      {/* <Chip
+                        name={collaborator?.login}
                         customColor={'gray-100'}
                         padding={3}
                         borderColor={'purple-200'}
-                      />
+                      /> */}
+
+                      <div className="avatar">
+                        <div className="w-10 rounded-full">
+                          <img src={collaborator?.avatar_url} />
+                        </div>
+                      </div>
                     </div>
                   ))}
-                </td> */}
+                </td>
               </tr>
             </tbody>
           </table>
