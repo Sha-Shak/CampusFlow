@@ -8,20 +8,35 @@ import {
   Box,
   Divider,
   Typography,
+  Autocomplete,
 } from '@mui/material';
 import { useAddAlumniInfoMutation } from '../../../features/alumni/alumniApi';
 import toast from 'react-hot-toast';
+import { useGetAllSkillsQuery } from '../../../features/skill/skillApi';
+
 const ExperienceForm = ({ handleClose }) => {
   const [jobTitle, setJobTitle] = useState('');
   const [companyName, setCompanyName] = useState('');
   const [fromDate, setFromDate] = useState('');
   const [toDate, setToDate] = useState('');
   const [description, setDescription] = useState('');
-  const [skills, setSkills] = useState([]);
+  const [selectedSkills, setSelectedSkills] = useState([]);
   const [status, setStatus] = useState(false);
-
+  const [techSkills, setTechSkills] = useState([]);
   const [AddPost, { data, isSuccess, error }] = useAddAlumniInfoMutation();
+  const {
+    data: skillsData,
+    isSuccess: skillsSuccess,
+    error: skillsError,
+  } = useGetAllSkillsQuery();
 
+  useEffect(() => {
+    const techSkillsTemp = skillsData?.filter((skill) =>
+      skill?.studentType?.includes('alumni')
+    );
+
+    setTechSkills(techSkillsTemp);
+  }, [skillsSuccess]);
   useEffect(() => {
     if (isSuccess) {
       toast.success('Experience added successfully');
@@ -36,20 +51,6 @@ const ExperienceForm = ({ handleClose }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    // TODO: Perform form submission logic here
-
-    // {
-    //   "info" : {
-    //     "jobTitle": "Software Engineer",
-    //     "companyName": "Google",
-    //     "fromDate": "2021-06-01T00:00:00Z",
-    //     "toDate": "2023-05-14T00:00:00Z",
-    //     "description": "Designing, developing, and testing software applications.",
-    //     "skills": ["JavaScript", "Python", "Java"],
-    //     "status": true
-    //     }
-    // }
-
     const experienceData = {
       id: '645bbb5a7865c6e61157889f',
       type: 'experiences',
@@ -59,21 +60,19 @@ const ExperienceForm = ({ handleClose }) => {
         fromDate: fromDate,
         toDate: toDate,
         description: description,
-        skills: skills,
+        skills: selectedSkills.map((skill) => skill.skillName),
         status: status,
       },
     };
 
     AddPost(experienceData);
-    console.log(experienceData);
 
-    // Reset form fields after submission
     setJobTitle('');
     setCompanyName('');
     setFromDate('');
     setToDate('');
     setDescription('');
-    setSkills([]);
+    setSelectedSkills([]);
     setStatus(false);
   };
 
@@ -132,23 +131,30 @@ const ExperienceForm = ({ handleClose }) => {
           margin="normal"
         />
 
-        <div>
-          {skills.map((skill, index) => (
-            <Chip
-              key={index}
-              label={skill}
-              onDelete={() => handleDeleteSkill(index)}
-              style={{ marginRight: '5px', marginBottom: '5px' }}
-            />
-          ))}
-        </div>
-
-        <TextField
-          label="Skills"
-          value=""
-          // onKeyDown={handleSkillKeyDown}
-          fullWidth
-          margin="normal"
+        <Autocomplete
+          multiple
+          options={techSkills || []}
+          getOptionLabel={(skill) => skill?.skillName}
+          value={selectedSkills}
+          onChange={(event, value) => setSelectedSkills(value)}
+          renderTags={(value, getTagProps) =>
+            value.map((skill, index) => (
+              <Chip
+                key={index}
+                label={skill?.skillName}
+                {...getTagProps({ index })}
+                onDelete={() =>
+                  setSelectedSkills((prevSkills) =>
+                    prevSkills?.filter((_, i) => i !== index)
+                  )
+                }
+                style={{ marginRight: '5px', marginBottom: '5px' }}
+              />
+            ))
+          }
+          renderInput={(params) => (
+            <TextField {...params} label="Skills" fullWidth margin="normal" />
+          )}
         />
 
         <FormControlLabel

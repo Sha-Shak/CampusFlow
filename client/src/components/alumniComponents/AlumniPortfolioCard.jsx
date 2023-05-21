@@ -53,7 +53,7 @@ function AlumniPortfolioCard({ project }) {
               // <div className="badge badge-outline badge-primary">{tech}</div>
             ))}
           </div>
-          <div className="text-xl mt-2 ">Type</div>
+          <div className="text-xl mt-8 ">Vertical</div>
           <div className=" flex flex-wrap gap-2 ">
             {project?.techStack.map((tech) => (
               <Chip

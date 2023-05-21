@@ -10,8 +10,9 @@ import {
 } from '@mui/material';
 import toast from 'react-hot-toast';
 import { useAddAlumniInfoMutation } from '../../../features/alumni/alumniApi';
+import { useGetAllSkillsQuery } from '../../../features/skill/skillApi';
 
-const EducationForm = ({ handleClose }) => {
+const EducationForm = () => {
   const [instituteName, setInstituteName] = useState('');
   const [program, setProgram] = useState('');
   const [fromDate, setFromDate] = useState('');
@@ -21,6 +22,11 @@ const EducationForm = ({ handleClose }) => {
   const [gpa, setGpa] = useState('');
 
   const [addInfo, { data, isSuccess, error }] = useAddAlumniInfoMutation();
+
+  // console.log(skillset);
+  // filter all tech skill for alumni
+  // const techSkills = skillset?.filter(skill => skill.type === 'tech' && skill.status === true)
+
   const handleKeyDown = (event) => {
     event.preventDefault();
     if (event.key === 'Enter') {
@@ -31,7 +37,6 @@ const EducationForm = ({ handleClose }) => {
   useEffect(() => {
     if (isSuccess) {
       toast.success('Education added successfully');
-      handleClose();
     }
     if (error) {
       console.log(error);
@@ -41,28 +46,14 @@ const EducationForm = ({ handleClose }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // if (name.trim() === '' || url.trim() === '') {
-    //   alert('Please fill in all required fields.');
-    //   return;
-    // }
+
     if (instituteName.trim() === '' || program.trim() === '') {
       alert('Please fill in all required fields.');
       return;
     }
 
-    //     {
-    //       "info":{
-    //             "instituteName": "DMC",
-    //             "program": "Master of Science in Computer Science",
-    //             "fromDate": "2019-09-01",
-    //             "toDate": "2021-06-01",
-    //             "description": "A rigorous and comprehensive program that prepares students for careers in computer science.",
-    //             "status": true,
-    //             "gpa": 3.9
-    //       }
-    // }
     const educationData = {
-      id: '645bbb5a7865c6e61157889f',
+      id: '646213253572798cad80c70e', // student id
       type: 'education',
       info: {
         instituteName: instituteName,
@@ -90,6 +81,7 @@ const EducationForm = ({ handleClose }) => {
     // setStatus(true);
     // setGpa('');
   };
+  console.log('I am from education form');
 
   return (
     <div>
@@ -133,6 +125,13 @@ const EducationForm = ({ handleClose }) => {
           required
           fullWidth
           margin="normal"
+          placeholder='Enter your "To Date"'
+          sx={{
+            '::placeholder': {
+              color: 'red',
+              margin: '1rem',
+            },
+          }}
         />
 
         <TextField
@@ -174,15 +173,6 @@ const EducationForm = ({ handleClose }) => {
             marginTop: '1rem',
           }}
         >
-          <Button
-            type="cancel"
-            variant="contained"
-            color="error"
-            onClick={handleClose}
-            sx={{ px: 5 }}
-          >
-            Cancel
-          </Button>
           <Button
             type="submit"
             variant="contained"

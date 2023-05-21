@@ -27,14 +27,17 @@ function Experience({ alumniInfo }) {
         aria-describedby="modal-modal-description"
         className="flex justify-center items-center"
       >
-        <div className=" flex justify-center w-[45vw] outline-none ">
+        <div className=" flex justify-center w-[45vw] outline-none bg-white rounded-2xl ">
           {/* <div className="flex flex-col justify-center gap-5 p-10 mt-5 outline-none w-[50vw] overflow-y-scroll max-h-[80vh] "> */}
-          <div className=" overflow-y-scroll max-h-[80vh] p-5 flex flex-col gap-5  ">
+          <div className=" overflow-y-scroll max-h-[80vh] p-5 flex flex-col gap-5  pt-10">
+            <div className="flex justify-between items-center">
+              <div className="font-semibold text-xl">Experiences</div>
+            </div>
             {allExperiences?.map((experience, index) => {
               // console.log(experience);
               return (
                 <div
-                  className="pt-5 px-5 w-[35vw] min-h-[10vw] bg-white rounded-xl "
+                  className="pt-5 px-5 w-[35vw] min-h-[10vw] bg-white rounded-xl shadow-lg "
                   key={index}
                 >
                   <OrganisationCard latestExperience={experience} />

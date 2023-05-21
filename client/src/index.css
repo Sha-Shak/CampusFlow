@@ -1,5 +1,6 @@
 ::-webkit-scrollbar {
-  width: 8px; /* Adjust the width as per your preference */
+  width: 12px; /* Adjust the width as per your preference */
+  margin: 20px
 }
 
 /* Track */
@@ -9,10 +10,12 @@
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #888; /* Change to your desired handle color */
+  background: rgba(255, 108, 255, 0.233);
+  border-radius: 20px;
+
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555; /* Change to your desired hover handle color */
+  background: purple; /* Change to your desired hover handle color */
 }
