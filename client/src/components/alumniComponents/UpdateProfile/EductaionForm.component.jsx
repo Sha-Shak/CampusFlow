@@ -53,7 +53,7 @@ const EducationForm = () => {
     }
 
     const educationData = {
-      id: '646213253572798cad80c70e', // student id
+      id: '6464d4525ed2a4cee3d1ce44', // student id
       type: 'education',
       info: {
         instituteName: instituteName,
