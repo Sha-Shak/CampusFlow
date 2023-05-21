@@ -14,7 +14,7 @@ import { useAddAlumniInfoMutation } from '../../../features/alumni/alumniApi';
 import toast from 'react-hot-toast';
 import { useGetAllSkillsQuery } from '../../../features/skill/skillApi';
 
-const ExperienceForm = ({ handleClose }) => {
+const ExperienceForm = () => {
   const [jobTitle, setJobTitle] = useState('');
   const [companyName, setCompanyName] = useState('');
   const [fromDate, setFromDate] = useState('');
@@ -52,7 +52,7 @@ const ExperienceForm = ({ handleClose }) => {
     event.preventDefault();
 
     const experienceData = {
-      id: '645bbb5a7865c6e61157889f',
+      id: '6464d4525ed2a4cee3d1ce44', // student id
       type: 'experiences',
       info: {
         jobTitle: jobTitle,
@@ -174,15 +174,6 @@ const ExperienceForm = ({ handleClose }) => {
             marginTop: '1rem',
           }}
         >
-          <Button
-            type="cancel"
-            variant="contained"
-            color="error"
-            onClick={handleClose}
-            sx={{ px: 5 }}
-          >
-            Cancel
-          </Button>
           <Button
             type="submit"
             variant="contained"

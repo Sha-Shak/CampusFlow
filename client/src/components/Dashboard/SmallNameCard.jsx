@@ -26,7 +26,7 @@ const SmallNameCard = ({ name, githubUsername, status, type, id }) => {
           {/* TODO: fix href */}
           <a>{name}</a>
         </div>
-        <div className="text-sm text-gray-500">{type}</div>
+        <div className="text-sm text-gray-500 capitalize">{type}</div>
       </div>
     </div>
   );

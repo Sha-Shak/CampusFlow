@@ -11,7 +11,7 @@ router.get(
   studentsControllers.getJuniorSoftSkillsFirstWeek
 );
 router.get(
-  '/getStudentWeekInfo/:id/:week/:type',
+  '/getStudentWeekInfo/:id/:week',
   studentsControllers.getStudentWeekInfo
 );
 router.put(
@@ -59,5 +59,7 @@ router.get(
   '/getAssessmentMarksByStudentID/:id',
   studentsControllers.getAssessmentMarksByStudentID
 );
+
+router.get('/getStudentType/:id', studentsControllers.getStudentType);
 
 module.exports = router;

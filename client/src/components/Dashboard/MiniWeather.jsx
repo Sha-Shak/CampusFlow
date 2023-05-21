@@ -22,7 +22,6 @@ const WeatherComponent = () => {
       const response = await axios.get(
         'https://api.openweathermap.org/data/2.5/weather?q=dhaka&appid=6eff17c5c4556545b5029079f0b42026&units=metric'
       );
-      console.log(response.data);
       setWeather(response.data);
     } catch (error) {
       console.error('Error fetching weather data:', error);

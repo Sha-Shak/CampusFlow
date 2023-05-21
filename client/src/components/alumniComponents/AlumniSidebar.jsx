@@ -4,11 +4,24 @@ import { FaCode, FaBrain, FaUserGraduate } from 'react-icons/fa';
 import { RiUserSettingsLine } from 'react-icons/ri';
 import { BsBriefcase } from 'react-icons/bs';
 import { GrCertificate, GrConnect } from 'react-icons/gr';
-import { IoCalendarClearOutline } from 'react-icons/io5';
+import { IoCalendarClearOutline, IoLogOutOutline } from 'react-icons/io5';
 import SmallNameCard from './SmallNameCard';
 import { useNavigate } from 'react-router-dom';
+import { AiOutlineFundProjectionScreen } from 'react-icons/ai';
+import { useDispatch, useSelector } from 'react-redux';
+import { userLoggedOut } from '../../features/auth/authSlice';
+import { Button } from '@mui/material';
 
 const AlumniSidebar = () => {
+  const dispatch = useDispatch();
+  const { name, profileImg, githubUsername } =
+    useSelector((state) => state?.auth?.user) || {};
+  const role = useSelector((state) => state?.auth?.role);
+  const logout = () => {
+    dispatch(userLoggedOut());
+    localStorage.removeItem('role');
+    window.location.href = '/';
+  };
   const navigate = useNavigate();
 
   const handleDashboard = () => {
@@ -27,6 +40,9 @@ const AlumniSidebar = () => {
   const handleCertification = () => {
     alert('coming soon');
     console.log('Certification');
+  };
+  const handleExperience = () => {
+    navigate('/alumni/experience');
   };
 
   return (
@@ -53,7 +69,7 @@ const AlumniSidebar = () => {
           </li>
           <li>
             <a onClick={handlePortfolio}>
-              <BsBriefcase color="gray" />
+              <AiOutlineFundProjectionScreen color="gray" />
               Portfolio
             </a>
           </li>
@@ -64,14 +80,33 @@ const AlumniSidebar = () => {
             </a>
           </li>
           <li>
+            <a onClick={handleExperience}>
+              <BsBriefcase color="gray" /> Experience
+            </a>
+          </li>
+          <li>
             <a onClick={handleCertification}>
               <GrCertificate />
               Certifications
             </a>
           </li>
         </div>
-        <div className=" mt-[58vh]">
-          <SmallNameCard />
+        <div>
+          <div className=" mt-[30vh]">
+            <SmallNameCard name={name} profileImg={profileImg} role={role} />
+          </div>
+          <div className=" mt-5 ">
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={logout}
+              fullWidth
+              size="small"
+            >
+              <span className="text-lg capitalize"> Logout </span>
+              <IoLogOutOutline className="text-2xl ml-2" onClick={logout} />
+            </Button>
+          </div>
         </div>
       </ul>
     </>

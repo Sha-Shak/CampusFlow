@@ -76,13 +76,7 @@ const getJuniorSoftSkillsFirstWeek = async (req, res) => {
 };
 
 const getStudentWeekInfo = async (req, res) => {
-  const { id, week, type } = req.params;
-  let studentType;
-  if (type === '1') {
-    studentType = 'junior';
-  } else if (type === '2') {
-    studentType = 'senior';
-  }
+  const { id, week } = req.params;
   try {
     const student = await Student.findById(id)
       .populate({
@@ -114,16 +108,14 @@ const getStudentWeekInfo = async (req, res) => {
         },
       });
     if (!student) {
+      return res.status(404).json({ message: 'Student is not active' });
+    }
+    if (!student.status) {
       return res.status(404).json({ message: 'Student not found' });
-    } else if (!student.status) {
-      const weekInfo = student[studentType][week - 1];
-      return res.status(201).json({
-        message: 'Student is not active',
-        weekInfo,
-      });
     }
 
-    const weekInfo = student[studentType][week - 1];
+    const { type } = student;
+    const weekInfo = student[type][week - 1];
 
     // console.log(weekInfo.softSkills[0].skill.category);
 
@@ -567,6 +559,21 @@ const getAssessmentMarksByStudentID = async (req, res) => {
   }
 };
 
+const getStudentType = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const student = await Student.findById(id);
+    if (!student) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+    const { type } = student;
+    res.status(200).json({ type });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
 module.exports = {
   getAllStudents,
   getAllActiveStudents,
@@ -585,4 +592,5 @@ module.exports = {
   JuniorUnitMarks,
   getAssessmentMarksByStudentID,
   getMidEndDataByStudentID,
+  getStudentType,
 };

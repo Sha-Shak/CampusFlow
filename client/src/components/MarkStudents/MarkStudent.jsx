@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { Paper } from '@mui/material';
+import { Button, Paper } from '@mui/material';
 import { useGetSkillsByCategoryQuery } from '../../features/skill/skillApi';
 import {
   useGetStudentTypeQuery,
@@ -22,6 +22,7 @@ const MarkStudent = ({ studentId, week, handleNext }) => {
     });
   const { data: studentType, refetch: refetchStudentType } =
     useGetStudentTypeQuery(studentId);
+
   useEffect(() => {
     refetchStudentInfo();
   }, [week, studentId]);
@@ -37,7 +38,6 @@ const MarkStudent = ({ studentId, week, handleNext }) => {
   const [initialTechSkillMarks, setInitialTechSkillMarks] = useState({});
   const [unitMarks, setUnitMarks] = useState({});
   const studentUnitMarks = studentWeekInfo?.unitMarks;
-  console.log('debug');
   useEffect(() => {
     if (!studentWeekInfo?.softSkills[0]?.skill) {
       const initialMarks = softSkills
@@ -48,7 +48,7 @@ const MarkStudent = ({ studentId, week, handleNext }) => {
           acc[skill._id] = 0;
           return acc;
         }, {});
-      // setInitialSoftSkillMarks(initialMarks);
+      setInitialSoftSkillMarks(initialMarks);
       setSoftSkillMarks(initialMarks);
     }
 
@@ -61,7 +61,7 @@ const MarkStudent = ({ studentId, week, handleNext }) => {
           acc[skill._id] = 0;
           return acc;
         }, {});
-      // setInitialTechSkillMarks(initialMarks);
+      setInitialTechSkillMarks(initialMarks);
       setTechSkillMarks(initialMarks);
     }
   }, [studentWeekInfo, techSkills, softSkills, studentId, week]);
@@ -282,9 +282,9 @@ const MarkStudent = ({ studentId, week, handleNext }) => {
               </div>
             ))}
           </div>
-          <button className="btn" type="submit" onClick={handleSubmitMark}>
+          <Button variant="contained" type="submit" onClick={handleSubmitMark}>
             Submit Marks
-          </button>
+          </Button>
         </form>
       </Paper>
     </>
