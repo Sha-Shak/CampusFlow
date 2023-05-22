@@ -7,6 +7,8 @@ import { store } from './app/store';
 import { createTheme } from '@mui/material/styles';
 import { ThemeProvider } from '@mui/material/styles';
 import { green, purple } from '@mui/material/colors';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 const theme = createTheme({
   palette: {
@@ -23,7 +25,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={store}>
     {/* <React.StrictMode> */}
     <ThemeProvider theme={theme}>
-      <App />
+      <DndProvider backend={HTML5Backend}>
+        <App />
+      </DndProvider>
     </ThemeProvider>
     {/* </React.StrictMode> */}
   </Provider>
