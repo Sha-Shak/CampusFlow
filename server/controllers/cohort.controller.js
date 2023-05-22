@@ -101,7 +101,7 @@ const getAllCohortStudents = async (req, res) => {
 const changeCohort = async (req, res) => {
   try {
     const { currentCohortName, newCohortName, id } = req.body;
-
+    console.log(currentCohortName, newCohortName, id);
     // change students cohortName
 
     await Student.findByIdAndUpdate(id.toString(), {

@@ -45,6 +45,14 @@ export const githubApi = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+
+    deleteStudentFromCohort: builder.mutation({
+      query: (data) => ({
+        url: `/github/deleteStudentFromCohort`,
+        method: 'DELETE',
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -55,4 +63,5 @@ export const {
   useGetGithubOrgReposQuery,
   useRemoveAccessToGithubRepoMutation,
   useGetAccessToGithubRepoMutation,
+  useDeleteStudentFromCohortMutation,
 } = githubApi;
