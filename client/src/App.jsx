@@ -44,6 +44,7 @@ import AlumniEducation from './pages/AlumniEducation';
 import AlumniExperience from './pages/AlumniExperience';
 import HRDND from './pages/hrdnd';
 import HRloginPage from './pages/HR/HRloginPage';
+import HRQuesetions from './pages/HR/HRQuestions.page';
 function App() {
   // const zoomLevel = useZoom();
   const authChecked = useAuthCheck();
@@ -94,7 +95,7 @@ function App() {
           <Route path="/hrdnd" element={<HRDND />} />
 
           <Route path="/hr/login" element={<HRloginPage />} />
-
+          <Route path="/hr/query" element={<HRQuesetions />} />
           <Route path="*" element={<div>404</div>} />
         </Routes>
       </Router>
