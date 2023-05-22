@@ -43,6 +43,7 @@ import AlumniPortfolio from './pages/AlumniPortfolio';
 import AlumniEducation from './pages/AlumniEducation';
 import AlumniExperience from './pages/AlumniExperience';
 import HRDND from './pages/hrdnd';
+import HRloginPage from './pages/HR/HRloginPage';
 function App() {
   // const zoomLevel = useZoom();
   const authChecked = useAuthCheck();
@@ -91,6 +92,8 @@ function App() {
           <Route path="/languageStats" element={<LanguageStats />} />
           <Route path="/graph" element={<GithubGraph />} />
           <Route path="/hrdnd" element={<HRDND />} />
+
+          <Route path="/hr/login" element={<HRloginPage />} />
 
           <Route path="*" element={<div>404</div>} />
         </Routes>

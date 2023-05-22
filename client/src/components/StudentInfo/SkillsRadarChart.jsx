@@ -6,6 +6,8 @@ import {
   PolarAngleAxis,
   PolarRadiusAxis,
   ResponsiveContainer,
+  Tooltip,
+  LabelList,
 } from 'recharts';
 
 const SkillsRadarChart = ({ skills }) => {
@@ -34,6 +36,7 @@ const SkillsRadarChart = ({ skills }) => {
           fill="#6f1ddc72"
           fillOpacity={0.8}
         />
+        <Tooltip />
       </RadarChart>
     </ResponsiveContainer>
   );
