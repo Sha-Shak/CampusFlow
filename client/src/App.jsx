@@ -76,7 +76,6 @@ function App() {
           <Route path="/addSkills" element={<AddSkill />} />
           <Route path="/migratestudents" element={<MigrateStudents />} />
           <Route path="/repoAccess" element={<RepoAccess />} />
-          <Route path="test" element={<SkillsRadarChart />} />
           <Route path="/alumni">
             <Route path="profile" element={<AlumniProfile />} />
             <Route path="projectcode/" element={<AlumniProjectcode />} />
@@ -89,11 +88,6 @@ function App() {
             <Route path="education" element={<AlumniEducation />} />
             <Route path="experience" element={<AlumniExperience />} />
           </Route>
-          <Route path="/search" element={<SelectIndustry />} />
-          <Route path="/languageStats" element={<LanguageStats />} />
-          <Route path="/graph" element={<GithubGraph />} />
-          <Route path="/hrdnd" element={<HRDND />} />
-
           <Route path="/hr/login" element={<HRloginPage />} />
           <Route path="/hr/query" element={<HRQuesetions />} />
           <Route path="*" element={<div>404</div>} />

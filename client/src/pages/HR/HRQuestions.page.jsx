@@ -73,16 +73,8 @@ function QontoStepIcon(props) {
 }
 
 QontoStepIcon.propTypes = {
-  /**
-   * Whether this step is active.
-   * @default false
-   */
   active: PropTypes.bool,
   className: PropTypes.string,
-  /**
-   * Mark the step as completed. Is passed to child components.
-   * @default false
-   */
   completed: PropTypes.bool,
 };
 
@@ -153,20 +145,9 @@ function ColorlibStepIcon(props) {
 }
 
 ColorlibStepIcon.propTypes = {
-  /**
-   * Whether this step is active.
-   * @default false
-   */
   active: PropTypes.bool,
   className: PropTypes.string,
-  /**
-   * Mark the step as completed. Is passed to child components.
-   * @default false
-   */
   completed: PropTypes.bool,
-  /**
-   * The label displayed in the step icon.
-   */
   icon: PropTypes.node,
 };
 
@@ -177,11 +158,25 @@ const steps = [
 ];
 
 export default function HRQuesetions() {
+  const [activeStep, setActiveStep] = React.useState(0);
+
+  const handleNext = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  };
+
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+
+  const handleSubmit = () => {
+    console.log('Form submitted');
+  };
+
   return (
     <Stack sx={{ width: '100%' }} spacing={4}>
       <Stepper
         alternativeLabel
-        activeStep={1}
+        activeStep={activeStep}
         connector={<ColorlibConnector />}
       >
         {steps.map((label) => (
@@ -190,6 +185,18 @@ export default function HRQuesetions() {
           </Step>
         ))}
       </Stepper>
+      <Stack sx={{ justifyContent: 'flex-end', gap: 2 }}>
+        {activeStep === steps.length ? (
+          <button onClick={handleSubmit}>Submit</button>
+        ) : (
+          <Stack direction="row" spacing={2}>
+            <button disabled={activeStep === 0} onClick={handleBack}>
+              Back
+            </button>
+            <button onClick={handleNext}>Next</button>
+          </Stack>
+        )}
+      </Stack>
     </Stack>
   );
 }
