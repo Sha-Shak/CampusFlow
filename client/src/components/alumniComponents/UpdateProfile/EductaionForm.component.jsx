@@ -11,6 +11,7 @@ import {
 import toast from 'react-hot-toast';
 import { useAddAlumniInfoMutation } from '../../../features/alumni/alumniApi';
 import { useGetAllSkillsQuery } from '../../../features/skill/skillApi';
+import { useSelector } from 'react-redux';
 
 const EducationForm = () => {
   const [instituteName, setInstituteName] = useState('');
@@ -26,13 +27,7 @@ const EducationForm = () => {
   // console.log(skillset);
   // filter all tech skill for alumni
   // const techSkills = skillset?.filter(skill => skill.type === 'tech' && skill.status === true)
-
-  const handleKeyDown = (event) => {
-    event.preventDefault();
-    if (event.key === 'Enter') {
-      handleSubmit();
-    }
-  };
+  const { _id: id } = useSelector((state) => state?.auth?.user) || {};
 
   useEffect(() => {
     if (isSuccess) {
@@ -53,7 +48,7 @@ const EducationForm = () => {
     }
 
     const educationData = {
-      id: '6464d4525ed2a4cee3d1ce44', // student id
+      id, // studentId id
       type: 'education',
       info: {
         instituteName: instituteName,
