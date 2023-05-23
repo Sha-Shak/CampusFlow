@@ -62,7 +62,7 @@ const convertToAlumni = async (req, res) => {
 // };
 
 const postInfo = async (req, res) => {
-  const { id } = req.params;
+  const { id } = req.params; // student id
   const type = req.query.type;
   const { info } = req.body;
 
@@ -198,7 +198,7 @@ const addSkills = async (req, res) => {
 // };
 
 const getAlumniById = async (req, res) => {
-  const { id } = req.params;
+  const { id } = req.params; // alumni id
   try {
     const alumni = await Alumni.findById(id).populate('projects');
     //populate doneby

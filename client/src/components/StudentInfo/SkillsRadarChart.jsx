@@ -15,7 +15,7 @@ const SkillsRadarChart = ({ skills }) => {
     return skills?.map((skill) => {
       return {
         skill: skill?.skill?.skillName,
-        value: skill?.marks,
+        value: skill?.marks?.toFixed(2),
       };
     });
   };

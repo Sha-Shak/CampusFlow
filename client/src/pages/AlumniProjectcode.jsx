@@ -1,19 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import AlumniLayout from '../components/alumniComponents/AlumniLayout';
-import {
-  useGetStudentWeekInfoByTypeQuery,
-  useGetStudentWeekInfoQuery,
-} from '../features/student/studentApi';
-import { useSaveMidEndJuniorCheckpointMutation } from '../features/student/studentApi';
-import { useSaveMidEndSeniorCheckpointMutation } from '../features/student/studentApi';
-import { useGetMidEndDataByStudentIDQuery } from '../features/student/studentApi';
+import { useGetStudentWeekInfoByTypeQuery } from '../features/student/studentApi';
 import { useGetAssessmentMarksByStudentIDQuery } from '../features/student/studentApi';
 import { useGetUnitMarksByStudentIDQuery } from '../features/student/studentApi';
 import SkillsRadarChart from '../components/StudentInfo/SkillsRadarChart';
 import UnitMarksChart from './../components/StudentInfo/UnitMarks';
 import AssessmentMarksChart from './../components/StudentInfo/AssessmentMarksChart';
 import ProjectcodeSkillTable from '../components/alumniComponents/ProjectcodeSkillTable';
-import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 function AlumniProjectcode() {
   const [selectedWeek, setSelectedWeek] = useState(1);
@@ -24,11 +17,8 @@ function AlumniProjectcode() {
   const [chartData, setChartData] = useState([]);
   const [tableData, setTableData] = useState([]);
 
+  // Getting student id from redux store
   const { _id: id } = useSelector((state) => state?.auth?.user) || {};
-
-  // Mutations function defined for saving mid/end checkpoint
-  const [saveMidEndJunior] = useSaveMidEndJuniorCheckpointMutation();
-  const [saveMidEndSenior] = useSaveMidEndSeniorCheckpointMutation();
 
   // API calls
   const { data: studentWeekInfo } = useGetStudentWeekInfoByTypeQuery({
@@ -57,14 +47,6 @@ function AlumniProjectcode() {
       setTableData(studentWeekInfo.weekInfo);
     }
   }, [studentWeekInfo]);
-
-  useEffect(() => {
-    let checkpointInfo = {
-      studentId: id,
-    };
-    saveMidEndJunior(checkpointInfo);
-    saveMidEndSenior(checkpointInfo);
-  }, []);
 
   useEffect(() => {
     if (midEndData) {

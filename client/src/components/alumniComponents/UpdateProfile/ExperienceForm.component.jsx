@@ -13,6 +13,7 @@ import {
 import { useAddAlumniInfoMutation } from '../../../features/alumni/alumniApi';
 import toast from 'react-hot-toast';
 import { useGetAllSkillsQuery } from '../../../features/skill/skillApi';
+import { useSelector } from 'react-redux';
 
 const ExperienceForm = () => {
   const [jobTitle, setJobTitle] = useState('');
@@ -30,6 +31,8 @@ const ExperienceForm = () => {
     error: skillsError,
   } = useGetAllSkillsQuery();
 
+  const { _id: id, alumniId: alumniId } =
+    useSelector((state) => state?.auth?.user) || {};
   useEffect(() => {
     const techSkillsTemp = skillsData?.filter((skill) =>
       skill?.studentType?.includes('alumni')
@@ -52,7 +55,7 @@ const ExperienceForm = () => {
     event.preventDefault();
 
     const experienceData = {
-      id: '6464d4525ed2a4cee3d1ce44', // student id
+      id, // student id
       type: 'experiences',
       info: {
         jobTitle: jobTitle,
@@ -113,6 +116,7 @@ const ExperienceForm = () => {
         <TextField
           label="To Date"
           type="date"
+          disabled={status}
           value={toDate}
           onChange={(event) => setToDate(event.target.value)}
           required

@@ -3,16 +3,19 @@ import AlumniLayout from '../components/alumniComponents/AlumniLayout';
 import AlumniEducationCard from '../components/alumniComponents/AlumniEducationCard';
 import EducationForm from '../components/alumniComponents/UpdateProfile/EductaionForm.component';
 import { useGetAlumniByIdQuery } from '../features/alumni/alumniApi';
+import { useSelector } from 'react-redux';
 
 function AlumniEducation() {
   const [education, setEducation] = useState([]);
+  const { _id: studentID, alumniId: id } =
+    useSelector((state) => state?.auth?.user) || {};
 
   const {
     data: alumniInfo,
     isSuccess,
     isLoading,
     error,
-  } = useGetAlumniByIdQuery('6468550a3d7ec6aa9065187e'); // student id
+  } = useGetAlumniByIdQuery(id); // alumni id
   useEffect(() => {
     if (isSuccess) {
       setEducation(alumniInfo?.education);
