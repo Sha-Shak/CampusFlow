@@ -1,6 +1,4 @@
 import React from 'react';
-import { BsFillBriefcaseFill } from 'react-icons/bs';
-import { GoLocation } from 'react-icons/go';
 import moment from 'moment';
 
 function OrganisationCard({ latestExperience }) {
@@ -20,14 +18,17 @@ function OrganisationCard({ latestExperience }) {
               <span>-</span>
 
               <span>
-                {moment(`${latestExperience?.toDate}`).format('MMM YYYY')}
+                {moment(`${latestExperience?.toDate}`).format('MMM YYYY') ===
+                'Invalid date'
+                  ? 'Present'
+                  : moment(`${latestExperience?.toDate}`).format('MMM YYYY')}
               </span>
             </div>
             <div className="flex items-center gap-1">
-              <div>
+              {/* <div>
                 <GoLocation />
               </div>
-              <div>Dublin, Ireland</div>
+              <div>Dublin, Ireland</div> */}
             </div>
           </div>
 

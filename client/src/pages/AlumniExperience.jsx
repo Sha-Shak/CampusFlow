@@ -5,16 +5,18 @@ import EducationForm from '../components/alumniComponents/UpdateProfile/Eductaio
 import { useGetAlumniByIdQuery } from '../features/alumni/alumniApi';
 import OrganisationCard from '../components/alumniComponents/OrganisationCard';
 import ExperienceForm from '../components/alumniComponents/UpdateProfile/ExperienceForm.component';
+import { useSelector } from 'react-redux';
 
 function AlumniExperience() {
   const [experiences, setExperiences] = useState([]);
-
+  const { _id: id, alumniId: alumniId } =
+    useSelector((state) => state?.auth?.user) || {};
   const {
     data: alumniInfo,
     isSuccess,
     isLoading,
     error,
-  } = useGetAlumniByIdQuery('6468550a3d7ec6aa9065187e'); // alumnni id
+  } = useGetAlumniByIdQuery(alumniId); // alumnni id
   useEffect(() => {
     if (isSuccess) {
       setExperiences(alumniInfo?.experiences);
