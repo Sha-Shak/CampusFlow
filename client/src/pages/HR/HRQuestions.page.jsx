@@ -12,6 +12,7 @@ import VideoLabelIcon from '@mui/icons-material/VideoLabel';
 import StepConnector, {
   stepConnectorClasses,
 } from '@mui/material/StepConnector';
+import BeautifulCheckbox from './BeautifulCheckbox';
 
 const QontoConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
@@ -159,6 +160,11 @@ const steps = [
 
 export default function HRQuesetions() {
   const [activeStep, setActiveStep] = React.useState(0);
+  const [formData, setFormData] = React.useState({
+    role: '',
+    skills: '',
+    industries: '',
+  });
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -168,8 +174,54 @@ export default function HRQuesetions() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
+
   const handleSubmit = () => {
-    console.log('Form submitted');
+    console.log(formData);
+  };
+
+  const renderForm = () => {
+    switch (activeStep) {
+      case 0:
+        return (
+          // <input
+          //   type="text"
+          //   name="role"
+          //   placeholder="Enter the role you would like to hire"
+          //   value={formData.role}
+          //   onChange={handleInputChange}
+          // />
+          <BeautifulCheckbox />
+        );
+      case 1:
+        return (
+          <input
+            type="text"
+            name="skills"
+            placeholder="Enter the skills or expertise you need"
+            value={formData.skills}
+            onChange={handleInputChange}
+          />
+        );
+      case 2:
+        return (
+          <input
+            type="text"
+            name="industries"
+            placeholder="Enter the industries you need"
+            value={formData.industries}
+            onChange={handleInputChange}
+          />
+        );
+      default:
+        return null;
+    }
   };
 
   return (
@@ -185,17 +237,20 @@ export default function HRQuesetions() {
           </Step>
         ))}
       </Stepper>
-      <Stack sx={{ justifyContent: 'flex-end', gap: 2 }}>
-        {activeStep === steps.length ? (
-          <button onClick={handleSubmit}>Submit</button>
-        ) : (
-          <Stack direction="row" spacing={2}>
-            <button disabled={activeStep === 0} onClick={handleBack}>
-              Back
-            </button>
+
+      <Stack sx={{ width: '100%' }} spacing={2}>
+        <Stack sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <button onClick={handleBack} disabled={activeStep === 0}>
+            Back
+          </button>
+          {activeStep === steps.length - 1 ? (
+            <button onClick={handleSubmit}>Submit</button>
+          ) : (
             <button onClick={handleNext}>Next</button>
-          </Stack>
-        )}
+          )}
+        </Stack>
+
+        <div>{renderForm()}</div>
       </Stack>
     </Stack>
   );
