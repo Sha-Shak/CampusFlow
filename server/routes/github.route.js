@@ -48,17 +48,25 @@ router.get(
   githubController.getGithubOrgRepos
 );
 
-router.get(
+router.post(
   '/getAccessToGithubRepo',
   authMiddleware,
   githubController.getAccessToGithubRepo
 );
-router.get(
+router.post(
   '/removeAccessToGithubRepo',
   authMiddleware,
   githubController.removeAccessToGithubRepo
 );
 
 router.put('/addInstructor', authMiddleware, githubController.addInstructor);
+
+router.get(
+  '/getCollaborators/:userName/:projectName',
+
+  githubController.getCollaborators
+);
+
+// router.post('/changeCohort', githubController.changeCohort);
 
 module.exports = router;

@@ -6,51 +6,26 @@ import {
   PolarAngleAxis,
   PolarRadiusAxis,
   ResponsiveContainer,
+  Tooltip,
+  LabelList,
 } from 'recharts';
-import { useGetStudentWeekInfoQuery } from '../../features/student/studentApi';
 
-const dummyData = [
-  { skill: 'Communication', value: 10 },
-  { skill: 'Problem-solving', value: 4 },
-  { skill: 'Leadership', value: 8 },
-  { skill: 'Time management', value: 10 },
-  { skill: 'Creativity', value: 10 },
-  { skill: 'Adaptability', value: 10 },
-  { skill: 'Strategic thinking', value: 4 },
-  { skill: 'Critical thinking', value: 10 },
-  { skill: 'Intelligence', value: 2 },
-  { skill: 'Negotiation', value: 10 },
-];
-
-const SkillsRadarChart = () => {
-  const {
-    data: studentWeekInfo,
-    isSuccess,
-    error,
-    isLoading,
-  } = useGetStudentWeekInfoQuery({
-    id: '6459f36db9399a5969db9038',
-    week: 1,
-  });
-
-  console.log('studentWeekInfo', studentWeekInfo);
-
-  const softSkills = studentWeekInfo?.softSkills;
-
-  const createFormattedData = (softSkills) => {
-    return softSkills?.map((skills) => {
+const SkillsRadarChart = ({ skills }) => {
+  const createFormattedData = (skills) => {
+    return skills?.map((skill) => {
       return {
-        skill: skills.skill.skillName,
-        value: skills.marks,
+        skill: skill?.skill?.skillName,
+        value: skill?.marks,
       };
     });
   };
 
-  const data = createFormattedData(softSkills);
+  const data = createFormattedData(skills);
+  // console.log('data', data);
 
   return (
     <ResponsiveContainer height={'100%'} width={'100%'}>
-      <RadarChart cx="50%" cy="50%" outerRadius="85%" data={dummyData}>
+      <RadarChart cx="50%" cy="50%" outerRadius="85%" data={data}>
         <PolarGrid />
         <PolarAngleAxis dataKey="skill" />
         <PolarRadiusAxis angle={30} domain={[0, 10]} />
@@ -61,6 +36,7 @@ const SkillsRadarChart = () => {
           fill="#6f1ddc72"
           fillOpacity={0.8}
         />
+        <Tooltip />
       </RadarChart>
     </ResponsiveContainer>
   );

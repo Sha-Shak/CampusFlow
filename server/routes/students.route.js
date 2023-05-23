@@ -3,6 +3,7 @@ const router = express.Router();
 const studentsControllers = require('../controllers/students.controller');
 
 router.get('/getAllStudents', studentsControllers.getAllStudents);
+router.get('/getAllActiveStudents', studentsControllers.getAllActiveStudents);
 router.get('/:id', studentsControllers.getStudentByID);
 router.post('/createStudent', studentsControllers.createStudent);
 router.get(
@@ -28,6 +29,17 @@ router.post(
   '/saveMidEndJuniorData/:id',
   studentsControllers.saveMidEndJuniorData
 );
+
+router.post(
+  '/saveMidEndSeniorData/:id',
+  studentsControllers.saveMidEndSeniorData
+);
+
+router.get(
+  '/getMidEndDataByStudentID/:id',
+  studentsControllers.getMidEndDataByStudentID
+);
+
 router.get(
   '/getStudentByCohortName/:cohortName',
   studentsControllers.getStudentByCohortName
@@ -41,6 +53,18 @@ router.post('/check/:id', studentsControllers.postUnitMarksByStudentID);
 router.get(
   '/getJuniorUnitMarks/:id/:type',
   studentsControllers.JuniorUnitMarks
+);
+
+router.get(
+  '/getAssessmentMarksByStudentID/:id',
+  studentsControllers.getAssessmentMarksByStudentID
+);
+
+router.get('/getStudentType/:id', studentsControllers.getStudentType);
+
+router.get(
+  '/getStudentWeekInfoByType/:id/:week/:type',
+  studentsControllers.getStudentWeekInfoByType
 );
 
 module.exports = router;

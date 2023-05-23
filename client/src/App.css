@@ -157,3 +157,37 @@ body {
 	border: 1px solid #c7c6c6;
 	color: #5b5562;
 }
+.blob-effect {
+  position: relative;
+  overflow: hidden;
+  width: 300px; /* Adjust the width and height as needed */
+  height: 300px;
+}
+
+.blob-effect::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background-image: radial-gradient(circle, #ff4d4d 20%, transparent 0);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 800px 800px; /* Adjust the size of the blob effect */
+  transform: rotate(-45deg);
+  z-index: -1;
+  animation: blob-animation 8s linear infinite; /* Adjust the animation duration as needed */
+}
+
+@keyframes blob-animation {
+  0% {
+    transform: rotate(-45deg) scale(0.8);
+  }
+  50% {
+    transform: rotate(-45deg) scale(1.2);
+  }
+  100% {
+    transform: rotate(-45deg) scale(0.8);
+  }
+}

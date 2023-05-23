@@ -1,9 +1,13 @@
 import React from 'react';
-import ProjectSection from './ProjectSection';
+import ProjectSection from '../AlumniComponents/ProjectSection';
 import Chip from './Chip';
+import { useNavigate } from 'react-router-dom';
 import { BsArrowRight } from 'react-icons/bs';
-
-const Portfolio = () => {
+const Portfolio = ({ alumniInfo, techStack }) => {
+  const navigate = useNavigate();
+  const handleViewAll = () => {
+    navigate('/alumni/profile/portfolio');
+  };
   return (
     <>
       <div className="card  bg-base-100 shadow-sm pl-4 pr-1 w-[70rem]">
@@ -11,7 +15,10 @@ const Portfolio = () => {
           <div className="flex justify-between ">
             <div className="text-2xl font-bold m-2">Portfolio</div>
             {/* View All */}
-            <div className=" cursor-pointer flex gap-2 mt-4 mr-4">
+            <div
+              className=" cursor-pointer flex gap-2 mt-4 mr-4"
+              onClick={handleViewAll}
+            >
               <div className="text-indigo-600 text-xs font-semibold">
                 View all
               </div>
@@ -21,15 +28,25 @@ const Portfolio = () => {
           </div>
 
           <div className="card-body m-2 p-0">
-            <ProjectSection />
+            <ProjectSection projects={alumniInfo?.projects} />
           </div>
         </div>
         <div className="flex flex-col m-2 items-left">
           <h2 className="text-2xl font-bold m-1">Skills</h2>
           <div className="m-2 flex gap-2 flex-wrap">
-            <Chip name="React" />
-            <Chip name="React" />
-            <Chip name="React" />
+            {techStack.slice(0, 8)?.map((tech, index) => {
+              return (
+                <div key={index}>
+                  <Chip
+                    key={tech}
+                    name={tech}
+                    customColor={'gray-200'}
+                    borderColor={'purple-300'}
+                    padding={'3'}
+                  />
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

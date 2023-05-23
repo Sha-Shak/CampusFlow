@@ -15,6 +15,8 @@ const addProject = async (req, res) => {
       techStack,
       thirdPartyApi,
       youtubeLink,
+      doneBy,
+      industry,
     } = req.body;
 
     const newProject = new Project({
@@ -26,7 +28,8 @@ const addProject = async (req, res) => {
       techStack,
       thirdPartyApi,
       youtubeLink,
-      doneBy: id,
+      doneBy,
+      industry,
     });
 
     const savedProject = await newProject.save();
@@ -53,7 +56,28 @@ const getProjects = async (req, res) => {
   }
 };
 
+const getProjectByStudentId = async (req, res) => {
+  const { id } = req.params; // this should be studnet id
+
+  try {
+    // const project = await Project.findById(id);
+    const project = await Project.find({
+      doneBy: {
+        $in: [id],
+      },
+    });
+    console.log(project);
+    if (project.length == 0 || !project) {
+      return res.status(404).json({ message: 'Project not found' });
+    }
+    res.status(200).json(project);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 module.exports = {
   addProject,
   getProjects,
+  getProjectByStudentId,
 };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
@@ -6,39 +6,139 @@ import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Layout from '../components/common/Layout';
+import {
+  useGetAccessToGithubRepoMutation,
+  useGetAllGithubCohortsQuery,
+  useGetGithubOrgReposQuery,
+  useRemoveAccessToGithubRepoMutation,
+} from '../features/github/githubApi';
+import toast, { Toaster } from 'react-hot-toast';
 
-// Import Repo Access Information from github (dummy data for now line 126)
-
+const repoTypes = [
+  { value: 'all', label: 'All' },
+  { value: 'tp', label: 'Toy Problems' },
+  { value: 'exercise', label: 'Exercises' },
+  { value: 'weekly-assessment', label: 'Weekly Assessments' },
+];
 const RepoAccess = () => {
   const [cohort, setCohort] = useState('');
   const [repoType, setRepoType] = useState('');
   const [repoName, setRepoName] = useState('');
+  const [repos, setRepos] = useState([]);
+  const [filteredRepos, setFilteredRepos] = useState([]);
+
+  const {
+    data: cohorts,
+    isCohortsLoading,
+    error: cohortsError,
+  } = useGetAllGithubCohortsQuery();
+
+  const {
+    data: repositeories,
+    isSuccess: isReposSuccess,
+    error: reposError,
+  } = useGetGithubOrgReposQuery();
+  const [giveAccess, { isSuccess: isGiveAccessSuccess }] =
+    useGetAccessToGithubRepoMutation();
+  const [removeAccess, { isSuccess: isRemoveAccessSuccess }] =
+    useRemoveAccessToGithubRepoMutation();
+  useEffect(() => {
+    if (isGiveAccessSuccess) {
+      toast.success('Access Given Successfully');
+    }
+  }, [isReposSuccess]);
+
+  useEffect(() => {
+    if (isRemoveAccessSuccess) {
+      toast.success('Access Removed Successfully');
+    }
+  }, [isRemoveAccessSuccess]);
 
   const handleCohortChange = (event) => {
     setCohort(event.target.value);
   };
 
   const handleRepoTypeChange = (event) => {
-    setRepoType(event.target.value);
+    const value = event.target.value;
+    setRepoType(value);
+    filterRepos(value);
   };
 
   const handleRepoNameChange = (event) => {
     setRepoName(event.target.value);
   };
+  useEffect(() => {
+    if (isGiveAccessSuccess) {
+      getRepos();
+    }
+  }, [isGiveAccessSuccess]);
+
+  useEffect(() => {
+    if (isRemoveAccessSuccess) {
+      getRepos();
+    }
+  }, [isRemoveAccessSuccess]);
 
   const handleGiveAccess = () => {
-    console.log('Give access to:', cohort, repoType, repoName);
+    const data = {
+      teamSlug: cohort,
+      repoName: repoName,
+    };
+    giveAccess(data);
     setCohort('');
     setRepoType('');
     setRepoName('');
   };
 
   const handleRemoveAccess = () => {
-    console.log('Remove access from:', cohort, repoType, repoName);
+    const data = {
+      teamSlug: cohort,
+      repoName: repoName,
+    };
+    removeAccess(data);
     setCohort('');
     setRepoType('');
     setRepoName('');
   };
+  function filterRepos(filterTag) {
+    let newSelection;
+    if (filterTag === 'tp') {
+      newSelection = repos.filter((repo) => repo?.name.slice(0, 3) === 'tp-');
+    } else {
+      newSelection = repos.filter((repo) => repo?.name.includes(filterTag));
+    }
+    newSelection.length
+      ? setFilteredRepos(newSelection)
+      : setFilteredRepos(repositeories);
+  }
+
+  async function getRepos() {
+    try {
+      const parsedRepos = repositeories.filter((repo) => {
+        const { name } = repo;
+        if (
+          name.includes('tp') ||
+          name.includes('assessment') ||
+          name.includes('exercise') ||
+          name.includes('pre-course') ||
+          name.includes('student-handbook') ||
+          name.includes('proposal')
+        )
+          return true;
+        if (
+          name.includes('software-engineering-lectures') ||
+          name.includes('code-review')
+        )
+          return true;
+        return false;
+      });
+
+      setRepos(parsedRepos);
+      setFilteredRepos(parsedRepos);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <Layout>
@@ -53,6 +153,7 @@ const RepoAccess = () => {
           padding: '20px',
         }}
       >
+        <Toaster />
         <Typography variant="h5">Repo Access</Typography>
 
         {/* All Drop down are in the box */}
@@ -66,9 +167,9 @@ const RepoAccess = () => {
               onChange={handleCohortChange}
               fullWidth
             >
-              {cohortNames.map((option) => (
-                <MenuItem key={option} value={option}>
-                  {option}
+              {cohorts?.map((cohort) => (
+                <MenuItem key={cohort?.name} value={cohort?.name}>
+                  {cohort?.name}
                 </MenuItem>
               ))}
             </TextField>
@@ -79,14 +180,14 @@ const RepoAccess = () => {
           <Box marginTop={2}>
             <TextField
               select
-              label="Repo Type"
               value={repoType}
+              label="Repo Type"
               onChange={handleRepoTypeChange}
               fullWidth
             >
-              {repoTypes.map((option) => (
-                <MenuItem key={option} value={option}>
-                  {option}
+              {repoTypes.map((type) => (
+                <MenuItem key={type?.value} value={type?.value}>
+                  {type?.label}
                 </MenuItem>
               ))}
             </TextField>
@@ -102,9 +203,9 @@ const RepoAccess = () => {
               onChange={handleRepoNameChange}
               fullWidth
             >
-              {repoNames.map((option) => (
-                <MenuItem key={option} value={option}>
-                  {option}
+              {filteredRepos?.map((repo) => (
+                <MenuItem key={repo?.name} value={repo?.name}>
+                  {repo?.name}
                 </MenuItem>
               ))}
             </TextField>
@@ -142,57 +243,3 @@ const RepoAccess = () => {
 };
 
 export default RepoAccess;
-
-const cohortNames = [
-  'Cohort 1',
-  'Cohort 2',
-  'Cohort 3',
-  'Cohort 4',
-  'Cohort 5',
-  'Cohort 6',
-  'Cohort 7',
-  'Cohort 8',
-  'Cohort 9',
-  'Cohort 10',
-  'Cohort 11',
-  'Cohort 12',
-  'Cohort 13',
-  'Cohort 14',
-  'Cohort 15',
-];
-
-const repoTypes = [
-  'Frontend',
-  'Backend',
-  'Fullstack',
-  'Mobile',
-  'AI/ML',
-  'Data Engineering',
-  'DevOps',
-  'Security',
-  'Game Development',
-  'Embedded Systems',
-  'Cloud Computing',
-  'Blockchain',
-  'UI/UX Design',
-  'Technical Writing',
-  'Project Management',
-];
-
-const repoNames = [
-  'frontend-project-1',
-  'frontend-project-2',
-  'backend-project-1',
-  'backend-project-2',
-  'react-project-1',
-  'react-project-2',
-  'node-project-1',
-  'node-project-2',
-  'database-project-1',
-  'database-project-2',
-  'mobile-project-1',
-  'mobile-project-2',
-  'web-design-project-1',
-  'web-design-project-2',
-  'data-science-project-1',
-];

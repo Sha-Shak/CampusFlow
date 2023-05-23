@@ -1,26 +1,42 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import Layout from '../components/common/Layout';
 import MiniCalender from '../components/Dashboard/MiniCalender';
 import MiniLectures from '../components/Dashboard/MiniLectures';
 import MiniNewsTile from '../components/Dashboard/MiniNewsTile';
 import MiniTodoList from '../components/Dashboard/MiniTodoList';
+import MiniWeather from '../components/Dashboard/MiniWeather';
 import RecentStudents from '../components/Dashboard/RecentStudents';
 import useAuthCheck from '../hooks/useAuthCheck';
+import { useGetAllActiveStudentsQuery } from '../features/student/studentApi';
 
 function Dashboard() {
-  const [user, setUser] = useState({});
-  // const user = JSON.parse(localStorage.getItem('user'));
-  const firstName = user?.name?.split(' ')[0];
+  // const [user, setUser] = useState({});
+  const [activeStudents, setActiveStudents] = useState([]);
+  const { name } = useSelector((state) => state?.auth?.user) || {};
+  const firstName = name?.split(' ')[0];
+
+  // Api calls to get all students
+  const {
+    data: allStudents,
+    error,
+    isSuccess,
+  } = useGetAllActiveStudentsQuery();
+
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    setUser(user);
-  }, []);
+    if (allStudents) {
+      if (activeStudents.length > 5) {
+        setActiveStudents(allStudents.slice(0, 5));
+      }
+      setActiveStudents(allStudents);
+    }
+  }, [activeStudents]);
 
   return (
     <Layout>
-      <div className="text-3xl mb-8 ml-4">Wellcome, {firstName}</div>
+      <div className="text-3xl mb-8 ml-4">Welcome, {firstName}</div>
       <div className="m-4">
-        <RecentStudents />
+        <RecentStudents students={allStudents} />
       </div>
       <div className="flex">
         <div className="m-4">
@@ -31,6 +47,7 @@ function Dashboard() {
         </div>
         <div className="m-4">
           <MiniCalender />
+          <MiniWeather />
         </div>
         <div>
           <MiniTodoList />

@@ -50,6 +50,7 @@ const getGithubAccessToken = async (req, res) => {
           name: userModel.name,
           profileImg: userModel.profileImg,
           type: userModel.type,
+          alumniId: userModel.alumniId ? userModel.alumniId : null,
         };
         role = 'student';
       } else {
@@ -307,7 +308,6 @@ const getGithubTeams = async (req, res) => {
   }
 };
 
-// NOT WORKING CORRECTLY
 const getGithubOrgRepos = async (req, res) => {
   const url1 = `https://api.github.com/orgs/${orgName}/repos?per_page=100&page=1`;
   const url2 = `https://api.github.com/orgs/${orgName}/repos?per_page=100&page=2`;
@@ -404,6 +404,25 @@ const addInstructor = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+const getCollaborators = async (req, res) => {
+  const githubAccessToken = req.headers['github-access-token'];
+  const { userName, projectName } = req.params;
+  // const url = `https://api.github.com/orgs/student-tool/teams/${cohortName}/memberships/${req.body.username}`;
+  const url = `https://api.github.com/repos/${userName}/${projectName}/collaborators`;
+  try {
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${gh_personal_token}`,
+        'github-access-token': `${githubAccessToken}`,
+      },
+    });
+    const data = response.data;
+    res.status(200).json(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
 
 // utils
 async function getCurrentUser(token) {
@@ -487,4 +506,5 @@ module.exports = {
   getCurrentUser,
   getOrgInstructors,
   getOrgMembers,
+  getCollaborators,
 };

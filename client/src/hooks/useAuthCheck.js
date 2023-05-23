@@ -17,6 +17,7 @@ export default function useAuthCheck() {
           userLoggedIn({
             accessToken: auth.accessToken,
             user: auth.user,
+            role: auth.role,
           })
         );
       }

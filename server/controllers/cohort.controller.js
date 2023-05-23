@@ -97,6 +97,56 @@ const getAllCohortStudents = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
+const changeCohort = async (req, res) => {
+  try {
+    const { currentCohortName, newCohortName, id } = req.body;
+    console.log(currentCohortName, newCohortName, id);
+    // change students cohortName
+
+    await Student.findByIdAndUpdate(id.toString(), {
+      cohortName: newCohortName,
+    });
+
+    // add student to new cohort
+    const newCohort = await Cohort.findOne({ cohortName: newCohortName });
+
+    // check if student is already in new cohort
+    const isStudentInNewCohort = newCohort.students.find(
+      (student) => student._id.toString() === id
+    );
+    if (isStudentInNewCohort) {
+      return res
+        .status(404)
+        .json({ message: `Student already in ${newCohortName}` });
+    } else {
+      newCohort.students.push(id);
+      await newCohort.save();
+    }
+
+    // remove student form prev cohort
+    const prevCohort = await Cohort.findOne({ cohortName: currentCohortName });
+    // check if student is in prev cohort
+    const isStudentFound = prevCohort.students.find(
+      (student) => student._id.toString() === id
+    );
+    if (!isStudentFound) {
+      return res
+        .status(404)
+        .json({ message: `Student not found in ${currentCohortName}` });
+    } else {
+      prevCohort.students = prevCohort.students.filter(
+        (student) => student._id.toString() !== id
+      );
+      await prevCohort.save();
+      res.status(200).json({ message: 'Student cohort changed' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
 module.exports = {
   CreateCohort,
   GetAllCohorts,
@@ -104,4 +154,5 @@ module.exports = {
   changeCohortStatus,
   addStudentToCohort,
   getAllCohortStudents,
+  changeCohort,
 };

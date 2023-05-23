@@ -36,23 +36,8 @@ const convertToAlumni = async (req, res) => {
       await student.save();
 
       alumniList.push(alumni);
+      res.status(200).send({ message: 'Student converted to alumni', alumni });
     }
-
-    // create alumni
-    const newAlumni = {
-      name: student.name,
-      image: student.profileImg,
-    };
-    const alumni = await Alumni.create(newAlumni);
-    await alumni.save();
-
-    // update student status
-    student.status = !student.status;
-    student.type = 'alumni';
-    student.alumniId = alumni._id;
-    await student.save();
-
-    res.status(200).send({ message: 'Student converted to alumni', alumni });
   } catch (err) {
     console.log(err);
     return res.status(500).send('Internal Server Error');
@@ -80,6 +65,7 @@ const postInfo = async (req, res) => {
   const { id } = req.params;
   const type = req.query.type;
   const { info } = req.body;
+
   if (type === 'about') {
     try {
       const alumni = await Student.findById(id).populate('alumniId');
@@ -127,6 +113,7 @@ const postInfo = async (req, res) => {
 const deleteInfo = async (req, res) => {
   const { id } = req.params; // alumni id
   const type = req.query.type;
+
   const { info } = req.body;
   try {
     const alumni = await Alumni.findById(id);
@@ -210,12 +197,27 @@ const addSkills = async (req, res) => {
 //   }
 // };
 
+const getAlumniById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const alumni = await Alumni.findById(id).populate('projects');
+    //populate doneby
+
+    if (!alumni) return res.status(404).send({ message: 'Alumni not found' });
+    res.status(200).send(alumni);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send('Internal Server Error');
+  }
+};
+
 module.exports = {
   test,
   convertToAlumni,
   postInfo,
   deleteInfo,
   addSkills,
+  getAlumniById,
   //   addEducation,
   //   deleteEducation,
   //   addExperience,

@@ -7,9 +7,17 @@ export const studentApi = apiSlice.injectEndpoints({
         url: `/student/getAllStudents`,
       }),
     }),
+
+    getAllActiveStudents: builder.query({
+      query: () => ({
+        url: `/student/getAllActiveStudents`,
+      }),
+    }),
+
     getStudentById: builder.query({
-      query: (id) => ({
-        url: `/student/${id}`,
+      query: (data) => ({
+        url: `/student/${data.studentId}`,
+        method: 'GET',
       }),
     }),
 
@@ -35,10 +43,16 @@ export const studentApi = apiSlice.injectEndpoints({
       }),
     }),
 
-    //donebysaimon
     getStudentWeekInfo: builder.query({
       query: (data) => ({
         url: `/student/getStudentWeekInfo/${data.studentId}/${data.week}`,
+        method: 'GET',
+      }),
+    }),
+
+    getStudentWeekInfoByType: builder.query({
+      query: (data) => ({
+        url: `/student/getStudentWeekInfoByType/${data.studentId}/${data.week}/${data.type}`,
         method: 'GET',
       }),
     }),
@@ -58,14 +72,68 @@ export const studentApi = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+
+    getStudentType: builder.query({
+      query: (id) => ({
+        url: `/student/getStudentType/${id}`,
+        method: 'GET',
+      }),
+    }),
+
+    saveMidEndJuniorCheckpoint: builder.mutation({
+      query: (data) => ({
+        url: `/student/saveMidEndJuniorData/${data.studentId}`,
+        method: 'POST',
+        body: data,
+      }),
+    }),
+
+    saveMidEndSeniorCheckpoint: builder.mutation({
+      query: (data) => ({
+        url: `/student/saveMidEndSeniorData/${data.studentId}`,
+        method: 'POST',
+        body: data,
+      }),
+    }),
+
+    getAssessmentMarksByStudentID: builder.query({
+      query: (data) => ({
+        url: `/student/getAssessmentMarksByStudentID/${data.studentId}`,
+        method: 'GET',
+      }),
+    }),
+
+    getUnitMarksByStudentID: builder.query({
+      query: (data) => ({
+        url: `/student/getUnitMarksByStudentID/${data.studentId}`,
+        method: 'GET',
+      }),
+    }),
+
+    getMidEndDataByStudentID: builder.query({
+      query: (data) => ({
+        url: `/student/getMidEndDataByStudentID/${data.studentId}`,
+        method: 'GET',
+      }),
+    }),
   }),
 });
 
 export const {
+  useGetAllStudentsQuery,
+  useGetAllActiveStudentsQuery,
   useCreateStudentMutation,
   useAddSoftTechSkillsByStudentIDMutation,
+  useGetStudentByIdQuery,
   useGetStudentByCohortNameQuery,
   useGetStudentWeekInfoQuery,
+  useGetStudentWeekInfoByTypeQuery,
   useSetStudentWeekInfoMutation,
   useChangeStudentsTypeMutation,
+  useGetStudentTypeQuery,
+  useSaveMidEndJuniorCheckpointMutation,
+  useGetAssessmentMarksByStudentIDQuery,
+  useGetUnitMarksByStudentIDQuery,
+  useSaveMidEndSeniorCheckpointMutation,
+  useGetMidEndDataByStudentIDQuery,
 } = studentApi;

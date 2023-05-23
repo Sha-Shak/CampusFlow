@@ -2,7 +2,7 @@ import React from 'react';
 import { FaGithub } from 'react-icons/fa';
 import { Link, useLocation } from 'react-router-dom';
 
-function StudentSidebar() {
+function StudentSidebar({ student }) {
   const location = useLocation();
 
   return (
@@ -16,14 +16,21 @@ function StudentSidebar() {
           <div className="absolute -bottom-12 flex h-[120px] w-[120px] items-center justify-center rounded-full border-[4px] border-white bg-pink-400 dark:!border-navy-700">
             <img
               className="h-full w-full rounded-full"
-              src="https://raw.githubusercontent.com/zahidtwt/zahidlive/main/277801721_1146010236235641_4251157026316733609_n.jpg"
-              alt=""
+              src={`https://avatars.githubusercontent.com/${student?.githubUsername}`}
+              alt={`${student?.name}'s profile`}
             />
           </div>
         </div>
         <div className="mt-16 flex flex-col items-center">
-          <h4 className="text-xl font-bold text-black ">Zahid Ul Islam</h4>
-          <p className="text-base font-normal text-gray-600">Senior Student</p>
+          <h4 className="text-xl font-bold text-black ">{student?.name}</h4>
+          <p className="text-lg font-normal text-gray-600 capitalize">
+            {student?.type} Student
+          </p>
+          <div className="mt-1 border-2 border-purple-00 p-1 px-2 text-sm rounded-full">
+            <p className="text-md text-gray-600 capitalize font-semibold">
+              {student?.cohortName}
+            </p>
+          </div>
         </div>
       </div>
       {/* </div> */}

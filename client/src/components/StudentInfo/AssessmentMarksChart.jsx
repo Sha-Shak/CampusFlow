@@ -8,36 +8,12 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
+  LabelList,
 } from 'recharts';
 
-const data = [
-  {
-    weekName: 'week-1',
-    assessmentMarks: 8,
-  },
-  {
-    weekName: 'week-2',
-    assessmentMarks: 7,
-  },
-  {
-    weekName: 'week-3',
-    assessmentMarks: 9,
-  },
-  {
-    weekName: 'week-4',
-    assessmentMarks: 8,
-  },
-  {
-    weekName: 'week-5',
-    assessmentMarks: 6,
-  },
-  {
-    weekName: 'week-6',
-    assessmentMarks: 8,
-  },
-];
+const AssessmentMarksChart = ({ assessmentMarks }) => {
+  const data = assessmentMarks;
 
-const AssessmentMarksChart = () => {
   return (
     <ResponsiveContainer>
       <ComposedChart
@@ -54,7 +30,9 @@ const AssessmentMarksChart = () => {
         <YAxis />
         <Tooltip />
         <Legend />
-        <Bar dataKey="assessmentMarks" barSize={15} fill="#7e22ceaf" />
+        <Bar dataKey="assessmentMarks" barSize={15} fill="#7e22ceaf">
+          <LabelList dataKey="assessmentMarks" position="top" />
+        </Bar>
         <Line
           type="monotone"
           dataKey="assessmentMarks"

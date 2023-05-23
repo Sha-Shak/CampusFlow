@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FaCheckCircle } from 'react-icons/fa';
 import MarkStudent from './MarkStudent';
-// define your data
 
 function MultiStepForm({ students, isStudentFetchSuccess, week }) {
   const [currentStep, setCurrentStep] = useState(0);

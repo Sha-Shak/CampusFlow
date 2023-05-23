@@ -23,17 +23,29 @@ import MigrateStudents from './pages/MigrateStudents.page';
 import PeerRatings from './pages/PeerRatings.page';
 
 import AlumniProfile from './pages/AlumniProfile.jsx';
-
+import Portfolio from './components/alumniComponents/Portfolio';
+import GithubGraph from './components/alumniComponents/GithubGraph';
 import useZoom from './hooks/useZoom';
 import useAuthCheck from './hooks/useAuthCheck';
+import AlumniUpdateProfile from './pages/AlumniUpdateProfile.page';
+import AlumniProjectcode from './pages/AlumniProjectcode';
+import ProjectForm from './components/alumniComponents/UpdateProfile/ProjectForm.component';
+import { Toaster } from 'react-hot-toast';
+import AlumniPortfolio from './pages/AlumniPortfolio';
+import AlumniEducation from './pages/AlumniEducation';
+import AlumniExperience from './pages/AlumniExperience';
+import HRDND from './pages/hrdnd';
+import HRloginPage from './pages/HR/HRloginPage';
+import HRQuesetions from './pages/HR/HRQuestions.page';
 function App() {
-  const zoomLevel = useZoom();
+  // const zoomLevel = useZoom();
   const authChecked = useAuthCheck();
   return !authChecked ? (
     // <Spinner size={'xl'}></Spinner>
     <div />
   ) : (
     <div>
+      <Toaster />
       <Router>
         <Routes>
           <Route path="/" element={<Navigate to="/login" />} />
@@ -56,8 +68,20 @@ function App() {
           <Route path="/addSkills" element={<AddSkill />} />
           <Route path="/migratestudents" element={<MigrateStudents />} />
           <Route path="/repoAccess" element={<RepoAccess />} />
-          <Route path="test" element={<SkillsRadarChart />} />
-          <Route path="/alumni/profile" element={<AlumniProfile />} />
+          <Route path="/alumni">
+            <Route path="profile" element={<AlumniProfile />} />
+            <Route path="projectcode/" element={<AlumniProjectcode />} />
+            <Route path="portfolio" element={<Portfolio />} />
+            <Route path="profile/portfolio" element={<AlumniPortfolio />} />
+            <Route path="education" element={<AlumniEducation />} />
+
+            <Route path="update-profile" element={<AlumniUpdateProfile />} />
+            <Route path="add-project" element={<ProjectForm />} />
+            <Route path="education" element={<AlumniEducation />} />
+            <Route path="experience" element={<AlumniExperience />} />
+          </Route>
+          <Route path="/hr/login" element={<HRloginPage />} />
+          <Route path="/hr/query" element={<HRQuesetions />} />
           <Route path="*" element={<div>404</div>} />
         </Routes>
       </Router>

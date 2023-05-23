@@ -1,41 +1,53 @@
 import React from 'react';
 import { RxDashboard } from 'react-icons/rx';
-import { FaCode, FaBrain } from 'react-icons/fa';
+import { FaCode, FaBrain, FaUserGraduate } from 'react-icons/fa';
 import { RiUserSettingsLine } from 'react-icons/ri';
 import { BsBriefcase } from 'react-icons/bs';
 import { GrCertificate, GrConnect } from 'react-icons/gr';
-import { IoCalendarClearOutline } from 'react-icons/io5';
+import { IoCalendarClearOutline, IoLogOutOutline } from 'react-icons/io5';
 import SmallNameCard from './SmallNameCard';
+import { useNavigate } from 'react-router-dom';
+import { AiOutlineFundProjectionScreen } from 'react-icons/ai';
+import { useDispatch, useSelector } from 'react-redux';
+import { userLoggedOut } from '../../features/auth/authSlice';
+import { Button } from '@mui/material';
 
 const AlumniSidebar = () => {
+  const dispatch = useDispatch();
+  const { name, githubUsername } =
+    useSelector((state) => state?.auth?.user) || {};
+  const role = useSelector((state) => state?.auth?.role);
+  const logout = () => {
+    window.location.href = '/';
+    dispatch(userLoggedOut());
+    localStorage.removeItem('role');
+  };
+  const navigate = useNavigate();
+
   const handleDashboard = () => {
-    console.log('Dashboard');
+    navigate('/alumni/profile');
   };
   const handleProjectCode = () => {
-    console.log('Project Code');
+    navigate('/alumni/projectcode');
   };
-  const handleTechSkill = () => {
-    console.log('Tech Skill');
+
+  const handlePortfolio = () => {
+    navigate('/alumni/profile/portfolio');
   };
-  const handleSoftSkill = () => {
-    console.log('Soft Skill');
-  };
-  const handleJunior = () => {
-    console.log('Junior');
-  };
-  const handleSenior = () => {
-    console.log('Senior');
-  };
-  const handleExperience = () => {
-    console.log('Experience');
+  const handleEducation = () => {
+    navigate('/alumni/education');
   };
   const handleCertification = () => {
+    alert('coming soon');
     console.log('Certification');
+  };
+  const handleExperience = () => {
+    navigate('/alumni/experience');
   };
 
   return (
     <>
-      <ul className="menu p-4 w-64 bg-#FFFBFB bg-white shadow-xl h-screen flex-col flex-wrap">
+      <ul className=" menu p-4 w-64 bg-#FFFBFB bg-white shadow-xl h-screen flex-col flex-wrap">
         <div className="flex">
           <a className="btn btn-ghost normal-case text-xl text-purple-700">
             CampusFlow
@@ -56,21 +68,20 @@ const AlumniSidebar = () => {
             </a>
           </li>
           <li>
-            <a onClick={handleTechSkill}>
-              <RiUserSettingsLine color="gray" />
-              Tech Skills
+            <a onClick={handlePortfolio}>
+              <AiOutlineFundProjectionScreen color="gray" />
+              Portfolio
             </a>
           </li>
           <li>
-            <a onClick={handleSoftSkill}>
-              <FaBrain color="gray" />
-              Soft Skills
+            <a onClick={handleEducation}>
+              <FaUserGraduate />
+              Education
             </a>
           </li>
           <li>
             <a onClick={handleExperience}>
-              <BsBriefcase color="gray" />
-              Experience
+              <BsBriefcase color="gray" /> Experience
             </a>
           </li>
           <li>
@@ -80,8 +91,26 @@ const AlumniSidebar = () => {
             </a>
           </li>
         </div>
-        <div className="m-auto">
-          <SmallNameCard />
+        <div>
+          <div className=" mt-[30vh]">
+            <SmallNameCard
+              name={name}
+              githubUsername={githubUsername}
+              role={role}
+            />
+          </div>
+          <div className=" mt-5 ">
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={logout}
+              fullWidth
+              size="small"
+            >
+              <span className="text-lg capitalize"> Logout </span>
+              <IoLogOutOutline className="text-2xl ml-2" onClick={logout} />
+            </Button>
+          </div>
         </div>
       </ul>
     </>

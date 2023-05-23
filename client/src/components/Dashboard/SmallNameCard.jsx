@@ -1,22 +1,32 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const SmallNameCard = ({ name, profileImg, status }) => {
+const SmallNameCard = ({ name, githubUsername, status, type, id }) => {
+  const navigate = useNavigate();
+  const handleStudentClick = (id) => {
+    console.log('id', id);
+    navigate(`/student/${id}`);
+  };
+
   return (
     <div
       className="bordered shadow-sm px-5 py-3
-     flex bg-white  rounded-2xl mr-5"
+     flex bg-white  rounded-2xl mr-5 hover:shadow-lg cursor-pointer"
+      onClick={() => handleStudentClick(id)}
     >
       <div className="avatar mr-2">
         <div className="w-12 rounded-full">
-          <img src="https://raw.githubusercontent.com/zahidtwt/zahidlive/main/277801721_1146010236235641_4251157026316733609_n.jpg" />
+          <img
+            src={`https://avatars.githubusercontent.com/${githubUsername}`}
+          />
         </div>
       </div>
       <div className="flex flex-col justify-center ">
-        <div className="font-semibold text-xl md:text-lg">
+        <div className="font-semibold text-sm">
           {/* TODO: fix href */}
-          <a href="/">Zahid Ul Islam</a>
+          <a>{name}</a>
         </div>
-        <div className="text-sm text-gray-500">Alumni</div>
+        <div className="text-sm text-gray-500 capitalize">{type}</div>
       </div>
     </div>
   );

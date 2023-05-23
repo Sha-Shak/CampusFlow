@@ -35,6 +35,7 @@ const CreateCohortModal = ({ open, onClose, refetchCohort }) => {
     }
   };
   useEffect(handleSuccess, [isSuccess, isError, error]);
+
   // JSX for the modal body
   const modalBody = (
     <Box
