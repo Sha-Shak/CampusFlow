@@ -28,10 +28,12 @@ const BeautifulCheckbox = () => {
             display: 'inline-flex',
             alignItems: 'center',
             justifyContent: 'center',
-            backgroundColor:
-              selectedOption === option ? 'purple' : 'transparent',
+            background:
+              selectedOption === option
+                ? 'linear-gradient( 136deg, #e73c7e 0%, #6f1ddc 50%, #6f1ddc 100%)'
+                : 'transparent',
             color: selectedOption === option ? '#fff' : 'inherit',
-            borderRadius: '5px',
+            borderRadius: '10px',
             padding: '16px',
             marginTop: '10px',
             cursor: 'pointer',
@@ -48,8 +50,9 @@ const BeautifulCheckbox = () => {
                 left: '0',
                 right: '0',
                 bottom: '0',
-                background:
-                  'linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 100%)',
+                // background:
+                //   'linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 100%)',
+                // // 'linear-gradient( 136deg, #e73c7e 0%, #6f1ddc 50%, #6f1ddc 100%)
                 borderRadius: '5px',
                 pointerEvents: 'none',
               }}

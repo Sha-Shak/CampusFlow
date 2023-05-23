@@ -118,7 +118,6 @@ const ExperienceForm = () => {
           disabled
           label="To Date"
           type="date"
-          disabled={status}
           value={toDate}
           onChange={(event) => setToDate(event.target.value)}
           required
