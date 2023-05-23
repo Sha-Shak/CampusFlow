@@ -15,7 +15,6 @@ import Dashboard from './pages/Dashboard.page';
 import CurriculumComponent from './pages/Curriculum.page';
 import CohortStudents from './components/Cohorts/CohortStudents';
 import Cohorts from './pages/Cohorts.page';
-import SkillsRadarChart from './components/StudentInfo/SkillsRadarChart';
 import StudentInfo from './pages/StudentInfo';
 import MarkStudents from './pages/MarkStudents.page';
 import AddSkill from './pages/AddSkills.page';
@@ -24,8 +23,7 @@ import PeerRatings from './pages/PeerRatings.page';
 
 import AlumniProfile from './pages/AlumniProfile.jsx';
 import Portfolio from './components/alumniComponents/Portfolio';
-import GithubGraph from './components/alumniComponents/GithubGraph';
-import useZoom from './hooks/useZoom';
+
 import useAuthCheck from './hooks/useAuthCheck';
 import AlumniUpdateProfile from './pages/AlumniUpdateProfile.page';
 import AlumniProjectcode from './pages/AlumniProjectcode';
@@ -34,7 +32,7 @@ import { Toaster } from 'react-hot-toast';
 import AlumniPortfolio from './pages/AlumniPortfolio';
 import AlumniEducation from './pages/AlumniEducation';
 import AlumniExperience from './pages/AlumniExperience';
-import HRDND from './pages/hrdnd';
+
 import HRloginPage from './pages/HR/HRloginPage';
 import HRQuesetions from './pages/HR/HRQuestions.page';
 function App() {
