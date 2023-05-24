@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import AlumniLayout from '../components/alumniComponents/AlumniLayout';
-import { useGetStudentWeekInfoByTypeQuery } from '../features/student/studentApi';
+import {
+  useGetMidEndDataByStudentIDQuery,
+  useGetStudentWeekInfoByTypeQuery,
+} from '../features/student/studentApi';
 import { useGetAssessmentMarksByStudentIDQuery } from '../features/student/studentApi';
 import { useGetUnitMarksByStudentIDQuery } from '../features/student/studentApi';
 import SkillsRadarChart from '../components/StudentInfo/SkillsRadarChart';

@@ -69,4 +69,9 @@ router.get(
 
 // router.post('/changeCohort', githubController.changeCohort);
 
+router.post(
+  '/removeAccessTokenFromGithub',
+  githubController.removeAccessTokenFromGithub
+);
+
 module.exports = router;
