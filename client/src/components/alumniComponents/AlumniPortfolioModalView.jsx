@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Chip from '../AlumniComponents/Chip';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 function AlumniPortfolioModalView({ project }) {
   // console.log('project apps', project);
@@ -15,9 +16,12 @@ function AlumniPortfolioModalView({ project }) {
     setyoutubevdo(getYoutubePreview(project?.youtubeLink));
   }, []);
 
+  const { accessToken } = useSelector((state) => state?.auth) || {};
+  console.log('accessToken', accessToken);
   useEffect(() => {
     const headers = {
-      'github-access-token': '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',
+      // 'github-access-token': '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',
+      'github-access-token': accessToken,
     };
     axios
       .get(

@@ -22,11 +22,10 @@ import toast from 'react-hot-toast';
 import { useGetAllSkillsQuery } from '../../../features/skill/skillApi';
 import { useSelector } from 'react-redux';
 const projectTypes = [
-  'Solo Project',
-  'Legacy Project',
-  'Thesis Project',
-  'Group Project',
-  'Personal Project',
+  { name: 'Solo Project', value: 'solo' },
+  { name: 'Legacy Project', value: 'legacy' },
+  { name: 'Thesis Project', value: 'thesis' },
+  { name: 'Personal Project', value: 'personal' },
 ];
 const ProjectForm = () => {
   const [projectName, setProjectName] = useState('');
@@ -138,125 +137,118 @@ const ProjectForm = () => {
           <Divider>
             <Typography variant="h6">Add Project Info</Typography>
           </Divider>
-          <form onSubmit={handleSubmit}>
-            <TextField
-              label="Project Name"
-              value={projectName}
-              onChange={(event) => setProjectName(event.target.value)}
+          <TextField
+            label="Project Name"
+            value={projectName}
+            onChange={(event) => setProjectName(event.target.value)}
+            required
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="YouTube Link"
+            value={youtubeLink}
+            onChange={handleYoutubeLinkChange}
+            fullWidth
+            margin="normal"
+          />
+          <FormControl fullWidth margin="normal">
+            <InputLabel id="project-type-label">Project Type</InputLabel>
+            <Select
+              labelId="project-type-label"
+              label="Project Type"
+              id="project-type-select"
+              value={projectType}
+              onChange={handleProjectTypeChange}
               required
-              fullWidth
-              margin="normal"
-            />
-            <TextField
-              label="YouTube Link"
-              value={youtubeLink}
-              onChange={handleYoutubeLinkChange}
-              fullWidth
-              margin="normal"
-            />
-            <FormControl fullWidth margin="normal">
-              <InputLabel id="project-type-label">Project Type</InputLabel>
-              <Select
-                labelId="project-type-label"
-                label="Project Type"
-                id="project-type-select"
-                value={projectType}
-                onChange={handleProjectTypeChange}
-                required
-              >
-                {projectTypes.map((type) => (
-                  <MenuItem key={type} value={type}>
-                    {type}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <SelectIndustry setProjectCategory={setProjectCategory} />
-            <TextField
-              label="Description"
-              value={description}
-              onChange={(event) => setDescription(event.target.value)}
-              required
-              fullWidth
-              multiline
-              rows={1}
-              margin="normal"
-            />
-            <TextField
-              label="Github Repo Link"
-              value={githubRepoLink}
-              onChange={(event) => setGithubRepoLink(event.target.value)}
-              required
-              fullWidth
-              margin="normal"
-            />
-            <TextField
-              label="Project Live Link"
-              value={projectLiveLink}
-              onChange={(event) => setProjectLiveLink(event.target.value)}
-              fullWidth
-              margin="normal"
-            />
-            <Autocomplete
-              multiple
-              options={techSkills || []}
-              getOptionLabel={(skill) => skill?.skillName}
-              value={selectedSkills}
-              onChange={(event, value) => setSelectedSkills(value)}
-              renderTags={(value, getTagProps) =>
-                value.map((skill, index) => (
-                  <Chip
-                    key={index}
-                    label={skill?.skillName}
-                    {...getTagProps({ index })}
-                    onDelete={() =>
-                      setSelectedSkills((prevSkills) =>
-                        prevSkills?.filter((_, i) => i !== index)
-                      )
-                    }
-                    style={{ marginRight: '5px', marginBottom: '5px' }}
-                  />
-                ))
-              }
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Skills"
-                  fullWidth
-                  margin="normal"
-                />
-              )}
-            />
-
-            <CompanyNameAutocomplete setThirdPartyApis={setThirdPartyApis} />
-
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginTop: '1rem',
-              }}
             >
-              <Button
-                type="cancel"
-                variant="contained"
-                color="info"
-                onClick={handleReset}
-                sx={{ px: 5 }}
-              >
-                Reset Form
-              </Button>
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                sx={{ px: 5 }}
-              >
-                Add Project
-              </Button>
-            </Box>
-          </form>
+              {projectTypes.map((type) => (
+                <MenuItem key={type} value={type.value}>
+                  {type.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <SelectIndustry setProjectCategory={setProjectCategory} />
+          <TextField
+            label="Description"
+            value={description}
+            onChange={(event) => setDescription(event.target.value)}
+            required
+            fullWidth
+            multiline
+            rows={1}
+            margin="normal"
+          />
+          <TextField
+            label="Github Repo Link"
+            value={githubRepoLink}
+            onChange={(event) => setGithubRepoLink(event.target.value)}
+            required
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="Project Live Link"
+            value={projectLiveLink}
+            onChange={(event) => setProjectLiveLink(event.target.value)}
+            fullWidth
+            margin="normal"
+          />
+          <Autocomplete
+            multiple
+            options={techSkills || []}
+            getOptionLabel={(skill) => skill?.skillName}
+            value={selectedSkills}
+            onChange={(event, value) => setSelectedSkills(value)}
+            renderTags={(value, getTagProps) =>
+              value.map((skill, index) => (
+                <Chip
+                  key={index}
+                  label={skill?.skillName}
+                  {...getTagProps({ index })}
+                  onDelete={() =>
+                    setSelectedSkills((prevSkills) =>
+                      prevSkills?.filter((_, i) => i !== index)
+                    )
+                  }
+                  style={{ marginRight: '5px', marginBottom: '5px' }}
+                />
+              ))
+            }
+            renderInput={(params) => (
+              <TextField {...params} label="Skills" fullWidth margin="normal" />
+            )}
+          />
+
+          <CompanyNameAutocomplete setThirdPartyApis={setThirdPartyApis} />
+
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginTop: '1rem',
+            }}
+          >
+            <Button
+              type="cancel"
+              variant="contained"
+              color="info"
+              onClick={handleReset}
+              sx={{ px: 5 }}
+            >
+              Reset Form
+            </Button>
+            <Button
+              onClick={handleSubmit}
+              variant="contained"
+              color="primary"
+              sx={{ px: 5 }}
+            >
+              Add Project
+            </Button>
+          </Box>
         </div>
         <div className="flex-[0.3] px-10">
           <Divider>
