@@ -14,6 +14,7 @@ import StepConnector, {
 import BeautifulCheckbox from './BeautifulCheckbox';
 import { Button } from '@mui/material';
 import SelectableChips from './SelectableChips';
+import SelectIndustry from '../../components/alumniComponents/SelectIndustry';
 
 const QontoConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
@@ -207,13 +208,14 @@ export default function HRMultiSteps() {
         );
       case 2:
         return (
-          <input
-            type="text"
-            name="industries"
-            placeholder="Enter the industries you need"
-            value={formData.industries}
-            onChange={handleInputChange}
-          />
+          // <input
+          //   type="text"
+          //   name="industries"
+          //   placeholder="Enter the industries you need"
+          //   value={formData.industries}
+          //   onChange={handleInputChange}
+          // />
+          <SelectIndustry />
         );
       default:
         return null;
