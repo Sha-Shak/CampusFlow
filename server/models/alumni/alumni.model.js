@@ -96,6 +96,9 @@ const alumniSchema = new mongoose.Schema({
       url: String,
     },
   ],
+  stack: {
+    type: String,
+  },
 });
 const Alumni = mongoose.model('Alumni', alumniSchema);
 module.exports = Alumni;

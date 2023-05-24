@@ -211,6 +211,21 @@ const getAlumniById = async (req, res) => {
   }
 };
 
+const addStack = async (req, res) => {
+  const { id } = req.params; // alumni id
+  const { stack } = req.body;
+  try {
+    const alumni = await Alumni.findById(id);
+    // console.log(alumni.stack);
+    alumni.stack = stack;
+    await alumni.save();
+    res.status(200).send({ message: 'Stack added', alumni });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send('Internal Server Error');
+  }
+};
+
 module.exports = {
   test,
   convertToAlumni,
@@ -218,6 +233,7 @@ module.exports = {
   deleteInfo,
   addSkills,
   getAlumniById,
+  addStack,
   //   addEducation,
   //   deleteEducation,
   //   addExperience,

@@ -12,6 +12,7 @@ const peerRatingRoute = require('./routes/peerRating.route');
 const cohortRoute = require('./routes/cohort.route');
 const alumniRoute = require('./routes/alumni.route');
 const apiRoute = require('./routes/api.route');
+const hrRoute = require('./routes/hr.route');
 const app = express();
 const PORT = process.env.PORT || 8080;
 
@@ -36,6 +37,7 @@ app.use('/peerRating', peerRatingRoute);
 app.use('/cohort', cohortRoute);
 app.use('/alumni', alumniRoute);
 app.use('/api', apiRoute);
+app.use('/hr', hrRoute);
 
 app.listen(PORT, () => {
   console.log(`🚀  Listening on port ${PORT}`);
