@@ -38,13 +38,13 @@ const companies = [
 
 const WhyProjectCode = () => {
   return (
-    <div className="flex flex-col items-center m-2 h-screen ">
+    <div className="flex flex-col items-center h-[90vh] bg-white m-10 p-10 rounded-3xl shadow-lg">
+      <img className="w-64" src="/public/projectcodefull.png" alt="logo" />{' '}
       <div className="flex flex-col justify-center">
-        <img src="/public/projectcodefull.png" alt="logo" />
-        <div className="flex justify-center text-4xl font-bold  text-[#7E22CE]">
+        <div className="flex justify-center text-2xl font-bold  text-[#7E22CE] mt-5">
           Why Project Code?
         </div>
-        <div className="flex justify-center text-xl font-normal  text-[#3E67AE] m-2 mb-10 gap-2">
+        <div className="flex justify-center text-lg font-normal  text-[#3E67AE] m-2 mb-10 gap-2">
           <span>RELIABLE,</span>
           <span>EFFECIENT, </span>
           <span>CONVENIENT</span>
@@ -52,27 +52,27 @@ const WhyProjectCode = () => {
       </div>
       <div className="flex flex-col gap-2">
         <div className="flex flex-row justify-start gap-2">
-          <p className="text-lg text-left text-[#444444] flex items-center gap-2">
+          <p className="text-sm text-left text-[#444444] flex items-center gap-2">
             <FaCheck className="text-[#444444] text-sm" />
             Immediate access to new talent markets with Project Code’s Always-on
             Hiring.
           </p>
         </div>
         <div className="flex flex-row justify-start gap-2">
-          <p className="text-lg text-left text-[#444444] flex items-center gap-2">
+          <p className="text-sm text-left text-[#444444] flex items-center gap-2">
             <FaCheck className="text-[#444444] text-sm" />
             Build and scale your teams while enabling a multicultural, diverse.
           </p>
         </div>
         <div className="flex flex-row justify-start gap-2">
-          <p className="text-lg text-left text-[#444444] flex items-center gap-2">
+          <p className="text-sm text-left text-[#444444] flex items-center gap-2">
             <FaCheck className="text-[#444444] text-sm" />
             More than just hiring
           </p>
         </div>
       </div>
-      <div className="mt-10">
-        <span className="text-2xl font-semibold text-[#3650B0] uppercase animate-pulse">
+      <div className="mt-20">
+        <span className="text-lg font-semibold text-[#3650B0] uppercase ">
           Amazing hiring partners believe in our program
         </span>
         <div className="mt-5 flex flex-wrap justify-center gap-2">
@@ -80,7 +80,7 @@ const WhyProjectCode = () => {
             <img
               src={company.logo}
               alt={company.name}
-              className="w-[140px] h-[65px] m-2"
+              className="w-[90px] m-2"
             />
           ))}
         </div>
@@ -89,7 +89,7 @@ const WhyProjectCode = () => {
             <img
               src={company.logo}
               alt={company.name}
-              className="w-[140px] h-[65px] m-2"
+              className="w-[90px]  m-2"
             />
           ))}
         </div>

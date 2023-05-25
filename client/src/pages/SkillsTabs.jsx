@@ -17,7 +17,7 @@ function SkillsTabs({ type, skills }) {
         <>
           {skills?.map((skill, index) => {
             return (
-              <div className="flex items-center justify-start ">
+              <div key={index} className="flex items-center justify-start ">
                 <div className="text-lg w-[25%]">{skill?.skill?.skillName}</div>
                 <progress
                   className={`progress progress-${color[index]} w-72 h-3`}
@@ -39,7 +39,7 @@ function SkillsTabs({ type, skills }) {
         <>
           {skills?.map((skill, index) => {
             return (
-              <div className="flex items-center justify-start ">
+              <div key={index} className="flex items-center justify-start ">
                 <div className="text-lg w-[25%]">{skill?.skill?.skillName}</div>
                 <progress
                   className={`progress progress-${color[index]} w-72 h-3`}
@@ -60,7 +60,7 @@ function SkillsTabs({ type, skills }) {
         <>
           {skills?.map((skill, index) => {
             return (
-              <div className="flex items-center justify-start ">
+              <div key={index} className="flex items-center justify-start ">
                 <div className="text-lg w-[25%]">{skill?.skill?.skillName}</div>
                 <progress
                   className={`progress progress-${color[index]} w-72 h-3`}

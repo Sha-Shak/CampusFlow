@@ -62,7 +62,7 @@ const convertToAlumni = async (req, res) => {
 // };
 
 const postInfo = async (req, res) => {
-  const { id } = req.params;
+  const { id } = req.params; // student id
   const type = req.query.type;
   const { info } = req.body;
 
@@ -198,13 +198,28 @@ const addSkills = async (req, res) => {
 // };
 
 const getAlumniById = async (req, res) => {
-  const { id } = req.params;
+  const { id } = req.params; // alumni id
   try {
     const alumni = await Alumni.findById(id).populate('projects');
     //populate doneby
 
     if (!alumni) return res.status(404).send({ message: 'Alumni not found' });
     res.status(200).send(alumni);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send('Internal Server Error');
+  }
+};
+
+const addStack = async (req, res) => {
+  const { id } = req.params; // alumni id
+  const { stack } = req.body;
+  try {
+    const alumni = await Alumni.findById(id);
+    // console.log(alumni.stack);
+    alumni.stack = stack;
+    await alumni.save();
+    res.status(200).send({ message: 'Stack added', alumni });
   } catch (err) {
     console.log(err);
     res.status(500).send('Internal Server Error');
@@ -218,6 +233,7 @@ module.exports = {
   deleteInfo,
   addSkills,
   getAlumniById,
+  addStack,
   //   addEducation,
   //   deleteEducation,
   //   addExperience,
