@@ -1,5 +1,7 @@
 require('dotenv').config();
 const axios = require('axios');
+const btoa = require('btoa');
+
 const gh_client_id = process.env.GITHUB_CLIENT_ID;
 const gh_client_secret = process.env.GITHUB_CLIENT_SECRET;
 const gh_personal_token = process.env.GITHUB_PERSONAL_TOKEN;
@@ -424,6 +426,29 @@ const getCollaborators = async (req, res) => {
   }
 };
 
+// remove access token form github
+async function removeAccessTokenFromGithub(req, res) {
+  const githubAccessToken = req.body.accessToken;
+  // const url = `https://api.github.com/applications/${gh_client_id}/tokens/${githubAccessToken}`;
+
+  try {
+    const response = await axios.post(
+      `https://api.github.com/applications/${clientID}/tokens/${githubAccessToken}`,
+      {},
+      {
+        headers: {
+          Authorization: `Basic ${btoa(`${gh_client_id}:${gh_client_secret}`)}`,
+          'Content-Length': '0',
+        },
+      }
+    );
+    res.status(200).json({ message: 'Token removed' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+}
+
 // utils
 async function getCurrentUser(token) {
   try {
@@ -507,4 +532,5 @@ module.exports = {
   getOrgInstructors,
   getOrgMembers,
   getCollaborators,
+  removeAccessTokenFromGithub,
 };
