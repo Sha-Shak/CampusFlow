@@ -61,6 +61,7 @@ const test = async (req, res) => {
 };
 
 const stackWiseFilter = async (req, res) => {
+  console.log('hello from neptune');
   const stackType = req.body.stack; // frontend, backend, fullstack
   const skilltypeIds = req.body.skill; // react, angular, nodejs, expressjs, mongodb, mysql, etc's id
   try {
@@ -147,7 +148,7 @@ const stackWiseFilter = async (req, res) => {
           skilltypeId
         );
       }
-      return res.send(filteredAlumniListByFullStack);
+      return res.status(200).send(filteredAlumniListByFullStack);
     }
   } catch (err) {
     console.log(err);

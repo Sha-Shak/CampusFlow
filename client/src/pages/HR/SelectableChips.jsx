@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Chip, Divider, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { RiReactjsLine } from 'react-icons/ri';
@@ -13,24 +13,33 @@ import {
   SiRedis,
   SiPostgresql,
 } from 'react-icons/si';
+import { useGetAllSkillsQuery } from '../../features/skill/skillApi';
 
-const FrontendOptions = [
-  { label: 'React', icon: RiReactjsLine },
-  { label: 'Angular', icon: FaAngular },
-  { label: 'Next.js', icon: SiNextdotjs },
-  { label: 'Redux', icon: SiRedux },
-  { label: 'GraphQL', icon: SiGraphql },
-];
+export default function SelectableChips({
+  setFrontendSkill,
+  setBackendSkill,
+  stack,
+}) {
+  const {
+    data: skillsName,
+    isSuccess,
+    refetch: refetchSkills,
+  } = useGetAllSkillsQuery();
 
-const BackendOptions = [
-  { label: 'Node', icon: FaNodeJs },
-  { label: 'Express.js', icon: SiExpress },
-  { label: 'MongoDB', icon: SiMongodb },
-  { label: 'PostgreSQL', icon: SiPostgresql },
-  { label: 'Redis', icon: SiRedis },
-];
+  const frontendSkills = skillsName?.filter((skill) => {
+    return skill?.stack?.includes('frontend');
+  });
+  const frontendSeniorSkill = frontendSkills?.filter((skill) => {
+    return skill?.studentType.includes('senior');
+  });
 
-export default function SelectableChips() {
+  const backendSkills = skillsName?.filter((skill) => {
+    return skill?.stack?.includes('backend');
+  });
+  const backendSeniorSkill = backendSkills?.filter((skill) => {
+    return skill?.studentType.includes('senior');
+  });
+
   const [selectedFrontend, setSelectedFrontend] = useState([]);
   const [selectedBackend, setSelectedBackend] = useState([]);
 
@@ -43,6 +52,12 @@ export default function SelectableChips() {
       setSelectedFrontend((prevSelected) => [...prevSelected, option]);
     }
   };
+  useEffect(() => {
+    setFrontendSkill(selectedFrontend);
+  }, [selectedFrontend]);
+  useEffect(() => {
+    setBackendSkill(selectedBackend);
+  }, [selectedBackend]);
 
   const handleBackendClick = (option) => {
     if (selectedBackend.includes(option)) {
@@ -56,52 +71,64 @@ export default function SelectableChips() {
 
   return (
     <div>
-      <div className="mt-5">
-        <Divider>
-          <Typography variant="h5" mb="10px">
-            FRONTEND
-          </Typography>
-        </Divider>
-        {FrontendOptions.map((option) => (
-          <Chip
-            key={option.label}
-            label={option.label}
-            onClick={() => handleFrontendClick(option)}
-            color={selectedFrontend.includes(option) ? 'primary' : 'default'}
-            variant={selectedFrontend.includes(option) ? 'filled' : 'outlined'}
-            style={{
-              margin: '10px',
-              padding: '5px',
-              height: '40px',
-              fontSize: '20px',
-            }}
-            icon={React.createElement(option.icon)}
-          />
-        ))}
-      </div>
-      <div className="mt-10">
-        <Divider>
-          <Typography variant="h5" mb="10px">
-            BACKEND
-          </Typography>
-        </Divider>
-        {BackendOptions.map((option) => (
-          <Chip
-            key={option.label}
-            label={option.label}
-            onClick={() => handleBackendClick(option)}
-            color={selectedBackend.includes(option) ? 'primary' : 'default'}
-            variant={selectedBackend.includes(option) ? 'filled' : 'outlined'}
-            style={{
-              margin: '10px',
-              padding: '5px',
-              height: '40px',
-              fontSize: '20px',
-            }}
-            icon={React.createElement(option.icon)}
-          />
-        ))}
-      </div>
+      {(stack === 'frontend' || stack === 'fullstack') && (
+        <div className="mt-5">
+          <Divider>
+            <Typography variant="h5" mb="10px">
+              FRONTEND
+            </Typography>
+          </Divider>
+          {frontendSeniorSkill?.map((option) => (
+            <Chip
+              key={option?._id}
+              label={option?.skillName}
+              onClick={() => handleFrontendClick(option?._id)}
+              color={
+                selectedFrontend.includes(option?._id) ? 'primary' : 'default'
+              }
+              variant={
+                selectedFrontend.includes(option?._id) ? 'filled' : 'outlined'
+              }
+              style={{
+                margin: '10px',
+                padding: '5px',
+                height: '40px',
+                fontSize: '20px',
+              }}
+              // icon={React.createElement(option.icon)}
+            />
+          ))}
+        </div>
+      )}
+      {(stack === 'backend' || stack === 'fullstack') && (
+        <div className="mt-10">
+          <Divider>
+            <Typography variant="h5" mb="10px">
+              BACKEND
+            </Typography>
+          </Divider>
+          {backendSeniorSkill?.map((option) => (
+            <Chip
+              key={option?._id}
+              label={option?.skillName}
+              onClick={() => handleBackendClick(option?._id)}
+              color={
+                selectedBackend.includes(option?._id) ? 'primary' : 'default'
+              }
+              variant={
+                selectedBackend.includes(option?._id) ? 'filled' : 'outlined'
+              }
+              style={{
+                margin: '10px',
+                padding: '5px',
+                height: '40px',
+                fontSize: '20px',
+              }}
+              // icon={React.createElement(option.icon)}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

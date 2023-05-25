@@ -78,6 +78,7 @@ const WhyProjectCode = () => {
         <div className="mt-5 flex flex-wrap justify-center gap-2">
           {companies.slice(0, 4).map((company) => (
             <img
+              key={company.name}
               src={company.logo}
               alt={company.name}
               className="w-[90px] m-2"
@@ -87,6 +88,7 @@ const WhyProjectCode = () => {
         <div className="mt-5 flex flex-wrap justify-center gap-2">
           {companies.slice(4).map((company) => (
             <img
+              key={company.name}
               src={company.logo}
               alt={company.name}
               className="w-[90px]  m-2"
