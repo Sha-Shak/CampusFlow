@@ -429,7 +429,7 @@ const getCollaborators = async (req, res) => {
 // remove access token form github
 async function removeAccessTokenFromGithub(req, res) {
   const githubAccessToken = req.body.accessToken;
-  const url = `https://api.github.com/applications/${gh_client_id}/tokens/${githubAccessToken}`;
+  // const url = `https://api.github.com/applications/${gh_client_id}/tokens/${githubAccessToken}`;
 
   try {
     const response = await axios.post(
