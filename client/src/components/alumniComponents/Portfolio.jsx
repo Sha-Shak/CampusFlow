@@ -1,6 +1,6 @@
 import React from 'react';
-import ProjectSection from '../AlumniComponents/ProjectSection';
-import Chip from './Chip';
+import ProjectSection from '../alumniComponents/ProjectSection';
+import Chip from '../alumniComponents/Chip';
 import { useNavigate } from 'react-router-dom';
 import { BsArrowRight } from 'react-icons/bs';
 const Portfolio = ({ alumniInfo, techStack }) => {

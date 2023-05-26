@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Chip from '../AlumniComponents/Chip';
+import Chip from '../alumniComponents/Chip';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 

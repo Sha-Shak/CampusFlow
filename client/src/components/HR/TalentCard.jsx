@@ -1,7 +1,7 @@
 import React from 'react';
 import { FiPhoneCall, FiLinkedin, FiGlobe } from 'react-icons/fi';
 import { SlEnvolope } from 'react-icons/sl';
-import Chip from '../AlumniComponents/Chip';
+import Chip from '../alumniComponents/Chip';
 import { GoLocation } from 'react-icons/go';
 import moment from 'moment';
 function TalentCard() {
