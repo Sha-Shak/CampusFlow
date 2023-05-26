@@ -23,7 +23,7 @@ function LoginPage() {
               className="w-40 h-40 border-2 border-indigo-50 rounded-full"
             />
           </div>
-          <a href="https://github.com/login/oauth/authorize?client_id=349cd35007a641dd3b2d">
+          <a href="https://github.com/login/oauth/authorize?client_id=9d1c7643a36826dd9a94">
             {/* <button>asdfasdf</button> */}
             <button className="btn bg-purple-200  border-none text-gray-500 hover:bg-purple-300 ">
               <div className="flex gap-2 items-center p-2">
