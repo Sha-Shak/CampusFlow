@@ -24,7 +24,7 @@ function MiniSearchResults() {
           key={result?.studentId}
           className={`bg-white mt-6 rounded-lg shadow-md p-2 cursor-pointer hover:bg-gray-100 ${
             result?.studentId == activeId
-              ? 'bg-purple-200 border-2 border-purple-500'
+              ? 'bg-purple-200 border-2 border-purple-300'
               : ''
           }`}
           onClick={() => {
@@ -41,7 +41,7 @@ function MiniSearchResults() {
             </div>
             <div className="flex flex-col gap-2">
               <div>
-                <div className="text-xl font-semibold text-purple-700 drop-shadow-lg">
+                <div className="text-md font-semibold text-purple-700 drop-shadow-lg">
                   {result?.alumniDetails?.name}
                 </div>
                 <div className="text-sm text-gray-700 drop-shadow-lg capitalize">
