@@ -149,7 +149,7 @@ const AlumniProfile = () => {
 
           <Portfolio alumniInfo={alumniInfo} techStack={techStack} />
           <div className="flex gap-4">
-            <GithubGraph alumniInfo={alumniInfo} />
+            <GithubGraph githubUsername={alumniInfo?.githubUsername} />
             <SiteChip alumniInfo={alumniInfo} />
           </div>
         </div>

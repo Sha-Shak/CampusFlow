@@ -11,6 +11,7 @@ import {
 } from 'recharts';
 
 const SkillsRadarChart = ({ skills }) => {
+  console.log('hi');
   const createFormattedData = (skills) => {
     return skills?.map((skill) => {
       return {

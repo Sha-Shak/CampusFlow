@@ -15,7 +15,7 @@ const Portfolio = ({ alumniInfo, techStack }) => {
           <div className="flex justify-between ">
             <div className="text-2xl font-bold m-2">Portfolio</div>
             {/* View All */}
-            <div
+            {/* <div
               className=" cursor-pointer flex gap-2 mt-4 mr-4"
               onClick={handleViewAll}
             >
@@ -24,7 +24,7 @@ const Portfolio = ({ alumniInfo, techStack }) => {
               </div>
 
               <BsArrowRight size={16} className="text-indigo-600" />
-            </div>
+            </div> */}
           </div>
 
           <div className="card-body m-2 p-0">

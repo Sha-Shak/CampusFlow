@@ -1,6 +1,6 @@
 import React from 'react';
+import HRMultiSteps from '../../components/HR/HRMultiStep';
 import WhyProjectCode from '../../components/HR/WhyProjectCode';
-import HRMultiSteps from './HRMultiStep';
 
 function HRQuestions() {
   return (

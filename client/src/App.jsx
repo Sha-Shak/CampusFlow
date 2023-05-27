@@ -36,6 +36,8 @@ import AlumniExperience from './pages/AlumniExperience';
 
 import HRloginPage from './pages/HR/HRloginPage';
 import HRQuesetions from './pages/HR/HRQuestions.page';
+import HRSearchResults from './pages/HR/HRSearchResults.page';
+import HRCandidatePreview from './pages/HR/HRCandidatePreview.page';
 function App() {
   // const zoomLevel = useZoom();
   const authChecked = useAuthCheck();
@@ -79,8 +81,12 @@ function App() {
             <Route path="education" element={<AlumniEducation />} />
             <Route path="experience" element={<AlumniExperience />} />
           </Route>
-          <Route path="/hr/login" element={<HRloginPage />} />
-          <Route path="/hr/query" element={<HRQuesetions />} />
+          <Route path="hr">
+            <Route path="login" element={<HRloginPage />} />
+            <Route path="query" element={<HRQuesetions />} />
+            <Route path="query-results" element={<HRSearchResults />} />
+            <Route path="candidate/:id" element={<HRCandidatePreview />} />
+          </Route>
           <Route path="*" element={<div>404</div>} />
         </Routes>
       </Router>
