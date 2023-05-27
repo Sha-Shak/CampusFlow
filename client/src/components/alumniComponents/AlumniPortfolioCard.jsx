@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Chip from '../AlumniComponents/Chip';
+import Chip from '../alumniComponents/Chip';
 import { Modal, Box, Typography } from '@mui/material';
 import AlumniPortfolioModalView from '../alumniComponents/AlumniPortfolioModalView';
 function AlumniPortfolioCard({ project }) {

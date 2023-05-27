@@ -1,4 +1,3 @@
-import * as React from 'react';
 import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 import Stack from '@mui/material/Stack';
@@ -7,7 +6,7 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Check from '@mui/icons-material/Check';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
-
+import React, { useState, useEffect } from 'react';
 import StepConnector, {
   stepConnectorClasses,
 } from '@mui/material/StepConnector';
@@ -15,30 +14,7 @@ import BeautifulCheckbox from './BeautifulCheckbox';
 import { Button } from '@mui/material';
 import SelectableChips from './SelectableChips';
 import SelectIndustry from '../../components/alumniComponents/SelectIndustry';
-
-const QontoConnector = styled(StepConnector)(({ theme }) => ({
-  [`&.${stepConnectorClasses.alternativeLabel}`]: {
-    top: 10,
-    left: 'calc(-50% + 16px)',
-    right: 'calc(50% + 16px)',
-  },
-  [`&.${stepConnectorClasses.active}`]: {
-    [`& .${stepConnectorClasses.line}`]: {
-      borderColor: '#784af4',
-    },
-  },
-  [`&.${stepConnectorClasses.completed}`]: {
-    [`& .${stepConnectorClasses.line}`]: {
-      borderColor: '#784af4',
-    },
-  },
-  [`& .${stepConnectorClasses.line}`]: {
-    borderColor:
-      theme.palette.mode === 'dark' ? theme.palette.grey[800] : '#eaeaf0',
-    borderTopWidth: 3,
-    borderRadius: 1,
-  },
-}));
+import { usePostStackWiseFilterMutation } from '../../features/ hr/hrApi';
 
 const QontoStepIconRoot = styled('div')(({ theme, ownerState }) => ({
   color: theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#eaeaf0',
@@ -155,12 +131,22 @@ const steps = [
 ];
 
 export default function HRMultiSteps() {
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [formData, setFormData] = React.useState({
-    role: '',
-    skills: '',
-    industries: '',
-  });
+  const [activeStep, setActiveStep] = useState(0);
+
+  const [stack, setStack] = useState('');
+  const [frontendSkill, setFrontendSkill] = useState([]);
+  const [backendSkill, setBackendSkill] = useState([]);
+
+  const [filterCanidate, { data, loading, error }] =
+    usePostStackWiseFilterMutation();
+  useEffect(() => {
+    if (data) {
+      console.log(data);
+    }
+    if (error) {
+      console.log(error);
+    }
+  }, [data]);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -170,53 +156,39 @@ export default function HRMultiSteps() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
-  };
-
   const handleSubmit = () => {
-    console.log(formData);
+    let skilltypeIds;
+    if (stack === 'frontend') {
+      skilltypeIds = frontendSkill;
+    } else if (stack === 'backend') {
+      skilltypeIds = backendSkill;
+    } else {
+      skilltypeIds = frontendSkill.concat(backendSkill);
+    }
+
+    const query = {
+      stack: stack,
+      skill: skilltypeIds,
+    };
+    filterCanidate(query);
+    console.log(query);
+    console.log(data);
   };
 
   const renderForm = () => {
     switch (activeStep) {
       case 0:
-        return (
-          // <input
-          //   type="text"
-          //   name="role"
-          //   placeholder="Enter the role you would like to hire"
-          //   value={formData.role}
-          //   onChange={handleInputChange}
-          // />
-          <BeautifulCheckbox />
-        );
+        return <BeautifulCheckbox setStack={setStack} />;
       case 1:
         return (
-          // <input
-          //   type="text"
-          //   name="skills"
-          //   placeholder="Enter the skills or expertise you need"
-          //   value={formData.skills}
-          //   onChange={handleInputChange}
-          // />
-          <SelectableChips />
+          <SelectableChips
+            stack={stack}
+            setFrontendSkill={setFrontendSkill}
+            setBackendSkill={setBackendSkill}
+          />
         );
       case 2:
-        return (
-          // <input
-          //   type="text"
-          //   name="industries"
-          //   placeholder="Enter the industries you need"
-          //   value={formData.industries}
-          //   onChange={handleInputChange}
-          // />
-          <SelectIndustry />
-        );
+        return <SelectIndustry />;
       default:
         return null;
     }

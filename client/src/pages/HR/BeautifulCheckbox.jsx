@@ -1,14 +1,28 @@
 import React, { useState } from 'react';
 import Checkbox from '@mui/material/Checkbox';
 
-const BeautifulCheckbox = () => {
+const BeautifulCheckbox = ({ setStack }) => {
   const [selectedOption, setSelectedOption] = useState('');
 
   const handleCheckboxChange = (option) => {
     setSelectedOption(option);
+    setStack(option);
   };
 
-  const options = ['Full Stack', 'Backend', 'Front-end'];
+  const options = [
+    {
+      name: 'Full Stack',
+      value: 'fullstack',
+    },
+    {
+      name: 'Front End',
+      value: 'frontend',
+    },
+    {
+      name: 'Back End',
+      value: 'backend',
+    },
+  ];
 
   return (
     <div
@@ -20,8 +34,8 @@ const BeautifulCheckbox = () => {
     >
       {options.map((option) => (
         <div
-          key={option}
-          onClick={() => handleCheckboxChange(option)}
+          key={option.value}
+          onClick={() => handleCheckboxChange(option.value)}
           style={{
             width: '100%',
             position: 'relative',
@@ -29,20 +43,20 @@ const BeautifulCheckbox = () => {
             alignItems: 'center',
             justifyContent: 'center',
             background:
-              selectedOption === option
+              selectedOption === option.value
                 ? 'linear-gradient( 136deg, #e73c7e 0%, #6f1ddc 50%, #6f1ddc 100%)'
                 : 'transparent',
-            color: selectedOption === option ? '#fff' : 'inherit',
+            color: selectedOption === option.value ? '#fff' : 'inherit',
             borderRadius: '10px',
             padding: '16px',
             marginTop: '10px',
             cursor: 'pointer',
-            border: selectedOption === option ? 'none' : '1px solid',
+            border: selectedOption === option.value ? 'none' : '1px solid',
             transition:
               'background-color 0.3s ease-in-out, border 0.3s ease-in-out',
           }}
         >
-          {selectedOption === option && (
+          {selectedOption === option.value && (
             <div
               style={{
                 position: 'absolute',
@@ -59,14 +73,14 @@ const BeautifulCheckbox = () => {
             />
           )}
           <Checkbox
-            checked={selectedOption === option}
-            onChange={() => handleCheckboxChange(option)}
+            checked={selectedOption === option.value}
+            onChange={() => handleCheckboxChange(option.value)}
             color="default"
             sx={{
               display: 'none',
             }}
           />
-          {option}
+          {option.name}
         </div>
       ))}
     </div>

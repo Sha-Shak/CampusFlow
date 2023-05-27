@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
-import AlumniInfoCard from '../components/AlumniComponents/AlumniInfoCard';
-import Experience from '../components/AlumniComponents/Experience';
+import AlumniInfoCard from '../components/alumniComponents/AlumniInfoCard';
+import Experience from '../components/alumniComponents/Experience';
 import Portfolio from '../components/alumniComponents/Portfolio';
 import AlumniLayout from '../components/alumniComponents/AlumniLayout';
 import GithubGraph from '../components/alumniComponents/GithubGraph';
-import SiteChip from '../components/AlumniComponents/SiteChip';
+import SiteChip from '../components/alumniComponents/SiteChip';
 import SkillsRadarChart from '../components/StudentInfo/SkillsRadarChart';
 import SkillsTabs from './SkillsTabs';
 import { useGetAlumniByIdQuery } from '../features/alumni/alumniApi';
