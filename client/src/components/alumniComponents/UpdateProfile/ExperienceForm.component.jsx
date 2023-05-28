@@ -44,7 +44,6 @@ const ExperienceForm = () => {
   useEffect(() => {
     if (isSuccess) {
       toast.success('Experience added successfully');
-      handleClose();
     }
     if (error) {
       console.log(error);
@@ -115,7 +114,6 @@ const ExperienceForm = () => {
         />
 
         <TextField
-          disabled
           label="To Date"
           type="date"
           value={toDate}

@@ -5,6 +5,8 @@ import {
   BrowserRouter as Router,
   Routes,
 } from 'react-router-dom';
+import Lottie from 'lottie-react';
+import fourzerofour from './assets/fourzerofour.json';
 import LoginPage from './pages/Login.page';
 import RedirectOAuth from './pages/RedirectOAuth.page';
 import CandidateList from './pages/CandidateList';
@@ -38,6 +40,8 @@ import HRloginPage from './pages/HR/HRloginPage';
 import HRQuesetions from './pages/HR/HRQuestions.page';
 import HRSearchResults from './pages/HR/HRSearchResults.page';
 import HRCandidatePreview from './pages/HR/HRCandidatePreview.page';
+import PrivateRoute from './components/common/PrivateRoute';
+import PublicRoute from './components/common/PublicRoute';
 function App() {
   // const zoomLevel = useZoom();
   const authChecked = useAuthCheck();
@@ -49,9 +53,24 @@ function App() {
       <Toaster />
       <Router>
         <Routes>
-          <Route path="/" element={<Navigate to="/login" />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/" element={<Navigate to="/dashboard" />} />
+          <Route
+            path="/login"
+            element={
+              <PublicRoute>
+                <LoginPage />
+              </PublicRoute>
+            }
+          />
+
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            }
+          />
           <Route path="/redirect/auth" element={<RedirectOAuth />} />
           <Route path="/curriculum" element={<CurriculumComponent />} />
 
@@ -70,7 +89,14 @@ function App() {
           <Route path="/migratestudents" element={<MigrateStudents />} />
           <Route path="/repoAccess" element={<RepoAccess />} />
           <Route path="/alumni">
-            <Route path="profile" element={<AlumniProfile />} />
+            <Route
+              path="profile"
+              element={
+                <PrivateRoute>
+                  <AlumniProfile />
+                </PrivateRoute>
+              }
+            />
             <Route path="projectcode/" element={<AlumniProjectcode />} />
             <Route path="portfolio" element={<Portfolio />} />
             <Route path="profile/portfolio" element={<AlumniPortfolio />} />
@@ -80,6 +106,7 @@ function App() {
             <Route path="add-project" element={<ProjectForm />} />
             <Route path="education" element={<AlumniEducation />} />
             <Route path="experience" element={<AlumniExperience />} />
+            {/* <Route path="logout" element={<LogoutPage />} /> */}
           </Route>
           <Route path="hr">
             <Route path="login" element={<HRloginPage />} />
@@ -87,7 +114,17 @@ function App() {
             <Route path="query-results" element={<HRSearchResults />} />
             <Route path="candidate/:id" element={<HRCandidatePreview />} />
           </Route>
-          <Route path="*" element={<div>404</div>} />
+          <Route
+            path="*"
+            element={
+              <div className="flex justify-center items-center">
+                <Lottie
+                  animationData={fourzerofour}
+                  style={{ width: '70vw' }}
+                />
+              </div>
+            }
+          />
         </Routes>
       </Router>
     </div>

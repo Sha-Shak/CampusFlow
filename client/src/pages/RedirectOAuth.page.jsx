@@ -50,9 +50,12 @@ function RedirectOAuth() {
         })
       );
 
-      if (role === 'instructor' || (role === 'student' && type !== 'alumni')) {
+      if (
+        role === 'instructor' ||
+        (role === 'student' && user.type !== 'alumni')
+      ) {
         navigate('/dashboard');
-      } else if (role === 'student' && type === 'alumni') {
+      } else if (role === 'student' && user.type === 'alumni') {
         navigate('/alumni/profile');
       } else {
         navigate('/login');
