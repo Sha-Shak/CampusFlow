@@ -14,7 +14,7 @@ function NavBar() {
     window.location.href = '/';
   };
   return (
-    <div className=" pt-5 px-5 sticky top-0 z-[100]">
+    <div className=" pt-5 px-5 sticky top-0 z-[40]">
       <div className="navbar bg-white bg-clip-border  border-[#e1e1e11f] border- shadow-3xl rounded-2xl border-slate-700	sticky top-0">
         <div className="flex-1">
           <a className="btn btn-ghost normal-case text-xl text-purple-700">

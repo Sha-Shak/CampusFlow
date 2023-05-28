@@ -9,12 +9,15 @@ import MiniWeather from '../components/Dashboard/MiniWeather';
 import RecentStudents from '../components/Dashboard/RecentStudents';
 import useAuthCheck from '../hooks/useAuthCheck';
 import { useGetAllActiveStudentsQuery } from '../features/student/studentApi';
+import Loader from '../components/common/Loader';
 
 function Dashboard() {
   // const [user, setUser] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
   const [activeStudents, setActiveStudents] = useState([]);
   const { name } = useSelector((state) => state?.auth?.user) || {};
   const firstName = name?.split(' ')[0];
+  const role = localStorage.getItem('role');
 
   // Api calls to get all students
   const {
@@ -22,6 +25,12 @@ function Dashboard() {
     error,
     isSuccess,
   } = useGetAllActiveStudentsQuery();
+
+  useEffect(() => {
+    if (name) {
+      setIsLoading(false);
+    }
+  }, [name]);
 
   useEffect(() => {
     if (allStudents) {
@@ -34,10 +43,13 @@ function Dashboard() {
 
   return (
     <Layout>
+      {isLoading && <Loader />}
       <div className="text-3xl mb-8 ml-4">Welcome, {firstName}</div>
-      <div className="m-4">
-        <RecentStudents students={allStudents} />
-      </div>
+      {role === 'instructor' && (
+        <div className="m-4">
+          <RecentStudents students={allStudents} />
+        </div>
+      )}
       <div className="flex">
         <div className="m-4">
           <MiniLectures />
