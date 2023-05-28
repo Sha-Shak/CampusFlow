@@ -18,7 +18,7 @@ const AlumniSidebar = () => {
     useSelector((state) => state?.auth?.user) || {};
   const role = useSelector((state) => state?.auth?.role);
   const logout = () => {
-    window.location.href = '/';
+    navigate('/login');
     dispatch(userLoggedOut());
     localStorage.removeItem('role');
   };

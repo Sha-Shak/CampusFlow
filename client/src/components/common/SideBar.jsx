@@ -1,18 +1,23 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import Lottie from 'lottie-react';
+import coding from '../../assets/coding.json';
 
 function SideBar() {
+  const role = localStorage.getItem('role');
   const location = useLocation();
   const route = {
-    ['Dashboard']: ['/dashboard'],
-    ['Candidate List']: ['/candidates'],
-    ['Curriculum']: ['/curriculum'],
-    ['Cohorts']: ['/cohorts'],
-    ['Mark Students']: ['/markstudents'],
-    ['Add Skills']: ['/addskills'],
-    ['Migrate Students']: ['/migratestudents'],
-    ['Repo Access']: ['/repoaccess'],
-    ['Peer Ratings']: ['/peerratings'],
+    Dashboard: ['/dashboard'],
+    ...(role === 'student' && { ['Peer Ratings']: ['/peerratings'] }),
+    ...(role === 'instructor' && { ['Candidate List']: ['/candidates'] }),
+    Curriculum: ['/curriculum'],
+    ...(role === 'instructor' && { Cohorts: ['/cohorts'] }),
+    ...(role === 'instructor' && { 'Mark Students': ['/markstudents'] }),
+    ...(role === 'instructor' && { ['Add Skills']: ['/addskills'] }),
+    ...(role === 'instructor' && {
+      ['Migrate Students']: ['/migratestudents'],
+    }),
+    ...(role === 'instructor' && { ['Repo Access']: ['/repoaccess'] }),
   };
 
   return (
@@ -33,6 +38,10 @@ function SideBar() {
                   <Link to={route[key][0]}>{key}</Link>
                 </li>
               ))}
+              <Lottie
+                animationData={coding}
+                style={{ width: '230px', margin: 'auto' }}
+              />
             </ul>
           </div>
         </div>
