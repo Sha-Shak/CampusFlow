@@ -1,5 +1,5 @@
 import axios from 'axios';
-const baseUrl = 'http://localhost:8080';
+const baseUrl = 'https://campusflow.fly.dev';
 
 export async function getAccessToken(code) {
   try {
