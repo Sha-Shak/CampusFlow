@@ -25,7 +25,7 @@ function AlumniPortfolioModalView({ project }) {
     };
     axios
       .get(
-        `http://localhost:8080/github/getCollaborators/${userName}/${projectName}`,
+        `https://campusflow.fly.dev/github/getCollaborators/${userName}/${projectName}`,
         headers
       )
       .then((res) => {
